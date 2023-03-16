@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Panta2.Core\Panta2.Core.csproj" />
+    <ProjectReference Include="..\Panta2.Infrastructure\Panta2.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
