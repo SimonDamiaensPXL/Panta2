@@ -4,7 +4,7 @@ namespace Panta2.Core.Contracts
 {
     public interface ICompanyRepository
     {
-        List<Company> GetAll();
+        Task<IEnumerable<Company>> GetAll();
         Company GetById(int id);
         Company Add(Company service);
         Company Update(Company service);

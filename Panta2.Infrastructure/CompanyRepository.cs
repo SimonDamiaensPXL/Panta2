@@ -2,29 +2,36 @@
 using Microsoft.Data.SqlClient;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
-using System.Data;
+using Panta2.Infrastructure.Context;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Dapper;
 
 namespace Panta2.Infrastructure
 {
     public class CompanyRepository : ICompanyRepository
     {
-        private IDbConnection _db;
+        private DapperContext _context;
 
-        public CompanyRepository(string connectionString)
+        public CompanyRepository(DapperContext context)
         {
-            _db = new SqlConnection(connectionString);
+            _context = context;
         }
 
-        public List<Company> GetAll()
+        public async Task<IEnumerable<Company>> GetAll()
         {
-            return _db.GetAll<Company>().ToList();
+            var query = "SELECT * FROM Companies";
+            using (var connection = _context.CreateConnection())
+            {
+                var companies = await connection.QueryAsync<Company>(query);
+                return companies.ToList();
+            }
         }
 
         public Company GetById(int id)
         {
             throw new NotImplementedException();
         }
-
         public Company Add(Company service)
         {
             throw new NotImplementedException();
