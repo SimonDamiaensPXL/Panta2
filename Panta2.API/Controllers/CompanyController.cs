@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Panta2.Application;
 using Panta2.Core.Contracts;
 using Panta2.Core.Models;
 

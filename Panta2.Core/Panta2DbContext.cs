@@ -11,8 +11,8 @@ namespace Panta2.Core
         //public DbSet<Service> Services { get; set; }
         //public DbSet<CompanyService> CompanyServices { get; set; }
         //public DbSet<ServiceRole> ServiceRoles { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        //public DbSet<User> Users { get; set; }
+        //public DbSet<Role> Roles { get; set; }
         //public DbSet<Favorite> Favorites { get; set; }
 
 
@@ -20,10 +20,10 @@ namespace Panta2.Core
         //{
         //}
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = Panta2Database");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = Panta2Database");
+        //}
 
         //protected override void OnModelCreating(ModelBuilder builder)
         //{

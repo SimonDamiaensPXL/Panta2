@@ -1,7 +1,6 @@
-﻿using Dapper;
+﻿using Dapper.Contrib.Extensions;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
-using Panta2.Core.Models;
 using Panta2.Infrastructure.Context;
 
 namespace Panta2.Infrastructure
@@ -17,22 +16,17 @@ namespace Panta2.Infrastructure
 
         public async Task<IEnumerable<Service>> GetAll()
         {
-            var query = "SELECT * FROM Services";
             using (var connection = _context.CreateConnection())
             {
-                var services = await connection.QueryAsync<Service>(query);
-                return services.ToList();
+                return await connection.GetAllAsync<Service>();
             }
         }
 
         public async Task<Service> GetById(int id)
         {
-            var query = "SELECT * FROM Services WHERE Id = @id";
-
             using (var connection = _context.CreateConnection())
             {
-                var service = await connection.QueryFirstOrDefaultAsync<Service>(query, new { id });
-                return service;
+                return await connection.GetAsync<Service>(id);
             }
         }
 
