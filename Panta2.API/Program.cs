@@ -11,6 +11,7 @@ builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
