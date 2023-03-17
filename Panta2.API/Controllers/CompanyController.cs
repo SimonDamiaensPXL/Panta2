@@ -23,7 +23,7 @@ namespace Panta2.API.Controllers
             return Ok(companies);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetCompanyById")]
         public async Task<ActionResult<CompanyDto>> GetCompanyById(int id)
         {
             var service = await _companyService.GetCompanyById(id);
@@ -40,7 +40,7 @@ namespace Panta2.API.Controllers
         public async Task<ActionResult<CompanyDto>> CreateCompany(CompanyForCreationDto company)
         {
             var createdCompany = await _companyService.InsertCompany(company);
-            return CreatedAtRoute("GetCompanyById", createdCompany);
+            return CreatedAtRoute("GetCompanyById", new { createdCompany.Id }, createdCompany);
         }
     }
 }
