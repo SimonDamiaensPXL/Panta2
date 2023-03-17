@@ -6,5 +6,8 @@ namespace Panta2.Core.Contracts
     {
         Task<IEnumerable<ServiceDto>> GetServiceList();
         Task<ServiceDto> GetServiceById(int id);
+        Task<ServiceDto> InsertService(ServiceForCreationDto service);
+        Task<bool> UpdateService(ServiceDto service);
+        Task<bool> DeleteService(int id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Panta2.Application;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Core.Models;
@@ -24,7 +25,7 @@ namespace Panta2.API.Controllers
             return Ok(services);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetServiceById")]
         public async Task<ActionResult<ServiceDto>> GetServiceById(int id)
         {
             var service = await _serviceService.GetServiceById(id);
@@ -35,6 +36,35 @@ namespace Panta2.API.Controllers
             }
 
             return Ok(service);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ServiceDto>> CreateService(ServiceForCreationDto service)
+        {
+            var createdService = await _serviceService.InsertService(service);
+            return CreatedAtRoute("GetServiceById", new { createdService.Id }, createdService);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceDto>> UpdateService(ServiceDto service)
+        {
+            if (!await _serviceService.UpdateService(service))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteService(int id)
+        {
+            if (!await _serviceService.DeleteService(id))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }

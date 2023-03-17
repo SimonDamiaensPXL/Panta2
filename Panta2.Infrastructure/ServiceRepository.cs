@@ -30,19 +30,29 @@ namespace Panta2.Infrastructure
             }
         }
 
-        public Service Add(Service service)
+        public async Task<Service> Add(Service service)
         {
-            throw new NotImplementedException();
+            using (var connection = _context.CreateConnection())
+            {
+                var id = await connection.InsertAsync(service);
+                service.Id = id;
+                return service;
+            }
+        }
+        public async Task<bool> Update(Service service)
+        {
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.UpdateAsync(service);
+            }
         }
 
-        public void Remove(int id)
+        public async Task<bool> Remove(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Service Update(Service service)
-        {
-            throw new NotImplementedException();
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.DeleteAsync(new Service { Id = id });
+            }
         }
 
         //public async Task<Service> GetServicesFromCompany(int id)

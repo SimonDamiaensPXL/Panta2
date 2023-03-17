@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Panta2.Core.Contracts;
+using Panta2.Core.Entities;
 using Panta2.Core.Models;
+using Panta2.Infrastructure;
 
 namespace Panta2.Application
 {
@@ -26,5 +28,26 @@ namespace Panta2.Application
             var serviceEntity = await _serviceRepository.GetById(id);
             return _mapper.Map<ServiceDto>(serviceEntity);
         }
+
+        public async Task<ServiceDto> InsertService(ServiceForCreationDto service)
+        {
+            var finalService = _mapper.Map<Service>(service);
+
+            var createdService = await _serviceRepository.Add(finalService);
+
+            return _mapper.Map<ServiceDto>(createdService);
+        }
+
+        public async Task<bool> UpdateService(ServiceDto service)
+        {
+            var updateService = _mapper.Map<Service>(service);
+            return await _serviceRepository.Update(updateService);
+        }
+
+        public async Task<bool> DeleteService(int id)
+        {
+            return await _serviceRepository.Remove(id);
+        }
     }
 }
+
