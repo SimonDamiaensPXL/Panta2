@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Panta2.Application;
 using Panta2.Core.Contracts;
+using Panta2.Core.Entities;
 using Panta2.Core.Models;
 
 namespace Panta2.API.Controllers
@@ -37,10 +39,33 @@ namespace Panta2.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CompanyDto>> CreateCompany(CompanyForCreationDto company)
+        public async Task<ActionResult> CreateCompany(CompanyForCreationDto company)
         {
             var createdCompany = await _companyService.InsertCompany(company);
             return CreatedAtRoute("GetCompanyById", new { createdCompany.Id }, createdCompany);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateCompany(CompanyDto company)
+        {
+            if (!await _companyService.UpdateCompany(company))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteCompany(int id)
+        {
+            if (!await _companyService.DeleteCompany(id))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
     }
 }

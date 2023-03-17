@@ -2,6 +2,7 @@
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Infrastructure.Context;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Panta2.Infrastructure
 {
@@ -40,14 +41,20 @@ namespace Panta2.Infrastructure
             }
         }
 
-        public void Remove(int id)
+        public async Task<bool> Update(Company company)
         {
-            throw new NotImplementedException();
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.UpdateAsync(company);
+            }
         }
 
-        public Company Update(Company service)
+        public async Task<bool> Remove(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.DeleteAsync(new Company { Id = id });
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Core.Models;
+using Panta2.Infrastructure;
 
 namespace Panta2.Application
 {
@@ -35,6 +36,17 @@ namespace Panta2.Application
             var createdCompany = await _companyRepository.Add(finalCompany);
 
             return _mapper.Map<CompanyDto>(createdCompany);
+        }
+
+        public async Task<bool> UpdateCompany(CompanyDto company)
+        {
+            var updateCompany = _mapper.Map<Company>(company);
+            return await _companyRepository.Update(updateCompany);
+        }
+
+        public async Task<bool> DeleteCompany(int id)
+        {
+            return await _companyRepository.Remove(id);
         }
     }
 }
