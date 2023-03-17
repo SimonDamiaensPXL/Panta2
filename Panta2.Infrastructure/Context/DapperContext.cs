@@ -22,6 +22,10 @@ namespace Panta2.Infrastructure.Context
                 {
                     return "companies";
                 }
+                else if (entityType == typeof(Service))
+                {
+                    return "services";
+                }
                 throw new Exception($"Not supported entity type {entityType}");
             };
         }
