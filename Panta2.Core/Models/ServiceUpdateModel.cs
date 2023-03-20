@@ -2,7 +2,7 @@
 
 namespace Panta2.Core.Models
 {
-    public class ServiceForUpdateDto
+    public class ServiceUpdateModel
     {
         [Required(ErrorMessage = "You should provide a Name value.")]
         public string? Name { get; set; }
