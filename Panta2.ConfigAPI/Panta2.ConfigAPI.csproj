@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Panta2.Application\Panta2.Application.csproj" />
     <ProjectReference Include="..\Panta2.Core\Panta2.Core.csproj" />
+    <ProjectReference Include="..\Panta2.Infrastructure\Panta2.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,8 @@ using Panta2.Core.Models;
 
 namespace Panta2.ConfigAPI.Controllers
 {
+    [ApiController]
+    [Route("configapi/companies")]
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;

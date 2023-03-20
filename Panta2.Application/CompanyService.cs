@@ -48,5 +48,10 @@ namespace Panta2.Application
         {
             return await _companyRepository.Remove(id);
         }
+
+        public Task<IEnumerable<CompanyModel>> GetFavoriteCompanies()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
