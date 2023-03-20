@@ -17,28 +17,28 @@ namespace Panta2.Application
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<IEnumerable<CompanyDto>> GetCompanyList()
+        public async Task<IEnumerable<CompanyModel>> GetCompanyList()
         {
             var companyEntities = await _companyRepository.GetAll();
-            return _mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
+            return _mapper.Map<IEnumerable<CompanyModel>>(companyEntities);
         }
 
-        public async Task<CompanyDto> GetCompanyById(int id)
+        public async Task<CompanyModel> GetCompanyById(int id)
         {
             var companyEntity = await _companyRepository.GetById(id);
-            return _mapper.Map<CompanyDto>(companyEntity);
+            return _mapper.Map<CompanyModel>(companyEntity);
         }
 
-        public async Task<CompanyDto> InsertCompany(CompanyForCreationDto company)
+        public async Task<CompanyModel> InsertCompany(CompanyCreationModel company)
         {
             var finalCompany = _mapper.Map<Company>(company);
 
             var createdCompany = await _companyRepository.Add(finalCompany);
 
-            return _mapper.Map<CompanyDto>(createdCompany);
+            return _mapper.Map<CompanyModel>(createdCompany);
         }
 
-        public async Task<bool> UpdateCompany(CompanyDto company)
+        public async Task<bool> UpdateCompany(CompanyModel company)
         {
             var updateCompany = _mapper.Map<Company>(company);
             return await _companyRepository.Update(updateCompany);

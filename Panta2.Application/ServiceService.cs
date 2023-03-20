@@ -17,28 +17,28 @@ namespace Panta2.Application
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<IEnumerable<ServiceDto>> GetServiceList()
+        public async Task<IEnumerable<ServiceModel>> GetServiceList()
         {
             var serviceEntities = await _serviceRepository.GetAll();
-            return _mapper.Map<IEnumerable<ServiceDto>>(serviceEntities);
+            return _mapper.Map<IEnumerable<ServiceModel>>(serviceEntities);
         }
 
-        public async Task<ServiceDto> GetServiceById(int id)
+        public async Task<ServiceModel> GetServiceById(int id)
         {
             var serviceEntity = await _serviceRepository.GetById(id);
-            return _mapper.Map<ServiceDto>(serviceEntity);
+            return _mapper.Map<ServiceModel>(serviceEntity);
         }
 
-        public async Task<ServiceDto> InsertService(ServiceForCreationDto service)
+        public async Task<ServiceModel> InsertService(ServiceCreationModel service)
         {
             var finalService = _mapper.Map<Service>(service);
 
             var createdService = await _serviceRepository.Add(finalService);
 
-            return _mapper.Map<ServiceDto>(createdService);
+            return _mapper.Map<ServiceModel>(createdService);
         }
 
-        public async Task<bool> UpdateService(ServiceDto service)
+        public async Task<bool> UpdateService(ServiceModel service)
         {
             var updateService = _mapper.Map<Service>(service);
             return await _serviceRepository.Update(updateService);

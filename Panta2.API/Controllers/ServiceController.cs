@@ -19,14 +19,14 @@ namespace Panta2.API.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ServiceDto>>> GetServices()
+        public async Task<ActionResult<IEnumerable<ServiceModel>>> GetServices()
         {
             var services = await _serviceService.GetServiceList();
             return Ok(services);
         }
 
         [HttpGet("{id}", Name = "GetServiceById")]
-        public async Task<ActionResult<ServiceDto>> GetServiceById(int id)
+        public async Task<ActionResult<ServiceModel>> GetServiceById(int id)
         {
             var service = await _serviceService.GetServiceById(id);
 
@@ -39,14 +39,14 @@ namespace Panta2.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceDto>> CreateService(ServiceForCreationDto service)
+        public async Task<ActionResult<ServiceModel>> CreateService(ServiceCreationModel service)
         {
             var createdService = await _serviceService.InsertService(service);
             return CreatedAtRoute("GetServiceById", new { createdService.Id }, createdService);
         }
 
         [HttpPut]
-        public async Task<ActionResult<ServiceDto>> UpdateService(ServiceDto service)
+        public async Task<ActionResult<ServiceModel>> UpdateService(ServiceModel service)
         {
             if (!await _serviceService.UpdateService(service))
             {

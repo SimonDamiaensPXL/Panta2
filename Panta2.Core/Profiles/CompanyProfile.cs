@@ -6,10 +6,10 @@ namespace Panta2.Core.Profiles
     {
         public CompanyProfile()
         {
-            CreateMap<Entities.Company, Models.CompanyDto>();
-            CreateMap<Models.CompanyForCreationDto, Entities.Company>();
-            CreateMap<Entities.Company, Models.CompanyForCreationDto>();
-            CreateMap<Models.CompanyDto, Entities.Company>();
+            CreateMap<Entities.Company, Models.CompanyModel>();
+            CreateMap<Models.CompanyCreationModel, Entities.Company>();
+            CreateMap<Entities.Company, Models.CompanyCreationModel>();
+            CreateMap<Models.CompanyModel, Entities.Company>();
         }
     }
 }

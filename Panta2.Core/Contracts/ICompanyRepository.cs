@@ -1,4 +1,5 @@
 ﻿using Panta2.Core.Entities;
+using Panta2.Core.Models;
 
 namespace Panta2.Core.Contracts
 {
@@ -9,5 +10,6 @@ namespace Panta2.Core.Contracts
         Task<Company> Add(Company company);
         Task<bool> Update(Company company);
         Task<bool> Remove(int id);
+        Task<IEnumerable<Company>> GetFavoriteCompanies();
     }
 }

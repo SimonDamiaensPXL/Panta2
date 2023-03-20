@@ -2,7 +2,6 @@
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Infrastructure.Context;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Panta2.Infrastructure
 {
@@ -55,6 +54,11 @@ namespace Panta2.Infrastructure
             {
                 return await connection.DeleteAsync(new Company { Id = id });
             }
+        }
+
+        public Task<IEnumerable<Company>> GetFavoriteCompanies()
+        {
+            throw new NotImplementedException();
         }
     }
 }
