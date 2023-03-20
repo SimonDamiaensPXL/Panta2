@@ -26,6 +26,10 @@ namespace Panta2.Infrastructure.Context
                 {
                     return "services";
                 }
+                else if (entityType == typeof(User))
+                {
+                    return "AspNetUsers";
+                }
                 throw new Exception($"Not supported entity type {entityType}");
             };
         }
