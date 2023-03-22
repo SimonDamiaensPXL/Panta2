@@ -9,9 +9,6 @@ namespace Panta2.Core.Models
 {
     public class UserLoginModel
     {
-        [Required(ErrorMessage = "You should provide a Id value.")]
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "You should provide a UserName value.")]
         public string? UserName { get; set; }
 

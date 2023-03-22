@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Panta2.API.Controllers
 {
-    [Route("authentication")]
+    [Route("api/auth")]
     [ApiController]
 
     public class AuthenticationController : ControllerBase
@@ -22,7 +22,7 @@ namespace Panta2.API.Controllers
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        [HttpPost("authenticate")]
+        [HttpPost("signin")]
         public async Task<ActionResult> Login(UserLoginModel model)
         {
             var user = await _userService.LoginUser(model.UserName, model.Password);

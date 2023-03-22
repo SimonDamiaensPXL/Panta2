@@ -44,7 +44,11 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin();
+        });
 });
 
 builder.Services.AddControllers();
@@ -66,6 +70,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseCors();
 
 app.UseAuthorization();
 

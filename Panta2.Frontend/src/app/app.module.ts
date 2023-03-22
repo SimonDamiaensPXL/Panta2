@@ -1,20 +1,30 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeModule } from './home/home.module';
+import { LoginComponent } from './login/login.component';
+
+import { httpInterceptorProviders } from './core/interceptors/http.interceptor'
+import { HomeComponent } from './home/home.component';
+import { FormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HomeModule
+    FormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
