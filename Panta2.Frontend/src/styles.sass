@@ -3,5 +3,22 @@
 @tailwind components
 @tailwind utilities
 
+    /* Import Lato font */
+@font-face
+    font-family: 'Lato'
+    src: url('/assets/fonts/Lato-Regular.ttf') format('truetype')
+    font-weight: normal
+    font-style: normal
+
+
+@font-face 
+    font-family: 'Lato'
+    src: url('/assets/fonts/Lato-Bold.ttf') format('truetype')
+    font-weight: bold
+    font-style: normal
+
+
+/* Set Lato as the default font for the body */
 body
-    @apply bg-gradient-to-b from-gray-200 via-gray-400 to-gray-600
+    font-family: 'Lato', sans-serif
+
