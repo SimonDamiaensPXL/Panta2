@@ -46,7 +46,10 @@ namespace Panta2.API.Controllers
                 SameSite = SameSiteMode.Strict
             });
 
-            return Ok(new { token = jwtToken });
+            return Ok(new { 
+                token = jwtToken,
+                id = user.Id
+            });
         }
 
         private string BuildJwtToken(UserModel user)

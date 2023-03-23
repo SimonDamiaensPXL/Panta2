@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
+      this.router.navigate(["/home"])
     }
   }
 
@@ -33,7 +33,8 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(username, password).subscribe({
       next: data => {
-        this.storageService.saveUser(data);
+        this.storageService.saveToken(data.token);
+        this.storageService.saveId(data.returnUser.id)
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.router.navigate(["/home"])
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  reloadPage(): void {
-    window.location.reload();
-  }
+  // reloadPage(): void {
+  //   window.location.reload();
+  // }
 }

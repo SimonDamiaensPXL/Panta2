@@ -10,6 +10,7 @@ import { httpInterceptorProviders } from './core/interceptors/http.interceptor'
 import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
+import { StorageService } from './core/services/storage/storage.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { ProfileComponent } from './profile/profile.component';
     FormsModule,
     HttpClientModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
