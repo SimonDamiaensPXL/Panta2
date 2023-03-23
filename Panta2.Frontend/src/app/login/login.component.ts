@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth/auth.service';
 import { StorageService } from '../core/services/storage/storage.service';
 
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
 
-  constructor(private authService: AuthService, private storageService: StorageService) { }
+  constructor(private authService: AuthService, private storageService: StorageService, private router: Router) { }
 
 
   ngOnInit(): void {
@@ -33,14 +34,17 @@ export class LoginComponent implements OnInit {
     this.authService.login(username, password).subscribe({
       next: data => {
         this.storageService.saveUser(data);
-
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
-        this.reloadPage();
+        this.router.navigate(["/home"])
       },
       error: err => {
-        this.errorMessage = err.error.message;
+        if (err.status == 401) {
+          this.errorMessage = "Username or Password is not correct."
+        }
+        else {
+          this.errorMessage = "Something went wrong."
+        }
         this.isLoginFailed = true;
       }
     });

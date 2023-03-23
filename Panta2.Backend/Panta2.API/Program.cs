@@ -40,16 +40,18 @@ builder.Services.AddAuthentication("Bearer")
     }
     );
 
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.AllowAnyOrigin();
-        });
+    options.AddPolicy("AllowFrontendOrigin", builder =>
+    {
+        builder.WithOrigins("http://localhost:4200")
+               .AllowCredentials()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
 });
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddControllers();
 
@@ -71,7 +73,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseCors();
+app.UseCors("AllowFrontendOrigin");
 
 app.UseAuthorization();
 

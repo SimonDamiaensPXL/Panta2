@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using Panta2.Core.Contracts;
 using Panta2.Core.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -37,7 +38,15 @@ namespace Panta2.API.Controllers
                 return Unauthorized();
             }
 
-            return Ok(BuildJwtToken(user));
+            var jwtToken = BuildJwtToken(user);
+
+            Response.Cookies.Append("jwtToken", jwtToken, new CookieOptions
+            {
+                HttpOnly = true,
+                SameSite = SameSiteMode.Strict
+            });
+
+            return Ok(new { token = jwtToken });
         }
 
         private string BuildJwtToken(UserModel user)
