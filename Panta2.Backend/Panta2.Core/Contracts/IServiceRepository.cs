@@ -9,5 +9,7 @@ namespace Panta2.Core.Contracts
         Task<Service> Add(Service service);
         Task<bool> Update(Service service);
         Task<bool> Remove(int id);
+        Task<IEnumerable<Service>> GetServicesFromUser(int id);
+        Task<IEnumerable<Service>> GetFavoriteServicesFromUser(int id);
     }
 }

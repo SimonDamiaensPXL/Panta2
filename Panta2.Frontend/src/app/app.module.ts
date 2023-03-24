@@ -10,7 +10,7 @@ import { httpInterceptorProviders } from './core/interceptors/http.interceptor'
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
-import { StorageService } from './core/services/storage/storage.service';
+import { ServiceComponent } from './service/service.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import { StorageService } from './core/services/storage/storage.service';
     LoginComponent,
     DashboardComponent,
     ProfileComponent,
+    ServiceComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +26,7 @@ import { StorageService } from './core/services/storage/storage.service';
     FormsModule,
     HttpClientModule,
   ],
-  providers: [httpInterceptorProviders, StorageService],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

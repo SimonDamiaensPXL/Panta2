@@ -40,6 +40,32 @@ namespace Panta2.API.Controllers
             return Ok(service);
         }
 
+        [HttpGet("user/{id}")]
+        public async Task<ActionResult<IEnumerable<ServiceModel>>> GetAllServicesFromUser(int id)
+        {
+            var services = await _serviceService.GetAllServicesFromUser(id);
+
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(services);
+        }
+
+        [HttpGet("favorites/{id}")]
+        public async Task<ActionResult<IEnumerable<ServiceModel>>> GetAllFavoriteServicesFromUser(int id)
+        {
+            var services = await _serviceService.GetAllFavoriteServicesFromUser(id);
+
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(services);
+        }
+
         [HttpPost]
         public async Task<ActionResult<ServiceModel>> CreateService(ServiceCreationModel service)
         {

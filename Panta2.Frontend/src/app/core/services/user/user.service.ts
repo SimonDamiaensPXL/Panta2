@@ -13,8 +13,4 @@ export class UserService {
   getUserById(id: any): Observable<any> {
     return this.http.get(API_URL + `users/${id}`, { responseType: 'text' });
   }
-
-  getPublicContent(): Observable<any> {
-    return this.http.get(API_URL + 'companies', { responseType: 'text' });
-  }
 }
