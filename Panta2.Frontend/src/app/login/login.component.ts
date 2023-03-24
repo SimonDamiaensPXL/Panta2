@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(username, password).subscribe({
       next: data => {
         this.storageService.saveToken(data.token);
-        this.storageService.saveId(data.returnUser.id)
+        this.storageService.saveId(data.id)
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.router.navigate(["/home"])

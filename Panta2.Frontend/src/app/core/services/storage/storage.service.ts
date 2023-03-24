@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from '../user/user.service';
+import { User } from '../../models/user.model';
+import { firstValueFrom } from 'rxjs';
 
 const USER_KEY = 'auth-user';
 const USER_ID = 'user-id';
@@ -27,30 +28,30 @@ export class StorageService {
     window.sessionStorage.setItem(USER_ID, JSON.stringify(id));
   }
 
-  public getUser(): void {
-    this.user = localStorage.getItem(USER)
+  public async getUser(): Promise<any> {
+    const userString = window.sessionStorage.getItem('USER');
+    const user: User = userString ? JSON.parse(userString) : null;
 
-    if (this.user == null) {
+    if (user == null) {
       const id = window.sessionStorage.getItem(USER_ID);
-
-      this.userService.getUserById(id).subscribe({
-        next: data => {
-          console.log(data);
-          this.user = data;
-          localStorage.setItem('user', this.user);
-        },
-        error: err => {
-          console.log(err.message)
-        }
-      });
+      try {
+        const userData = await firstValueFrom(this.userService.getUserById(id));
+        const user = JSON.parse(userData);
+        window.sessionStorage.setItem('USER', JSON.stringify(user));
+        return user;
+      } catch (err) {
+        console.log(err);
+        // handle the error appropriately
+      }
+    } else {
+      return user;
     }
-    return JSON.parse(this.user);
   }
 
   public deleteUserStorage(): void {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.removeItem(USER_ID);
-    localStorage.removeItem(USER);
+    window.sessionStorage.removeItem(USER);
   }
 
   public isLoggedIn(): boolean {
