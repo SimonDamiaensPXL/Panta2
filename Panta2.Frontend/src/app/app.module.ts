@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
 import { httpInterceptorProviders } from './core/interceptors/http.interceptor'
-import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import { StorageService } from './core/services/storage/storage.service';
@@ -16,7 +16,7 @@ import { StorageService } from './core/services/storage/storage.service';
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
+    DashboardComponent,
     ProfileComponent,
   ],
   imports: [
