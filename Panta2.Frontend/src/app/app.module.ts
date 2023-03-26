@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import { ServiceComponent } from './service/service.component';
+import { FooterComponent } from './shared/footer.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ServiceComponent } from './service/service.component';
     DashboardComponent,
     ProfileComponent,
     ServiceComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

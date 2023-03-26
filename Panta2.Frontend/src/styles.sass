@@ -1,5 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+:root
+    --primary: #ffffff
+    --secondary: #9ca3af
+
+    /* You can add global styles to this file, and also import other style files */
 @tailwind base
+
+    /* Firefox */
+*
+    scrollbar-width: thin
+    scrollbar-color: var(--secondary) var(--primary)
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar
+    width: 15px
+
+*::-webkit-scrollbar-track
+    background: var(--primary)
+    border-radius: 5px
+
+*::-webkit-scrollbar-thumb
+    background: linear-gradient(180deg, #e5e7eb, #9ca3af, #4b5563)
+    border-radius: 14px
+    border: 3px solid var(--primary)
+
 @tailwind components
 @tailwind utilities
 
@@ -10,15 +33,12 @@
     font-weight: normal
     font-style: normal
 
-
-@font-face 
+@font-face
     font-family: 'Lato'
     src: url('/assets/fonts/Lato-Bold.ttf') format('truetype')
     font-weight: bold
     font-style: normal
 
-
 /* Set Lato as the default font for the body */
 body
     font-family: 'Lato', sans-serif
-

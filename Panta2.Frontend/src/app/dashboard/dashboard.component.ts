@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { StorageService } from "../core/services/storage/storage.service";
 import { UserService } from "../core/services/user/user.service";
@@ -12,7 +12,7 @@ import { Service } from "../core/models/service.model";
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.sass']
 })
-export class DashboardComponent implements OnInit, AfterViewInit  {
+export class DashboardComponent implements OnInit {
   services: Service[] = [];
   favoriteServices: Service[] = [];
   userName?: string;
@@ -26,13 +26,11 @@ export class DashboardComponent implements OnInit, AfterViewInit  {
       this.userName = user.firstName;
       this.services = await firstValueFrom(this.serviceService.getServices(user.id));
       this.favoriteServices = await firstValueFrom(this.serviceService.getFavoriteServices(user.id));
+      this.isLoading = false;
+
     } catch (error) {
       console.error(error);
     }
-  }
-
-  ngAfterViewInit(): void {
-    this.isLoading = false;
   }
 
   logout(): void {
