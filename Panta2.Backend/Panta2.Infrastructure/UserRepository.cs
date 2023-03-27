@@ -41,5 +41,29 @@ namespace Panta2.Infrastructure
                 return await connection.QueryFirstOrDefaultAsync<User>(query, new { username });
             }
         }
+
+        public async Task<bool> AddFavoriteService(int userId, int serviceId)
+        {
+            var query = "INSERT INTO Favorites (UserId, ServiceId) " +
+                        "VALUES (@userId, @serviceId)";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { userId, serviceId });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> RemoveFavoriteService(int userId, int serviceId)
+        {
+            var query = "DELETE FROM Favorites " +
+                        "WHERE UserId = @userId AND ServiceId = @serviceId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { userId, serviceId });
+                return rowsAffected == 1;
+            }
+        }
     }
 }

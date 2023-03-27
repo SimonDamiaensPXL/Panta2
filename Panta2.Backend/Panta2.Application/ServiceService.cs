@@ -60,5 +60,10 @@ namespace Panta2.Application
             var serviceEntities = await _serviceRepository.GetFavoriteServicesFromUser(id);
             return _mapper.Map<IEnumerable<ServiceModel>>(serviceEntities);
         }
+
+        public async Task<IEnumerable<SerivceWithIsFavoriteModel>> GetAllServicesWithIsFavoriteFromUser(int id)
+        {
+            return await _serviceRepository.GetServicesWithIsFavorite(id);
+        }
     }
 }

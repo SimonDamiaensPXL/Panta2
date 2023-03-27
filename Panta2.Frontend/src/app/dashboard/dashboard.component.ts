@@ -16,25 +16,22 @@ export class DashboardComponent implements OnInit {
   services: Service[] = [];
   favoriteServices: Service[] = [];
   userName?: string;
+  companyLogo?: string;
   isLoading: boolean = true;
 
-  constructor(private storageService: StorageService, private userService: UserService, private serviceService: ServiceService, private router: Router) { }
+  constructor(private storageService: StorageService, private userService: UserService, private serviceService: ServiceService) { }
 
   async ngOnInit(): Promise<void> {
     try {
       const user: User = await this.storageService.getUser();
-      this.userName = user.firstName;
+
       this.services = await firstValueFrom(this.serviceService.getServices(user.id));
       this.favoriteServices = await firstValueFrom(this.serviceService.getFavoriteServices(user.id));
       this.isLoading = false;
 
     } catch (error) {
       console.error(error);
+      this.storageService.deleteUserStorage();
     }
-  }
-
-  logout(): void {
-    this.storageService.deleteUserStorage();
-    this.router.navigate(["/login"])
   }
 } 

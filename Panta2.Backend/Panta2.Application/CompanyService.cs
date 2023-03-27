@@ -28,6 +28,12 @@ namespace Panta2.Application
             return _mapper.Map<CompanyModel>(companyEntity);
         }
 
+        public async Task<string> GetCompanyLogoById(int id)
+        {
+            return await _companyRepository.GetLogo(id);
+            
+        }
+
         public async Task<CompanyModel> InsertCompany(CompanyCreationModel company)
         {
             var finalCompany = _mapper.Map<Company>(company);
@@ -46,11 +52,6 @@ namespace Panta2.Application
         public async Task<bool> DeleteCompany(int id)
         {
             return await _companyRepository.Remove(id);
-        }
-
-        public Task<IEnumerable<CompanyModel>> GetFavoriteCompanies()
-        {
-            throw new NotImplementedException();
         }
     }
 }

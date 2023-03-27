@@ -1,4 +1,5 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Infrastructure.Context;
@@ -30,6 +31,17 @@ namespace Panta2.Infrastructure
             }
         }
 
+        public async Task<string> GetLogo(int id)
+        {
+            var query = "SELECT Logo FROM Companies c WHERE c.Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var logo = await connection.QueryFirstOrDefaultAsync<string>(query, new { id });
+                return logo;
+            }
+        }
+
         public async Task<Company> Add(Company company)
         {
             using (var connection = _context.CreateConnection())
@@ -54,11 +66,6 @@ namespace Panta2.Infrastructure
             {
                 return await connection.DeleteAsync(new Company { Id = id });
             }
-        }
-
-        public Task<IEnumerable<Company>> GetFavoriteCompanies()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -54,9 +54,22 @@ namespace Panta2.API.Controllers
         }
 
         [HttpGet("favorites/{id}")]
-        public async Task<ActionResult<IEnumerable<ServiceModel>>> GetAllFavoriteServicesFromUser(int id)
+        public async Task<ActionResult<IEnumerable<SerivceWithIsFavoriteModel>>> GetAllFavoriteServicesFromUser(int id)
         {
             var services = await _serviceService.GetAllFavoriteServicesFromUser(id);
+
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(services);
+        }
+
+        [HttpGet("isfavorites/{id}")]
+        public async Task<ActionResult<IEnumerable<ServiceModel>>> GetAllServicesWithIsFavoriteFromUser(int id)
+        {
+            var services = await _serviceService.GetAllServicesWithIsFavoriteFromUser(id);
 
             if (services == null)
             {

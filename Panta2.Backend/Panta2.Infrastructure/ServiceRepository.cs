@@ -2,6 +2,7 @@
 using Dapper.Contrib.Extensions;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
+using Panta2.Core.Models;
 using Panta2.Infrastructure.Context;
 
 namespace Panta2.Infrastructure
@@ -83,6 +84,21 @@ namespace Panta2.Infrastructure
             using (var connection = _context.CreateConnection())
             {
                 var services = await connection.QueryAsync<Service>(query, new { id });
+                return services;
+            }
+        }
+
+        public async Task<IEnumerable<SerivceWithIsFavoriteModel>> GetServicesWithIsFavorite(int id)
+        {
+            var query = "SELECT s.Id, s.Name, s.Icon, s.Link, " +
+                        "CASE WHEN fs.ServiceId IS NULL THEN 0 ELSE 1 END AS isFavorite " +
+                        "FROM Services s " +
+                        "LEFT JOIN Favorites fs ON s.Id = fs.ServiceId " +
+                        "AND fs.UserId = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var services = await connection.QueryAsync<SerivceWithIsFavoriteModel>(query, new { id });
                 return services;
             }
         }

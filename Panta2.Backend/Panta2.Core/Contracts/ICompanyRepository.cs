@@ -7,9 +7,9 @@ namespace Panta2.Core.Contracts
     {
         Task<IEnumerable<Company>> GetAll();
         Task<Company> GetById(int id);
+        Task<string> GetLogo(int id);
         Task<Company> Add(Company company);
         Task<bool> Update(Company company);
         Task<bool> Remove(int id);
-        Task<IEnumerable<Company>> GetFavoriteCompanies();
     }
 }

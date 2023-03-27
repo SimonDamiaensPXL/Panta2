@@ -13,4 +13,8 @@ export class UserService {
   getUserById(id: any): Observable<any> {
     return this.http.get(API_URL + `users/${id}`, { responseType: 'text' });
   }
+
+  getUserCompanyById(id: any): Observable<any> {
+    return this.http.get(API_URL + `companies/logo/${id}`, { responseType: 'text' });
+  }
 }

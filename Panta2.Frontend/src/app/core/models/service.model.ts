@@ -3,4 +3,5 @@ export interface Service {
     name: string;
     icon: string;
     link: string;
+    isFavorite: boolean;
  }

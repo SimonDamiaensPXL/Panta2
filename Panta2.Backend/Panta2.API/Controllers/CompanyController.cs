@@ -40,11 +40,17 @@ namespace Panta2.API.Controllers
             return Ok(service);
         }
 
-        [HttpGet("favorite")]
-        public async Task<ActionResult<IEnumerable<CompanyModel>>> GetFavoriteCompanies()
+        [HttpGet("logo/{id}")]
+        public async Task<ActionResult<CompanyModel>> GetCompanyLogoById(int id)
         {
-            var favoriteCompanies = await _companyService.GetFavoriteCompanies();
-            return Ok(favoriteCompanies);
+            var logo = await _companyService.GetCompanyLogoById(id);
+
+            if (logo == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(logo);
         }
     }
 }

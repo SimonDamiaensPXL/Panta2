@@ -14,6 +14,10 @@ export class ServiceService {
       return this.apiService.get(`/services/user/${id}`);
     }
 
+    getIsFavoriteServices(id: number): Observable<Service[]> {
+      return this.apiService.get(`/services/isfavorites/${id}`);
+    }
+
     getFavoriteServices(id: number): Observable<Service[]> {
       return this.apiService.get(`/services/favorites/${id}`);
     }

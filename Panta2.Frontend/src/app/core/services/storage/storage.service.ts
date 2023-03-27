@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { User } from '../../models/user.model';
 import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 const USER_KEY = 'auth-user';
 const USER_ID = 'user-id';
@@ -11,7 +12,7 @@ const USER = 'user';
   providedIn: 'root'
 })
 export class StorageService {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
   user?: any;
 
   clean(): void {
@@ -52,6 +53,7 @@ export class StorageService {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.removeItem(USER_ID);
     window.sessionStorage.removeItem(USER);
+    this.router.navigate(['/login']);
   }
 
   public isLoggedIn(): boolean {

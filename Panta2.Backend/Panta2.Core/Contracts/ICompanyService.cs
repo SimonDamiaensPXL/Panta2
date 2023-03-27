@@ -6,10 +6,10 @@ namespace Panta2.Core.Contracts
     {
         Task<IEnumerable<CompanyModel>> GetCompanyList();
         Task<CompanyModel> GetCompanyById(int id);
+        Task<string> GetCompanyLogoById(int id);
         Task<CompanyModel> InsertCompany(CompanyCreationModel company);
         Task<bool> UpdateCompany(CompanyModel company);
         Task<bool> DeleteCompany(int id);
-        Task<IEnumerable<CompanyModel>> GetFavoriteCompanies();
 
     }
 }
