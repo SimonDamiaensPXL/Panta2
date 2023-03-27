@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import { ServiceComponent } from './service/service.component';
 import { FooterComponent } from './shared/footer.component';
+import { SettingsComponent } from './settings/settings.component';
+import { NavbarComponent } from './shared/navbar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { FooterComponent } from './shared/footer.component';
     DashboardComponent,
     ProfileComponent,
     ServiceComponent,
-    FooterComponent
+    FooterComponent,
+    NavbarComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
