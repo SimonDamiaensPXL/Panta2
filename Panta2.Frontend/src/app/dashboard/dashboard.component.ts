@@ -25,8 +25,8 @@ export class DashboardComponent implements OnInit {
     try {
       const user: User = await this.storageService.getUser();
 
-      this.services = await firstValueFrom(this.serviceService.getServices(user.id));
-      this.favoriteServices = await firstValueFrom(this.serviceService.getFavoriteServices(user.id));
+      this.services = await firstValueFrom(this.userService.getServices(user.id));
+      this.favoriteServices = await firstValueFrom(this.userService.getFavoriteServices(user.id));
       this.isLoading = false;
 
     } catch (error) {

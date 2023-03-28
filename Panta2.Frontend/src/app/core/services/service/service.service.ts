@@ -10,15 +10,5 @@ export class ServiceService {
 
   constructor(private apiService: ApiService) { }
 
-    getServices(id: number): Observable<Service[]> {
-      return this.apiService.get(`/services/user/${id}`);
-    }
 
-    getIsFavoriteServices(id: number): Observable<Service[]> {
-      return this.apiService.get(`/services/isfavorites/${id}`);
-    }
-
-    getFavoriteServices(id: number): Observable<Service[]> {
-      return this.apiService.get(`/services/favorites/${id}`);
-    }
 }

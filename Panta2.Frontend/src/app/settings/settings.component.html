@@ -37,24 +37,18 @@
                                         <th scope="col" class="px-6 py-3">
                                             Favorite
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Edit
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let service of services" class="bg-white border-b hover:bg-gray-100">
                                         <td class="w-32 p-4">
-                                            <img src={{service.icon}} alt="Apple Watch">
+                                            <img src={{service.icon}} alt="Service Image">
+                                        </td>
+                                        <td class="px-6 py-4 font-semibold text-gray-900">
+                                            {{service.name}}
                                         </td>
                                         <td class="px-6 py-4 font-semibold">
-                                            <input type="text" id="default-input" value={{service.name}} class="bg-gray-50 border border-gray-300 text-gray-900  focus:outline-gray-400 text-sm rounded-lg block w-fit p-1">
-                                        </td>
-                                        <td class="px-6 py-4 font-semibold">
-                                            <input checked id="checked-checkbox" type="checkbox" [checked]="service.isFavorite" class="w-7 h-7 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <a href="#" class="font-bold text-xl text-green-600 hover:underline">Save</a>
+                                            <input checked id="checked-checkbox" type="checkbox" [checked]="service.isFavorite" (click)="editFavorite(service.serviceId, service.isFavorite)" class="w-7 h-7 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                         </td>
                                     </tr>
                                 </tbody>
