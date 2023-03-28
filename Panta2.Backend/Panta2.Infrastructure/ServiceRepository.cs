@@ -56,51 +56,5 @@ namespace Panta2.Infrastructure
                 return await connection.DeleteAsync(new Service { Id = id });
             }
         }
-
-        public async Task<IEnumerable<Service>> GetServicesFromUser(int id)
-        {
-            var query = "SELECT s.Name, s.Icon, s.Link " +
-                        "FROM AspNetUsers u " +
-                        "INNER JOIN AspNetUserRoles ur ON u.Id = ur.UserId " +
-                        "JOIN AspNetRoles r ON ur.RoleId = r.Id " +
-                        "INNER JOIN RoleService rs ON r.Id = rs.RoleId " +
-                        "INNER JOIN Services s ON rs.ServiceId = s.Id " +
-                        "WHERE u.Id = @id";
-            using (var connection = _context.CreateConnection())
-            {
-                var services = await connection.QueryAsync<Service>(query,new { id });
-                return services;
-            }
-        }
-
-        public async Task<IEnumerable<Service>> GetFavoriteServicesFromUser(int id)
-        {
-            var query = "SELECT s.Name, s.Icon, s.Link " +
-                "FROM AspNetUsers u " +
-                "INNER JOIN Favorites fs ON u.Id = fs.UserId " +
-                "INNER JOIN Services s ON fs.ServiceId = s.Id " +
-                "WHERE u.Id = @id";
-
-            using (var connection = _context.CreateConnection())
-            {
-                var services = await connection.QueryAsync<Service>(query, new { id });
-                return services;
-            }
-        }
-
-        public async Task<IEnumerable<SerivceWithIsFavoriteModel>> GetServicesWithIsFavorite(int id)
-        {
-            var query = "SELECT s.Id, s.Name, s.Icon, s.Link, " +
-                        "CASE WHEN fs.ServiceId IS NULL THEN 0 ELSE 1 END AS isFavorite " +
-                        "FROM Services s " +
-                        "LEFT JOIN Favorites fs ON s.Id = fs.ServiceId " +
-                        "AND fs.UserId = @id";
-
-            using (var connection = _context.CreateConnection())
-            {
-                var services = await connection.QueryAsync<SerivceWithIsFavoriteModel>(query, new { id });
-                return services;
-            }
-        }
     }
 }

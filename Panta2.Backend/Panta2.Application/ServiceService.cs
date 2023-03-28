@@ -48,22 +48,5 @@ namespace Panta2.Application
         {
             return await _serviceRepository.Remove(id);
         }
-
-        public async Task<IEnumerable<ServiceModel>> GetAllServicesFromUser(int id)
-        {
-            var serviceEntities = await _serviceRepository.GetServicesFromUser(id);
-            return _mapper.Map<IEnumerable<ServiceModel>>(serviceEntities);
-        }
-
-        public async Task<IEnumerable<ServiceModel>> GetAllFavoriteServicesFromUser(int id)
-        {
-            var serviceEntities = await _serviceRepository.GetFavoriteServicesFromUser(id);
-            return _mapper.Map<IEnumerable<ServiceModel>>(serviceEntities);
-        }
-
-        public async Task<IEnumerable<SerivceWithIsFavoriteModel>> GetAllServicesWithIsFavoriteFromUser(int id)
-        {
-            return await _serviceRepository.GetServicesWithIsFavorite(id);
-        }
     }
 }

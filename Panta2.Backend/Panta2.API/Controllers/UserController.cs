@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Panta2.Application;
 using Panta2.Core.Contracts;
 using Panta2.Core.Models;
 
@@ -28,6 +29,56 @@ namespace Panta2.API.Controllers
             }
 
             return Ok(user);
+        }
+
+        [HttpGet("services/{id}")]
+        public async Task<ActionResult<IEnumerable<ServiceModel>>> GetAllServicesFromUser(int id)
+        {
+            var services = await _userService.GetAllServicesFromUser(id);
+
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(services);
+        }
+
+        [HttpGet("favorites/{id}")]
+        public async Task<ActionResult<IEnumerable<SerivceWithIsFavoriteModel>>> GetAllFavoriteServicesFromUser(int id)
+        {
+            var services = await _userService.GetAllFavoriteServicesFromUser(id);
+
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(services);
+        }
+
+        [HttpGet("isfavorites/{id}")]
+        public async Task<ActionResult<IEnumerable<ServiceModel>>> GetAllServicesWithIsFavoriteFromUser(int id)
+        {
+            var services = await _userService.GetAllServicesWithIsFavoriteFromUser(id);
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(services);
+        }
+
+        [HttpPut("favorite")]
+        public async Task<ActionResult<bool>> EditFavoritesFromUser(EditFavoriteFromUserModel model)
+        {
+            bool isEdited = await _userService.EditFavoritesFromUser(model.UserId, model.ServiceId, model.IsFavorite);
+            if (!isEdited)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }

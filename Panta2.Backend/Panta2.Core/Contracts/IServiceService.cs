@@ -9,8 +9,5 @@ namespace Panta2.Core.Contracts
         Task<ServiceModel> InsertService(ServiceCreationModel service);
         Task<bool> UpdateService(ServiceModel service);
         Task<bool> DeleteService(int id);
-        Task<IEnumerable<ServiceModel>> GetAllServicesFromUser(int id);
-        Task<IEnumerable<ServiceModel>> GetAllFavoriteServicesFromUser(int id);
-        Task<IEnumerable<SerivceWithIsFavoriteModel>> GetAllServicesWithIsFavoriteFromUser(int id);
     }
 }

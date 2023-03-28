@@ -1,4 +1,5 @@
 ﻿using Panta2.Core.Entities;
+using Panta2.Core.Models;
 
 namespace Panta2.Core.Contracts
 {
@@ -7,6 +8,9 @@ namespace Panta2.Core.Contracts
         Task<User> GetById(int id);
         Task<User> CreateAsync(User user);
         Task<User> GetUserByUsername(string username);
+        Task<IEnumerable<Service>> GetServicesFromUser(int id);
+        Task<IEnumerable<Service>> GetFavoriteServicesFromUser(int id);
+        Task<IEnumerable<SerivceWithIsFavoriteModel>> GetServicesWithIsFavorite(int id);
         Task<bool> AddFavoriteService(int userId, int serviceId);
         Task<bool> RemoveFavoriteService(int userId, int serviceId);
     }

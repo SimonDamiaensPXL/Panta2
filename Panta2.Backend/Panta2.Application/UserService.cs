@@ -48,5 +48,39 @@ namespace Panta2.Application
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
             return result == PasswordVerificationResult.Success ? _mapper.Map<UserModel>(user) : null;
         }
+        public async Task<IEnumerable<ServiceModel>> GetAllServicesFromUser(int id)
+        {
+            var serviceEntities = await _userRepository.GetServicesFromUser(id);
+            return _mapper.Map<IEnumerable<ServiceModel>>(serviceEntities);
+        }
+
+        public async Task<IEnumerable<ServiceModel>> GetAllFavoriteServicesFromUser(int id)
+        {
+            var serviceEntities = await _userRepository.GetFavoriteServicesFromUser(id);
+            return _mapper.Map<IEnumerable<ServiceModel>>(serviceEntities);
+        }
+
+        public async Task<IEnumerable<SerivceWithIsFavoriteModel>> GetAllServicesWithIsFavoriteFromUser(int id)
+        {
+            return await _userRepository.GetServicesWithIsFavorite(id);
+        }
+
+        public async Task<bool> EditFavoritesFromUser(int userId, int serviceId, bool isFavorite)
+        {
+            if (isFavorite)
+            {
+                return await _userRepository.RemoveFavoriteService(userId, serviceId);
+            }
+            else
+            {
+                var favoriteServices = await GetAllFavoriteServicesFromUser(userId);
+                if (favoriteServices.Count() >= 5)
+                {
+                    return false;
+                }
+
+                return await _userRepository.AddFavoriteService(userId, serviceId);
+            }
+        }
     }
 }
