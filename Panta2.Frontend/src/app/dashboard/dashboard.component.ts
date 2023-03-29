@@ -15,6 +15,7 @@ import { Service } from "../core/models/service.model";
 export class DashboardComponent implements OnInit {
   services: Service[] = [];
   favoriteServices: Service[] = [];
+  filteredServices: Service[] = [];
   userName?: string;
   companyLogo?: string;
   isLoading: boolean = true;
@@ -33,5 +34,11 @@ export class DashboardComponent implements OnInit {
       console.error(error);
       this.storageService.deleteUserStorage();
     }
+  }
+
+  onFiltered(filteredItems: any[]) {
+    this.filteredServices = filteredItems;
+
+    console.log(this.filteredServices);
   }
 } 

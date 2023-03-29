@@ -27,12 +27,11 @@
                             placeholder="Password" class="w-full text-gray-600 rounded-lg outline-none">
                     </div>
                     <button
-                        class="bg-gray-600 h-12 w-64 mt-10 rounded-lg mb-2 text-white text-2xl hover:bg-gray-700">Log
+                        class="h-12 w-64 mt-10 rounded-lg mb-2 text-white text-2xl bg-gray-600 hover:bg-gray-700">Log
                         in</button>
                     <div *ngIf="username.errors && f.submitted" class="mb-2 text-red-600">Username is required!</div>
                     <div *ngIf="password.errors && f.submitted" class="text-red-600">Password is required!</div>
-                    <div *ngIf="f.submitted && isLoginFailed" class="text-red-600" role="alert">Login failed: {{
-                        errorMessage }}
+                    <div *ngIf="isLoginFailed" class="text-red-600" role="alert">{{errorMessage}}
                     </div>
                 </form>
                 <div class=" text-green-600" *ngIf="isLoggingIn">

@@ -38,7 +38,7 @@ export class StorageService {
       try {
         const userData = await firstValueFrom(this.userService.getUserById(id));
         const user = userData;
-        window.sessionStorage.setItem('USER', JSON.stringify(user));
+        window.sessionStorage.setItem(USER, JSON.stringify(user));
         return user;
       } catch (err) {
         console.log(err);

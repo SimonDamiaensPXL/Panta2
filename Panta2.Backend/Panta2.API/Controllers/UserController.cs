@@ -31,6 +31,19 @@ namespace Panta2.API.Controllers
             return Ok(user);
         }
 
+        [HttpPut("name")]
+        public async Task<ActionResult> ChangeFirstName(UpdateFirstNameModel model)
+        {
+            var isFound = await _userService.ChangeFirstName(model.FirstName, model.UserId);
+
+            if (!isFound)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
         [HttpGet("services/{id}")]
         public async Task<ActionResult<IEnumerable<ServiceModel>>> GetAllServicesFromUser(int id)
         {

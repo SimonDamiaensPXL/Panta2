@@ -33,15 +33,27 @@ namespace Panta2.Infrastructure
             }
         }
 
+        public async Task<bool> UpdateFirstName(string firstname, int id)
+        {
+            const string query = "UPDATE AspNetUsers SET FirstName = @firstname WHERE Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { firstname, id });
+                return rowsAffected == 1;
+            }
+        }
+
         public async Task<User> GetUserByUsername(string username)
         {
-            const string query = "SELECT * FROM AspNetUsers WHERE UserName = @UserName";
+            const string query = "SELECT * FROM AspNetUsers WHERE UserName = @username";
 
             using (var connection = _context.CreateConnection())
             {
                 return await connection.QueryFirstOrDefaultAsync<User>(query, new { username });
             }
         }
+
         public async Task<IEnumerable<Service>> GetServicesFromUser(int id)
         {
             var query = "SELECT cs.* " +
@@ -80,7 +92,7 @@ namespace Panta2.Infrastructure
                         "INNER JOIN RoleService rs ON cs.ServiceId = rs.ServiceId " +
                         "INNER JOIN AspNetRoles r ON rs.RoleId = r.Id " +
                         "INNER JOIN AspNetUserRoles ur ON r.Id = ur.RoleId " +
-                        "LEFT JOIN Favorites f ON cs.ServiceId = f.ServiceId AND f.UserId = 4 " +
+                        "LEFT JOIN Favorites f ON cs.ServiceId = f.ServiceId AND f.UserId = @id " +
                         "WHERE ur.UserId = @id";
 
             using (var connection = _context.CreateConnection())

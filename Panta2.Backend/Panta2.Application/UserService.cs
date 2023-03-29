@@ -48,6 +48,12 @@ namespace Panta2.Application
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
             return result == PasswordVerificationResult.Success ? _mapper.Map<UserModel>(user) : null;
         }
+
+        public async Task<bool> ChangeFirstName(string username, int id)
+        {
+            return await _userRepository.UpdateFirstName(username, id);
+        }
+
         public async Task<IEnumerable<ServiceModel>> GetAllServicesFromUser(int id)
         {
             var serviceEntities = await _userRepository.GetServicesFromUser(id);

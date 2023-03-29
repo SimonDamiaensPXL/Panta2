@@ -39,9 +39,11 @@ export class LoginComponent implements OnInit {
       error: err => {
         if (err.status == 401) {
           this.isLoggingIn = false;
+          console.log(err);
           this.errorMessage = "Username or Password is not correct."
         }
         else {
+          console.log(err.message);
           this.isLoggingIn = false;
           this.errorMessage = "Something went wrong."
         }
@@ -49,8 +51,4 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-
-  // reloadPage(): void {
-  //   window.location.reload();
-  // }
 }

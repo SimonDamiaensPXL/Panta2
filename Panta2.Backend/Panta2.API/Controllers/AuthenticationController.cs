@@ -71,7 +71,7 @@ namespace Panta2.API.Controllers
                 _configuration["Authentication:Audience"],
                 claimsForToken,
                 DateTime.UtcNow,
-                DateTime.UtcNow.AddHours(1),
+                DateTime.UtcNow.AddHours(200),
                 signingCredentials);
 
             var tokenToReturn = new JwtSecurityTokenHandler()

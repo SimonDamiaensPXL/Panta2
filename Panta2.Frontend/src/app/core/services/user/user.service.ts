@@ -13,34 +13,20 @@ const API_URL = 'https://localhost:7094/api'
 export class UserService {
   constructor(private http: HttpClient, private apiService: ApiService) { }
 
+  changeName(FirstName: string, UserId: number) {
+    return this.apiService.put(`/users/name`, {FirstName, UserId});
+  }
+
   getUserById(id: any): Observable<any> {
-    return this.apiService.get(`users/${id}`);
+    return this.apiService.get(`/users/${id}`);
   }
 
   getUserCompanyById(id: any): Observable<any> {
     return this.http.get(API_URL + `/companies/logo/${id}`, { responseType: 'text' });
   }
 
-  editFavorites(userId: number, serviceId: number, isFavorite: boolean) {
-    const editFavoriteFromUserModel: EditFavorite = { 
-      UserId: userId, 
-      ServiceId: serviceId, 
-      IsFavorite: isFavorite
-    };
-    const response = this.apiService.put(`/users/favorite`, editFavoriteFromUserModel);
-    return {
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(response),
-    };
-  }
-
-  editFavorite(userId: number, serviceId: number, isFavorite: boolean) {
-    const editFavoriteFromUserModel: EditFavorite = { 
-      UserId: userId, 
-      ServiceId: serviceId, 
-      IsFavorite: isFavorite
-    }
-    return this.apiService.put(`/users/favorite`,editFavoriteFromUserModel);
+  editFavorite(userId: number, serviceId: number, isFavorite: boolean): Observable<any> {
+    return this.apiService.put(`/users/favorite`, {userId, serviceId, isFavorite});
   }
 
   getServices(id: number): Observable<Service[]> {

@@ -34,7 +34,7 @@ builder.Services.AddAuthentication("Bearer")
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Authentication:Issuer"],
             ValidAudience = builder.Configuration["Authentication:Audience"],
-            ClockSkew = TimeSpan.FromHours(100),
+            ClockSkew = TimeSpan.FromHours(200),
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.ASCII.GetBytes(builder.Configuration["Authentication:SecretForKey"]))
         };

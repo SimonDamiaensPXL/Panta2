@@ -8,7 +8,6 @@ using Panta2.Core.Models;
 namespace Panta2.ConfigAPI.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("configapi/users")]
     public class UserController : ControllerBase
     {
@@ -19,6 +18,7 @@ namespace Panta2.ConfigAPI.Controllers
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
+        [Authorize]
         [HttpGet("{id}", Name = "GetUserById")]
         public async Task<ActionResult<UserModel>> GetUserById(int id)
         {
