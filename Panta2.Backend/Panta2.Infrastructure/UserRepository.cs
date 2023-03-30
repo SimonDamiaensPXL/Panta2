@@ -56,25 +56,28 @@ namespace Panta2.Infrastructure
 
         public async Task<IEnumerable<Service>> GetServicesFromUser(int id)
         {
-            var query = "SELECT cs.* " +
+            var query = "SELECT cs.ServiceId AS Id, cs.Name, cs.Icon, s.Link " +
                         "FROM AspNetUsers u " +
                         "INNER JOIN AspNetUserRoles ur ON u.Id = ur.UserId " +
                         "INNER JOIN AspNetRoles r ON ur.RoleId = r.Id " +
                         "INNER JOIN RoleService rs ON r.Id = rs.RoleId " +
                         "INNER JOIN CompanyService cs ON rs.ServiceId = cs.ServiceId " +
+                        "INNER JOIN Services s ON cs.ServiceId = s.Id " +
                         "WHERE u.Id = @id";
             using (var connection = _context.CreateConnection())
             {
                 var services = await connection.QueryAsync<Service>(query, new { id });
+                Console.WriteLine(services.Last().Id);
                 return services;
             }
         }
 
         public async Task<IEnumerable<Service>> GetFavoriteServicesFromUser(int id)
         {
-            var query = "SELECT cs.CompanyId, cs.ServiceId, cs.Name, cs.Icon, cs.Enabled, cs.[Order] " +
+            var query = "SELECT cs.ServiceId AS Id, cs.Name, cs.Icon, s.Link " +
                         "FROM CompanyService cs " +
                         "INNER JOIN Favorites f ON cs.ServiceId = f.ServiceId " +
+                        "INNER JOIN Services s ON cs.ServiceId = s.Id " +
                         "WHERE f.UserId = @id";
 
             using (var connection = _context.CreateConnection())

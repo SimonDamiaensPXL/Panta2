@@ -31,7 +31,7 @@ export class NavbarComponent implements OnInit {
   }
 
   onFilter(query: string) {
-    this.filteredItems = this.list.filter(item => item.name.includes(query));
+    this.filteredItems = this.list.filter(item => (item.name as string).toLowerCase().includes(query.toLowerCase()));
     this.filtered.emit(this.filteredItems);
   }
   

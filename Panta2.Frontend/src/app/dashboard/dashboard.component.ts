@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
 
       this.services = await firstValueFrom(this.userService.getServices(user.id));
       this.favoriteServices = await firstValueFrom(this.userService.getFavoriteServices(user.id));
+      this.filteredServices = this.services;
       this.isLoading = false;
 
     } catch (error) {

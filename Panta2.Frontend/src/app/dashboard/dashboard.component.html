@@ -3,25 +3,30 @@
         <div class="flex flex-col items-center w-full h-full">
             <div *ngIf="!isLoading" class="flex flex-col justify-center items-center h-full w-full max-w-screen-2xl">
                 <div
-                    class="flex flex-col content-between items-center w-full h-full bg-white rounded-t-lg drop-shadow-2xl overflow-auto">
+                    class="flex flex-col content-between items-center justify-between w-full h-full bg-white rounded-t-lg drop-shadow-2xl overflow-auto">
                     <div class="flex flex-col w-11/12">
                         <app-layout-navbar [isSearchbarEnabled]="true" [list]="services"
                             (filtered)="onFiltered($event)"></app-layout-navbar>
-                        <div *ngIf="filteredServices.length != 0" class="flex flex-col w-full h-full text-gray-600">
-                            <h1 class="text-2xl font-bold mb-5 ">Search Results</h1>
-                            <div class="flex flex-wrap mb-16  mx-[-10px]">
-                                <app-service class="w-[20%]" *ngFor="let service of filteredServices" [service]="service"></app-service>
+                        <div *ngIf="filteredServices.length != services.length"
+                            class="flex flex-col w-full h-full text-gray-600">
+                            <h1 class="text-2xl font-bold mb-5">Search Results</h1>
+                            <div class="flex flex-wrap mb-16 mx-[-10px]">
+                                <app-service class="w-[20%]" *ngFor="let service of filteredServices"
+                                    [service]="service"></app-service>
                             </div>
                         </div>
-                        <div *ngIf="filteredServices.length == 0" class="flex flex-col w-full h-full text-gray-600">
-                            <h1 class="text-2xl font-bold mb-5 ">Favorites</h1>
-                            <div class="flex flex-wrap mb-16 mx-[-10px]">
-                                <app-service class="w-[20%]" *ngFor="let service of favoriteServices" [service]="service"></app-service>
+                        <div *ngIf="filteredServices.length == services.length"
+                            class="flex flex-col w-full h-full text-gray-600">
+                            <h1 *ngIf="favoriteServices.length > 0" class="text-2xl font-bold mb-5 ">Favorites</h1>
+                            <div *ngIf="favoriteServices.length > 0" class="flex flex-wrap mb-16 mx-[-10px]">
+                                <app-service class="w-[20%]" *ngFor="let service of favoriteServices"
+                                    [service]="service"></app-service>
                             </div>
 
                             <h1 class="text-2xl font-bold mb-5">All</h1>
                             <div class="flex flex-wrap mx-[-10px]">
-                                <app-service class="w-[20%]" *ngFor="let service of services" [service]="service"></app-service>
+                                <app-service class="w-[20%]" *ngFor="let service of services"
+                                    [service]="service"></app-service>
                             </div>
                         </div>
                     </div>
