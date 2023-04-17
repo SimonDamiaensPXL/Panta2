@@ -3,9 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Service } from '../../models/service.model';
 import { ApiService } from '../api/api.service';
-import { EditFavorite } from '../../models/editFavorite.model';
-
-const API_URL = 'https://localhost:7094/api'
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +19,7 @@ export class UserService {
   }
 
   getUserCompanyById(id: any): Observable<any> {
-    return this.http.get(API_URL + `/companies/logo/${id}`, { responseType: 'text' });
+    return this.apiService.get(`/companies/logo/${id}`);
   }
 
   editFavorite(userId: number, serviceId: number, isFavorite: boolean): Observable<any> {

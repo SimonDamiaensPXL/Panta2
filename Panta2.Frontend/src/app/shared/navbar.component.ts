@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
   @Output() filtered = new EventEmitter<any[]>();
 
   userName?: string;
-  companyLogo?: string;
+  companyLogo?: any;
   filteredItems: any[] = [];
   searchQuery: string = ""
 
@@ -25,9 +25,11 @@ export class NavbarComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const user: User = await this.storageService.getUser();
-
     this.userName = user.firstName;
     this.companyLogo = await firstValueFrom(this.userService.getUserCompanyById(user.companyId));
+
+    console.log(this.companyLogo.logo);
+
   }
 
   onFilter(query: string) {
