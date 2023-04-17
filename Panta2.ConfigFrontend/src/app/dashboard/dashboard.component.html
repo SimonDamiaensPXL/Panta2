@@ -4,8 +4,18 @@
             <div *ngIf="!isLoading" class="flex flex-col justify-center items-center h-full w-full max-w-screen-2xl">
                 <div
                     class="flex flex-col content-between items-center justify-between w-full h-full bg-white rounded-t-lg drop-shadow-2xl overflow-auto">
-                    <div class="flex flex-col w-11/12">
-                        <app-layout-navbar [isSearchbarEnabled]="true" [list]="services" (filtered)="onFiltered($event)"></app-layout-navbar>
+                    <div class="flex flex-col w-11/12 h-full">
+                        <app-layout-navbar [isSearchbarEnabled]="true" [list]="companies" (filtered)="onFiltered($event)"></app-layout-navbar>
+                        <div class="flex w-full h-full text-gray-600">
+                            <app-layout-sidebar class="w-1/6"></app-layout-sidebar>
+                            <div class="w-5/6 h-full">
+                                <h1 class="text-2xl font-bold mb-5">All Companies</h1>
+                                <div class="flex flex-wrap mx-[-10px]">
+                                    <app-company class="w-[20%]" *ngFor="let company of companies"
+                                        [company]="company"></app-company>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

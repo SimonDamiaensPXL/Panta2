@@ -8,14 +8,18 @@ import { NavbarComponent } from './shared/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { httpInterceptorProviders } from './core/interceptors/http.interceptor';
-import { LoginComponent } from './login/login.component';
+import { FooterComponent } from './shared/footer.component';
+import { SidebarComponent } from './shared/sidebar.component';
+import { CompanyComponent } from './company/company.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     DashboardComponent,
-    NavbarComponent
+    NavbarComponent,
+    SidebarComponent,
+    FooterComponent,
+    CompanyComponent
   ],
   imports: [
     BrowserModule,

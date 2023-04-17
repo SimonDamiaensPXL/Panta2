@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Service } from "../core/models/service.model";
+import { Company } from "../core/models/company.model";
+import { firstValueFrom } from "rxjs";
+import { CompanyService } from "../core/services/company/company.service";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -7,20 +9,17 @@ import { Service } from "../core/models/service.model";
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
-  services: Service[] = [];
-  favoriteServices: Service[] = [];
-  filteredServices: Service[] = [];
+  companies: Company[] = [];
   isLoading: boolean = true;
 
-  constructor() { }
+  constructor(private companyService: CompanyService) { }
 
   async ngOnInit(): Promise<void> {
+
+    this.companies = await firstValueFrom(this.companyService.getCompanies());
     this.isLoading = false;
   }
 
   onFiltered(filteredItems: any[]) {
-    this.filteredServices = filteredItems;
-
-    console.log(this.filteredServices);
   }
 } 

@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import { UserService } from '../core/services/user/user.service';
 
 @Component({
-  selector: 'app-layout-navbar',
-  templateUrl: './navbar.component.html'
+  selector: 'app-layout-sidebar',
+  templateUrl: './sidebar.component.html'
 })
 
 
-export class NavbarComponent implements OnInit {
+export class SidebarComponent implements OnInit {
   @Input() isSearchbarEnabled: boolean = false;
   @Input() list: any[] = []
   @Output() filtered = new EventEmitter<any[]>();
