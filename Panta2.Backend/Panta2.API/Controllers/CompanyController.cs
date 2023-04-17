@@ -50,7 +50,7 @@ namespace Panta2.API.Controllers
                 return NotFound();
             }
 
-            return Ok(logo);
+            return Ok(new { logo });
         }
     }
 }

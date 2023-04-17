@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Panta2.Application;
 using Panta2.Core.Contracts;
-using Panta2.Core.Entities;
 using Panta2.Core.Models;
 
 namespace Panta2.API.Controllers
