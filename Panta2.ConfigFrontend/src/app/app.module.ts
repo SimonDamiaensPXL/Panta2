@@ -11,6 +11,10 @@ import { httpInterceptorProviders } from './core/interceptors/http.interceptor';
 import { FooterComponent } from './shared/footer.component';
 import { SidebarComponent } from './shared/sidebar.component';
 import { CompanyComponent } from './company/company.component';
+import { CompaniesOverviewComponent } from './companies-overview/companies-overview.component';
+import { ServicesOverviewComponent } from './services-overview/services-overview.component';
+import { UsersOverviewComponent } from './users-overview/users-overview.component';
+import { ServiceComponent } from './service/service.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { CompanyComponent } from './company/company.component';
     NavbarComponent,
     SidebarComponent,
     FooterComponent,
-    CompanyComponent
+    CompanyComponent,
+    ServiceComponent,
+    CompaniesOverviewComponent,
+    ServicesOverviewComponent,
+    UsersOverviewComponent
   ],
   imports: [
     BrowserModule,

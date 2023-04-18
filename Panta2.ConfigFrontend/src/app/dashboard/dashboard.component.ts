@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Company } from "../core/models/company.model";
-import { firstValueFrom } from "rxjs";
 import { CompanyService } from "../core/services/company/company.service";
 
 @Component({
@@ -11,13 +10,16 @@ import { CompanyService } from "../core/services/company/company.service";
 export class DashboardComponent implements OnInit {
   companies: Company[] = [];
   isLoading: boolean = true;
+  pageNumber: number = 1;
 
   constructor(private companyService: CompanyService) { }
 
   async ngOnInit(): Promise<void> {
-
-    this.companies = await firstValueFrom(this.companyService.getCompanies());
     this.isLoading = false;
+  }
+
+  onChangePage(pageNumber: any) {
+    this.pageNumber = pageNumber;
   }
 
   onFiltered(filteredItems: any[]) {
