@@ -15,6 +15,8 @@ import { CompaniesOverviewComponent } from './companies-overview/companies-overv
 import { ServicesOverviewComponent } from './services-overview/services-overview.component';
 import { UsersOverviewComponent } from './users-overview/users-overview.component';
 import { ServiceComponent } from './service/service.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AddCompanyComponent } from './add-company/add-company.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { ServiceComponent } from './service/service.component';
     ServiceComponent,
     CompaniesOverviewComponent,
     ServicesOverviewComponent,
-    UsersOverviewComponent
+    UsersOverviewComponent,
+    PageNotFoundComponent,
+    AddCompanyComponent
   ],
   imports: [
     BrowserModule,

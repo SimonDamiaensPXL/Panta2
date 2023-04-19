@@ -3,16 +3,92 @@
         <div class="flex flex-col items-center w-full h-full">
             <div *ngIf="!isLoading" class="flex flex-col justify-center items-center h-full w-full max-w-screen-2xl">
                 <div
-                    class="flex flex-col content-between items-center justify-between w-full h-full bg-white rounded-t-lg drop-shadow-2xl overflow-y-auto">
+                    class="flex flex-col content-between items-center justify-between w-full h-full bg-white rounded-t-lg drop-shadow-2xl">
                     <div class="flex flex-col w-full h-full">
-                        <app-layout-navbar [isSearchbarEnabled]="true" [list]="companies" (filtered)="onFiltered($event)"></app-layout-navbar>
-                        <div class="flex w-full h-full text-gray-600">
-                            <app-layout-sidebar (changePage)="onChangePage($event)" class="w-1/6 h-full"></app-layout-sidebar>
-                            <div class="w-5/6 h-full pt-5">
-                                <app-companies-overview *ngIf="pageNumber == 1" ></app-companies-overview>
-                                <app-services-overview *ngIf="pageNumber == 1" ></app-services-overview>
-                                <app-companies-overview *ngIf="pageNumber == 2" ></app-companies-overview>
-                                <app-services-overview *ngIf="pageNumber == 3" ></app-services-overview>
+                        <app-layout-navbar [isSearchbarEnabled]="true" [list]="companies"
+                            (filtered)="onFiltered($event)"></app-layout-navbar>
+                        <div class="flex w-full h-full text-gray-600 overflow-y-auto">
+                            <app-layout-sidebar (changePage)="onChangePage($event)"
+                                class="w-1/6 h-full"></app-layout-sidebar>
+                            <div class="w-5/6 h-full pt-5 pl-5 overflow-y-auto">
+                                <div *ngIf="pageNumber == 1">
+                                    <h1 class="text-2xl font-bold mb-5">Companies</h1>
+                                    <app-companies-overview></app-companies-overview>
+                                    <h1 class="text-2xl font-bold mb-5">Services</h1>
+                                    <app-services-overview></app-services-overview>
+                                </div>
+                                <div *ngIf="pageNumber == 2">
+                                    <div class="flex justify-between">
+                                        <h1 class="text-2xl font-bold mb-5">Companies</h1>
+                                        <div>
+                                            <button type="button"
+                                                class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-700 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-8 mr-5 text-center inline-flex items-center mb-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M12 4.5v15m7.5-7.5h-15" />
+                                                </svg>Add company</button>
+                                            <button type="button"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-8 text-center inline-flex items-center mr-5">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                                </svg>
+                                                Refresh
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <app-companies-overview></app-companies-overview>
+                                </div>
+                                <div *ngIf="pageNumber == 3">
+                                    <div class="flex justify-between">
+                                        <h1 class="text-2xl font-bold mb-5">Services</h1>
+                                        <div>
+                                            <button type="button"
+                                                class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-700 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-8 mr-5 text-center inline-flex items-center mb-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M12 4.5v15m7.5-7.5h-15" />
+                                                </svg>Add service</button>
+                                            <button type="button"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-8 text-center inline-flex items-center mr-5">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 animate-spin">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                                </svg>
+                                                Refreshing...
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <app-services-overview></app-services-overview>
+                                </div>
+                                <div *ngIf="pageNumber == 4">
+                                    <div class="flex justify-between">
+                                        <h1 class="text-2xl font-bold mb-5">Users</h1>
+                                        <div>
+                                            <button type="button"
+                                                class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-700 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-8 mr-5 text-center inline-flex items-center mb-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M12 4.5v15m7.5-7.5h-15" />
+                                                </svg>Add user</button>
+                                            <button type="button"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-8 text-center inline-flex items-center mr-5">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                                </svg>
+                                                Refresh
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <app-users-overview></app-users-overview>
+                                </div>
                             </div>
                         </div>
                     </div>

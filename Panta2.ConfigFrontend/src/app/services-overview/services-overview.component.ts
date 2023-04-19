@@ -16,5 +16,6 @@ export class ServicesOverviewComponent {
 
   async ngOnInit(): Promise<void> {
     this.services = await firstValueFrom(this.serviceService.getServices());
+    this.isLoading = false;
   }
 }

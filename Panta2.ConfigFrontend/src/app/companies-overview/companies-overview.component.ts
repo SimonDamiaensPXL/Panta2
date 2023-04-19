@@ -16,5 +16,6 @@ export class CompaniesOverviewComponent {
 
   async ngOnInit(): Promise<void> {
     this.companies = await firstValueFrom(this.companyService.getCompanies());
+    this.isLoading = false;
   }
 }
