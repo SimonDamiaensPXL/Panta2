@@ -5,6 +5,7 @@ namespace Panta2.Core.Contracts
 {
     public interface IUserRepository
     {
+        Task<IEnumerable<User>> GetAll();
         Task<User> GetById(int id);
         Task<User> CreateAsync(User user);
         Task<bool> UpdateFirstName(string username, int id);

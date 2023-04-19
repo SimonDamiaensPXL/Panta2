@@ -18,7 +18,19 @@ namespace Panta2.ConfigAPI.Controllers
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
-        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserModel>> GetUsers()
+        {
+            var users = await _userService.GetUserList();
+
+            if (users == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(users);
+        }
+
         [HttpGet("{id}", Name = "GetUserById")]
         public async Task<ActionResult<UserModel>> GetUserById(int id)
         {

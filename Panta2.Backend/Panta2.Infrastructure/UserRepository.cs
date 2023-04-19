@@ -15,6 +15,15 @@ namespace Panta2.Infrastructure
         {
             _context = context;
         }
+
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.GetAllAsync<User>();
+            }
+        }
+
         public async Task<User> GetById(int id)
         {
             using (var connection = _context.CreateConnection())

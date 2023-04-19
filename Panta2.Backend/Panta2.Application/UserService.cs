@@ -20,6 +20,12 @@ namespace Panta2.Application
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        public async Task<IEnumerable<UserModel>> GetUserList()
+        {
+            var userEntities = await _userRepository.GetAll();
+            return _mapper.Map<IEnumerable<UserModel>>(userEntities);
+        }
+
         public async Task<UserModel> GetUserById(int id)
         {
             var userEntity = await _userRepository.GetById(id);

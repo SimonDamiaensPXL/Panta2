@@ -4,6 +4,7 @@ namespace Panta2.Core.Contracts
 {
     public interface IUserService
     {
+        Task<IEnumerable<UserModel>> GetUserList();
         Task<UserModel> GetUserById(int id);
         Task<UserModel> RegisterUser(UserRegistrationModel user);
         Task<UserModel> LoginUser(string username, string password);
