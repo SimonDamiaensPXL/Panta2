@@ -6,7 +6,6 @@ import { UserService } from '../core/services/user/user.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.sass']
 })
 export class UserListComponent {
   users: User[] = [];

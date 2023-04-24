@@ -6,7 +6,6 @@ import { ServiceService } from '../core/services/service/service.service';
 @Component({
   selector: 'app-service-list',
   templateUrl: './service-list.component.html',
-  styleUrls: ['./service-list.component.sass']
 })
 export class ServiceListComponent {
   services: Service[] = [];

@@ -6,7 +6,6 @@ import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-company-list',
   templateUrl: './company-list.component.html',
-  styleUrls: ['./company-list.component.sass']
 })
 export class CompanyListComponent {
   companies: Company[] = [];

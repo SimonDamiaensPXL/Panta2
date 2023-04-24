@@ -4,7 +4,6 @@ import { Company } from "../core/models/company.model";
 @Component({
   selector: 'app-dashboard-page',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
   companies: Company[] = [];
