@@ -1,0 +1,30 @@
+<div *ngIf="!isLoading" class="relative overflow-x-auto shadow-md sm:rounded-l-lg">
+    <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    id
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    First name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Last name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users" class="bg-white border-b hover:bg-gray-100 font-semibold">
+                <td class="px-6 p-4">
+                    {{user.id}}
+                </td>
+                <td class="px-6 py-4">
+                    {{user.firstName}}
+                </td>
+                <td class="px-6 py-4">
+                    {{user.lastName}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
