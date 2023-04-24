@@ -1,0 +1,6 @@
+<div *ngIf="!isLoading">
+    <div class="flex flex-wrap mx-[-10px] w-full">
+        <app-service class="w-[25%] 2xl:w-[20%]" *ngFor="let service of services"
+            [service]="service"></app-service>
+    </div>
+</div>
