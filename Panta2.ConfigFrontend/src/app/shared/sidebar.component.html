@@ -1,6 +1,6 @@
 <div class="flex flex-col h-full bg-gradient-to-b from-gray-300 via-gray-200 to-gray-100 rounded-r-2xl">
     <div class="flex flex-col h-full pt-10">
-        <button type="button" [class.bg-white]="item === 1" [class.text-gray-600]="item === 1" (click)="changeItem(1)"
+        <button type="button" [class.bg-white]="item === 'home'" [class.text-gray-600]="item === 'home'" (click)="changeItem('home')"
             class="text-gray-400 bg-none hover:bg-white focus:ring-1 focus:outline-none focus:ring-gray-100 font-medium rounded-l-xl text-sm ml-5 px-5 py-1 text-center inline-flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-5 h-5 mr-2">
@@ -9,7 +9,7 @@
             </svg>
             <p class="text-lg">Home</p>
         </button>
-        <button type="button" [class.bg-white]="item === 2" [class.text-gray-600]="item === 2" (click)="changeItem(2)"
+        <button type="button" [class.bg-white]="item === 'companies'" [class.text-gray-600]="item === 'companies'" (click)="changeItem('companies')"
             class="text-gray-400 bg-none hover:bg-white focus:ring-1 focus:outline-none focus:ring-gray-100 font-medium rounded-l-xl text-sm ml-5 mt-3 px-5 py-1 text-center inline-flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-5 h-5 mr-2">
@@ -18,7 +18,7 @@
             </svg>
             <p class="text-lg">Companies</p>
         </button>
-        <button type="button" [class.bg-white]="item === 3" [class.text-gray-600]="item === 3" (click)="changeItem(3)"
+        <button type="button" [class.bg-white]="item === 'services'" [class.text-gray-600]="item === 'services'" (click)="changeItem('services')"
             class="text-gray-400 bg-none hover:bg-white focus:ring-1 focus:outline-none focus:ring-gray-100 font-medium rounded-l-xl text-sm ml-5 mt-3 px-5 py-1 text-center inline-flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-5 h-5 mr-2">
@@ -27,7 +27,7 @@
             </svg>
             <p class="text-lg">Services</p>
         </button>
-        <button type="button" [class.bg-white]="item === 4" [class.text-gray-600]="item === 4" (click)="changeItem(4)"
+        <button type="button" [class.bg-white]="item === 'users'" [class.text-gray-600]="item === 'users'" (click)="changeItem('users')"
             class="text-gray-400 bg-none hover:bg-white focus:ring-1 focus:outline-none focus:ring-gray-100 font-medium rounded-l-xl text-sm ml-5 mt-3 px-5 py-1 text-center inline-flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-5 h-5 mr-2">

@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { StorageService } from '../core/services/storage/storage.service';
 
 @Component({
   selector: 'app-layout-sidebar',
@@ -7,16 +9,17 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 
 export class SidebarComponent implements OnInit {
-  @Input() item: number = 1;
-  @Output() changePage = new EventEmitter<any>();
+  item?: string;
 
-  constructor() {}
+  constructor(private storageService: StorageService, private router: Router) {}
 
   async ngOnInit(): Promise<void> {
+    this.item = await this.storageService.getItem();
   }
 
-  changeItem(item: number): void {
+  changeItem(item: string): void {
     this.item = item;
-    this.changePage.emit(this.item);
+    this.storageService.changeItem(this.item);
+    this.router.navigate([`/${item}`]);
   }
 }

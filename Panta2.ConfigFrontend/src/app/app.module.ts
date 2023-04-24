@@ -17,6 +17,10 @@ import { UsersOverviewComponent } from './users-overview/users-overview.componen
 import { ServiceComponent } from './service/service.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AddCompanyComponent } from './add-company/add-company.component';
+import { HomeOverviewComponent } from './home-overview/home-overview.component';
+import { CompanyListComponent } from './company-list/company-list.component';
+import { ServiceListComponent } from './service-list/service-list.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import { AddCompanyComponent } from './add-company/add-company.component';
     ServicesOverviewComponent,
     UsersOverviewComponent,
     PageNotFoundComponent,
-    AddCompanyComponent
+    AddCompanyComponent,
+    HomeOverviewComponent,
+    CompanyListComponent,
+    ServiceListComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

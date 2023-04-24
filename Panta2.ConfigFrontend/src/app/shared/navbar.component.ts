@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../core/services/user/user.service';
+import { StorageService } from '../core/services/storage/storage.service';
 
 @Component({
   selector: 'app-layout-navbar',
@@ -18,7 +19,7 @@ export class NavbarComponent implements OnInit {
   filteredItems: any[] = [];
   searchQuery: string = ""
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private storageService: StorageService, private router: Router) {}
 
   async ngOnInit(): Promise<void> {
     this.companyLogo = "../../assets/images/logos/logo_cegeka.png"
@@ -30,6 +31,7 @@ export class NavbarComponent implements OnInit {
   }
 
   goToHome(): void {
+    this.storageService.changeItem('home');
     this.router.navigate(["/home"]);
   }
 }

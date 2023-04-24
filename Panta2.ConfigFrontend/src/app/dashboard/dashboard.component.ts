@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Company } from "../core/models/company.model";
-import { CompanyService } from "../core/services/company/company.service";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -10,16 +9,11 @@ import { CompanyService } from "../core/services/company/company.service";
 export class DashboardComponent implements OnInit {
   companies: Company[] = [];
   isLoading: boolean = true;
-  pageNumber: number = 1;
 
-  constructor(private companyService: CompanyService) { }
+  constructor() { }
 
   async ngOnInit(): Promise<void> {
     this.isLoading = false;
-  }
-
-  onChangePage(pageNumber: any) {
-    this.pageNumber = pageNumber;
   }
 
   onFiltered(filteredItems: any[]) {

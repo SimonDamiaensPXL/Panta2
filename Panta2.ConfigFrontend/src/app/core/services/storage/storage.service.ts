@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UserService } from '../user/user.service';
 
 import { Router } from '@angular/router';
 
@@ -7,5 +6,15 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class StorageService {
-  constructor(private userService: UserService, private router: Router) {}
+  item: string = "home";
+
+  constructor(private router: Router) {}
+
+  changeItem(item: string): void {
+    this.item = item;
+  }
+
+  getItem(): any {
+    return this.item;
+  }
 }

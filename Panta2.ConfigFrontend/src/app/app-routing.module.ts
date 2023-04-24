@@ -2,9 +2,16 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ServicesOverviewComponent } from './services-overview/services-overview.component';
+import { CompaniesOverviewComponent } from './companies-overview/companies-overview.component';
+import { UsersOverviewComponent } from './users-overview/users-overview.component';
+import { HomeOverviewComponent } from './home-overview/home-overview.component';
 
 const routes: Routes = [
-  { path: 'home', component: DashboardComponent},
+  { path: 'home', component: HomeOverviewComponent},
+  { path: 'companies', component: CompaniesOverviewComponent},
+  { path: 'services', component: ServicesOverviewComponent},
+  { path: 'users', component: UsersOverviewComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}
 ];
