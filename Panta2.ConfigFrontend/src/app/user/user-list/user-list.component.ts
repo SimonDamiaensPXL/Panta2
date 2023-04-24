@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { User } from '../core/models/user.model';
-import { UserService } from '../core/services/user/user.service';
+import { User } from '../../core/models/user.model';
+import { UserService } from '../../core/services/user/user.service';
 
 @Component({
-  selector: 'app-user-list',
+  selector: 'app-users-list',
   templateUrl: './user-list.component.html',
 })
-export class UserListComponent {
+export class UsersListComponent {
   users: User[] = [];
   isLoading: boolean = true;
 

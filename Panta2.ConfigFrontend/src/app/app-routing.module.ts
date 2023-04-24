@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ServicesOverviewComponent } from './services-overview/services-overview.component';
-import { CompaniesOverviewComponent } from './companies-overview/companies-overview.component';
-import { UsersOverviewComponent } from './users-overview/users-overview.component';
+import { PageNotFoundComponent } from './shared/page-not-found.component';
+import { ServicesOverviewComponent } from './service/services-overview/services-overview.component';
+import { CompaniesOverviewComponent } from './company/companies-overview/companies-overview.component';
+import { UsersOverviewComponent } from './user/users-overview/users-overview.component';
 import { HomeOverviewComponent } from './home-overview/home-overview.component';
 
 const routes: Routes = [

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { Service } from '../core/models/service.model';
-import { ServiceService } from '../core/services/service/service.service';
+import { Service } from 'src/app/core/models/service.model';
+import { ServiceService } from 'src/app/core/services/service/service.service';
 
 @Component({
-  selector: 'app-service-list',
-  templateUrl: './service-list.component.html',
+  selector: 'app-services-table',
+  templateUrl: './services-table.component.html'
 })
-export class ServiceListComponent {
+export class ServicesTableComponent {
   services: Service[] = [];
   isLoading: boolean = true;
 

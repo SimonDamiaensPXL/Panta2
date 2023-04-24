@@ -10,17 +10,19 @@ import { FormsModule } from '@angular/forms';
 import { httpInterceptorProviders } from './core/interceptors/http.interceptor';
 import { FooterComponent } from './shared/footer.component';
 import { SidebarComponent } from './shared/sidebar.component';
-import { CompanyComponent } from './company-entity/company-entity.component';
-import { CompaniesOverviewComponent } from './companies-overview/companies-overview.component';
-import { ServicesOverviewComponent } from './services-overview/services-overview.component';
-import { UsersOverviewComponent } from './users-overview/users-overview.component';
-import { ServiceComponent } from './service-entity/service-entity.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AddCompanyComponent } from './add-company/add-company.component';
+import { CompanyComponent } from './company/company-entity/company-entity.component';
+import { CompaniesOverviewComponent } from './company/companies-overview/companies-overview.component';
+import { ServicesOverviewComponent } from './service/services-overview/services-overview.component';
+import { UsersOverviewComponent } from './user/users-overview/users-overview.component';
+import { ServiceComponent } from './service/service-entity/service-entity.component';
+import { PageNotFoundComponent } from './shared/page-not-found.component';
+import { AddCompanyComponent } from './company/add-company/add-company.component';
 import { HomeOverviewComponent } from './home-overview/home-overview.component';
-import { CompanyListComponent } from './company-list/company-list.component';
-import { ServiceListComponent } from './service-list/service-list.component';
-import { UserListComponent } from './user-list/user-list.component';
+import { CompanyListComponent } from './company/companies-list/companies-list.component';
+import { ServicesListComponent } from './service/services-list/services-list.component';
+import { UsersListComponent } from './user/user-list/user-list.component';
+import { CompanyTableComponent } from './company/companies-table/companies-table.component';
+import { ServicesTableComponent } from './service/services-table/services-table.component';
 
 @NgModule({
   declarations: [
@@ -38,8 +40,10 @@ import { UserListComponent } from './user-list/user-list.component';
     AddCompanyComponent,
     HomeOverviewComponent,
     CompanyListComponent,
-    ServiceListComponent,
-    UserListComponent
+    ServicesListComponent,
+    UsersListComponent,
+    CompanyTableComponent,
+    ServicesTableComponent
   ],
   imports: [
     BrowserModule,

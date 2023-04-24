@@ -6,15 +6,13 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class StorageService {
-  item: string = "home";
-
   constructor(private router: Router) {}
 
   changeItem(item: string): void {
-    this.item = item;
+    localStorage.setItem("page", item);
   }
 
   getItem(): any {
-    return this.item;
+    return localStorage.getItem("page");
   }
 }
