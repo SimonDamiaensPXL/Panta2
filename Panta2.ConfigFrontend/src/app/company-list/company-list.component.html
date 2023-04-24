@@ -1,0 +1,6 @@
+<div *ngIf="!isLoading">
+    <div class="flex flex-wrap mx-[-10px] w-full">
+        <app-company class="w-[20%]" *ngFor="let company of companies"
+            [company]="company"></app-company>
+    </div>
+</div>
