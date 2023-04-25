@@ -6,12 +6,14 @@ import { ServicesOverviewComponent } from './service/services-overview/services-
 import { CompaniesOverviewComponent } from './company/companies-overview/companies-overview.component';
 import { UsersOverviewComponent } from './user/users-overview/users-overview.component';
 import { HomeOverviewComponent } from './home-overview/home-overview.component';
+import { AddCompanyComponent } from './company/add-company/add-company.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeOverviewComponent},
   { path: 'companies', component: CompaniesOverviewComponent},
   { path: 'services', component: ServicesOverviewComponent},
   { path: 'users', component: UsersOverviewComponent},
+  { path: 'companies/add', component: AddCompanyComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}
 ];

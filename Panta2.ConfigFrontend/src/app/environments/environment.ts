@@ -5,5 +5,9 @@
 
 export const environment = {
   production: false,
-  api_url: 'https://localhost:7189/configapi'
+  api_url: 'https://localhost:7189/configapi',
+
+  publicKey: "public_JqyPbaZd1wHPLPsXWryER3v48vw=",
+  urlEndpoint: 'https://ik.imagekit.io/panta2/',
+  authenticationEndpoint: 'http://localhost:4400/'
 };

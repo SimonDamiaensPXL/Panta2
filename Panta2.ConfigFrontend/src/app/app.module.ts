@@ -23,6 +23,10 @@ import { ServicesListComponent } from './service/services-list/services-list.com
 import { UsersListComponent } from './user/user-list/user-list.component';
 import { CompanyTableComponent } from './company/companies-table/companies-table.component';
 import { ServicesTableComponent } from './service/services-table/services-table.component';
+import { DragDirective } from './core/directives/drag.directive';
+import { ImagekitioAngularModule } from 'imagekitio-angular';
+import { environment } from './environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -43,13 +47,19 @@ import { ServicesTableComponent } from './service/services-table/services-table.
     ServicesListComponent,
     UsersListComponent,
     CompanyTableComponent,
-    ServicesTableComponent
+    ServicesTableComponent,
+    DragDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ImagekitioAngularModule.forRoot({
+      publicKey: environment.publicKey,
+      urlEndpoint: environment.urlEndpoint,
+      authenticationEndpoint: environment.authenticationEndpoint
+    })
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
