@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Imagekit.Sdk;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Core.Models;
-using Panta2.Infrastructure;
 
 namespace Panta2.Application
 {
@@ -10,11 +10,16 @@ namespace Panta2.Application
     {
         private readonly IServiceRepository _serviceRepository;
         private readonly IMapper _mapper;
+        private readonly ImagekitClient _imagekit;
+        private readonly string publicKey = "public_JqyPbaZd1wHPLPsXWryER3v48vw=";
+        private readonly string urlEndPoint = "https://ik.imagekit.io/panta2/";
+        private readonly string privateKey = "private_OBkUkzNy0p7AzRqoGBrz2tvSpAc=";
 
         public ServiceService(IServiceRepository serviceRepository, IMapper mapper)
         {
             _serviceRepository = serviceRepository ?? throw new ArgumentNullException(nameof(serviceRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _imagekit = new ImagekitClient(publicKey, privateKey, urlEndPoint);
         }
 
         public async Task<IEnumerable<ServiceModel>> GetServiceList()
@@ -31,6 +36,16 @@ namespace Panta2.Application
 
         public async Task<ServiceModel> InsertService(ServiceCreationModel service)
         {
+            FileCreateRequest ob2 = new FileCreateRequest
+            {
+                file = service.Icon,
+                fileName = $"{service.Name}-{Guid.NewGuid()}",
+                folder = "assets/images/icons"
+            };
+            Result resp = _imagekit.Upload(ob2);
+
+            service.Icon = resp.url;
+
             var finalService = _mapper.Map<Service>(service);
 
             var createdService = await _serviceRepository.Add(finalService);

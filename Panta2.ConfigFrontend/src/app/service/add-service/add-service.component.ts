@@ -1,35 +1,38 @@
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { CompanyService } from 'src/app/core/services/company/company.service';
+import { ServiceService } from 'src/app/core/services/service/service.service';
 
 @Component({
-  selector: 'app-add-company',
-  templateUrl: './add-company.component.html',
+  selector: 'app-add-service',
+  templateUrl: './add-service.component.html'
 })
-export class AddCompanyComponent {
+export class AddServiceComponent {
   form: any = {
-    company_name: null,
-    company_logo: null,
+    service_name: null,
+    service_link: null,
+    service_icon: null
   };
   image?: any;
   isUploading: boolean = false;
   isUploadFailed: boolean = false;
   errorMessage: string = '';
 
-  constructor(private companyService: CompanyService, private sanitizer: DomSanitizer, private router: Router) { }
+
+  constructor(private serviceService: ServiceService ,private sanitizer: DomSanitizer, private router: Router) { }
 
   onSubmit(): void {
     this.isUploading = true;
-    this.companyService.createCompany(this.form.company_name, this.form.company_logo).subscribe({
+    this.serviceService.createService(this.form.service_name, this.form.service_link, this.form.service_icon).subscribe({
       next: data => {
         this.isUploadFailed = false;
-        this.router.navigate(['/companies']);
+        this.router.navigate(['/services']);
       },
       error: err => {
         this.isUploading = false;
         console.log(err);
         this.errorMessage = "Something went wrong! Please try again.";
+        console.log(this.errorMessage);
         this.isUploadFailed = true;
       }
     });
@@ -41,9 +44,9 @@ export class AddCompanyComponent {
 
       reader.readAsDataURL(event);
 
-      reader.onload = (event: any) => {
+      reader.onload = (event: any) => { 
         this.image = event.target.result;
-        this.form.company_logo = event.target.result;
+        this.form.service_icon = event.target.result;
       }
     }
   }
@@ -56,16 +59,14 @@ export class AddCompanyComponent {
 
       reader.onload = (event: any) => {
         this.image = event.target.result;
-        this.form.company_logo = event.target.result;
-
-        console.log(this.image);
+        this.form.service_icon = event.target.result;
       }
     }
   }
 
   resetPreview(): void {
     this.image = null;
-    this.form.company_logo = null;
+    this.form.service_icon = null;
     this.errorMessage = "";
   }
 }

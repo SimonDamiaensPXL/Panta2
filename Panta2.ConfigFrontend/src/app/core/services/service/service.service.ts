@@ -11,4 +11,8 @@ export class ServiceService {
   getServices() {
     return this.apiService.get('/services');
   }
+
+  createService(name: string, link: string, icon: string) {
+    return this.apiService.post('/services', { name, icon, link });
+  }
 }

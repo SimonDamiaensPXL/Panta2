@@ -2,14 +2,14 @@
     <nav class="flex mb-5" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
             <li class="inline-flex items-center">
-                <a href="/companies"
+                <a href="/services"
                     class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-800">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
                     </svg>
-                    Companies
+                    Services
                 </a>
             </li>
             <li aria-current="page">
@@ -20,7 +20,7 @@
                             d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                             clip-rule="evenodd"></path>
                     </svg>
-                    <span class="ml-1 text-sm font-medium text-gray-600 md:ml-2">Add company</span>
+                    <span class="ml-1 text-sm font-medium text-gray-600 md:ml-2">Add Service</span>
                 </div>
             </li>
         </ol>
@@ -28,15 +28,20 @@
     <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate
         class="flex flex-col items-center w-full mb-5">
         <div class="w-2/3 mb-5">
-            <h1 class="text-2xl font-bold mb-5">Add new company</h1>
-            <label for="company_name" class="block mb-2 text-sm font-semibold text-gray-900">Company name</label>
-            <input type="text" id="company_name" name="company_name" [(ngModel)]="form.company_name" required
-                #company_name="ngModel"
+            <h1 class="text-2xl font-bold mb-5">Add new service</h1>
+            <label for="service_name" class="block mb-2 text-sm font-semibold text-gray-900">Service name</label>
+            <input type="text" id="service_name" name="service_name" [(ngModel)]="form.service_name" required
+                #service_name="ngModel"
+                class="bg-gray-50 mb-5 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="Room cleaning">
+            <label for="service_link" class="block mb-2 text-sm font-semibold text-gray-900">Service link</label>
+            <input type="text" id="service_link" name="service_link" [(ngModel)]="form.service_link" required
+                #service_link="ngModel"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Hospital">
+                placeholder="https://www.your-service-link.com/">
         </div>
         <div *ngIf="!image" class="w-2/3" appDrag (fileDropped)="onFileDropped($event)">
-            <p class="mb-2 text-sm font-semibold text-gray-900">Company logo</p>
+            <p class="mb-2 text-sm font-semibold text-gray-900">Service icon</p>
             <label for="dropzone-file"
                 class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -66,14 +71,14 @@
                 <span class="sr-only">Reset preview</span>
             </button>
         </div>
-        <div *ngIf="company_name.errors && f.submitted" class="mt-2 text-red-600">Company name is required!</div>
-        <div *ngIf="!image && f.submitted" class="mt-2 text-red-600">Company logo is required!</div>
+        <div *ngIf="service_name.errors && f.submitted" class="mt-2 text-red-600">Service name is required!</div>
+        <div *ngIf="service_link.errors && f.submitted" class="mt-2 text-red-600">Service link is required!</div>
+        <div *ngIf="!image && f.submitted" class="mt-2 text-red-600">Service logo is required!</div>
         <p *ngIf="isUploadFailed" class="text-red-600 mt-2">{{errorMessage}}</p>
-
 
         <button type="submit" *ngIf="!isUploading"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-10 text-center inline-flex items-center mt-5">Add
-            company</button>
+            service</button>
         <div class=" text-green-600" *ngIf="isUploading">
             <div class="h-full flex flex-col items-center justify-center">
                 <p class="mb-2 mt-2">Adding new service... </p>

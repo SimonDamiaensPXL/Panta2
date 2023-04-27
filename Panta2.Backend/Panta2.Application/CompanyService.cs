@@ -2,6 +2,7 @@
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Core.Models;
+using Imagekit.Sdk;
 
 namespace Panta2.Application
 {
@@ -9,11 +10,16 @@ namespace Panta2.Application
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;
+        private readonly ImagekitClient _imagekit;
+        private readonly string publicKey = "public_JqyPbaZd1wHPLPsXWryER3v48vw=";
+        private readonly string urlEndPoint = "https://ik.imagekit.io/panta2/";
+        private readonly string privateKey = "private_OBkUkzNy0p7AzRqoGBrz2tvSpAc=";
 
         public CompanyService(ICompanyRepository companyRepository, IMapper mapper)
         {
             _companyRepository = companyRepository ?? throw new ArgumentNullException(nameof(companyRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _imagekit = new ImagekitClient(publicKey, privateKey, urlEndPoint);
         }
 
         public async Task<IEnumerable<CompanyModel>> GetCompanyList()
@@ -36,6 +42,16 @@ namespace Panta2.Application
 
         public async Task<CompanyModel> InsertCompany(CompanyCreationModel company)
         {
+            FileCreateRequest ob2 = new FileCreateRequest
+            {
+                file = company.Logo,
+                fileName = $"{company.Name}-{Guid.NewGuid().ToString()}",
+                folder = "assets/images/logos"
+            };
+            Result resp = _imagekit.Upload(ob2);
+
+            company.Logo = resp.url;
+
             var finalCompany = _mapper.Map<Company>(company);
 
             var createdCompany = await _companyRepository.Add(finalCompany);

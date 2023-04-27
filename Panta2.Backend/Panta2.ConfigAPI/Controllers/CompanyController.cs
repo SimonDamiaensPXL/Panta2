@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Panta2.Core.Contracts;
 using Panta2.Core.Models;
 
@@ -39,8 +38,8 @@ namespace Panta2.ConfigAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateCompany(CompanyCreationModel company)
         {
-            var createdCompany = await _companyService.InsertCompany(company);
-            return CreatedAtRoute("GetCompanyById", new { createdCompany.Id }, createdCompany);
+            await _companyService.InsertCompany(company);
+            return NoContent();
         }
 
         [HttpPut]

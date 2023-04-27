@@ -16,10 +16,17 @@ namespace Panta2.ConfigAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CompanyModel>>> GetCompanies()
+        public async Task<ActionResult<IEnumerable<CompanyModel>>> GetServices()
         {
             var companies = await _serviceService.GetServiceList();
             return Ok(companies);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateCompany(ServiceCreationModel service)
+        {
+            await _serviceService.InsertService(service);
+            return NoContent();
         }
     }
 }

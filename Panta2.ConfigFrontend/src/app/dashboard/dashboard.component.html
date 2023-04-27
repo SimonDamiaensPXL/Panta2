@@ -5,7 +5,7 @@
                 <div
                     class="flex flex-col content-between items-center justify-between w-full h-full bg-white rounded-t-lg drop-shadow-2xl">
                     <div class="flex flex-col w-full h-full">
-                        <app-layout-navbar [isSearchbarEnabled]="true" [list]="companies"
+                        <app-layout-navbar [isSearchbarEnabled]="false" [list]="companies"
                             (filtered)="onFiltered($event)"></app-layout-navbar>
                         <div class="flex w-full h-full text-gray-600 overflow-y-auto">
                             <app-layout-sidebar class="w-1/6 h-full"></app-layout-sidebar>

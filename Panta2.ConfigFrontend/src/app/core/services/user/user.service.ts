@@ -10,4 +10,8 @@ export class UserService {
   getUsers() {
     return this.apiService.get('/users');
   }
+
+  createUser(username: string, firstname: string, lastname: string) {
+    return this.apiService.post('/services', { username, firstname, lastname });
+  }
 }

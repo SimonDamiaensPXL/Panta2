@@ -26,6 +26,8 @@ import { ServicesTableComponent } from './service/services-table/services-table.
 import { DragDirective } from './core/directives/drag.directive';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { environment } from './environments/environment';
+import { AddServiceComponent } from './service/add-service/add-service.component';
+import { AddUserComponent } from './user/add-user/add-user.component';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import { environment } from './environments/environment';
     UsersListComponent,
     CompanyTableComponent,
     ServicesTableComponent,
-    DragDirective
+    DragDirective,
+    AddServiceComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
