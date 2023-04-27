@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         else {
           console.log(err.message);
           this.isLoggingIn = false;
-          this.errorMessage = "Something went wrong."
+          this.errorMessage = "Something went wrong! Please try again."
         }
         this.isLoginFailed = true;
       }
