@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Service } from '../core/models/service.model';
 import { User } from '../core/models/user.model';
-import { ServiceService } from '../core/services/service/service.service';
 import { StorageService } from '../core/services/storage/storage.service';
 import { UserService } from '../core/services/user/user.service';
 
@@ -19,7 +18,7 @@ export class SettingsComponent implements OnInit {
   name?: string;
   inputName?: string;
 
-  constructor(private storageService: StorageService, private serviceService: ServiceService, private userService: UserService) {}
+  constructor(private storageService: StorageService, private userService: UserService) {}
 
   async ngOnInit(): Promise<void> {
     try {

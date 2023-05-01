@@ -19,27 +19,6 @@ namespace Panta2.API.Controllers
             _companyService = companyService ?? throw new ArgumentNullException(nameof(companyService));
         }
 
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<CompanyModel>>> GetCompanies()
-        {
-            var companies = await _companyService.GetCompanyList();
-            return Ok(companies);
-        }
-
-        [HttpGet("{id}", Name = "GetCompanyById")]
-        public async Task<ActionResult<CompanyModel>> GetCompanyById(int id)
-        {
-            var service = await _companyService.GetCompanyById(id);
-
-            if (service == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(service);
-        }
-
         [HttpGet("logo/{id}")]
         public async Task<ActionResult<CompanyModel>> GetCompanyLogoById(int id)
         {

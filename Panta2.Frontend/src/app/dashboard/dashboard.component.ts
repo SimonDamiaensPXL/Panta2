@@ -4,7 +4,6 @@ import { StorageService } from "../core/services/storage/storage.service";
 import { UserService } from "../core/services/user/user.service";
 import { User } from "../core/models/user.model";
 import { firstValueFrom } from 'rxjs';
-import { ServiceService } from "../core/services/service/service.service";
 import { Service } from "../core/models/service.model";
 
 @Component({
@@ -20,7 +19,7 @@ export class DashboardComponent implements OnInit {
   companyLogo?: string;
   isLoading: boolean = true;
 
-  constructor(private storageService: StorageService, private userService: UserService, private serviceService: ServiceService) { }
+  constructor(private storageService: StorageService, private userService: UserService) { }
 
   async ngOnInit(): Promise<void> {
     try {
