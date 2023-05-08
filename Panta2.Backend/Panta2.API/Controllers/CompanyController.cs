@@ -17,7 +17,7 @@ namespace Panta2.API.Controllers
         public CompanyController(ICompanyService companyService)
         {
             _companyService = companyService ?? throw new ArgumentNullException(nameof(companyService));
-        }
+        } 
 
         [HttpGet("logo/{id}")]
         public async Task<ActionResult<CompanyModel>> GetCompanyLogoById(int id)

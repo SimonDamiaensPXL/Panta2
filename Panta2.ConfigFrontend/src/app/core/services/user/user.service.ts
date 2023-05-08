@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
+import { UserCreation } from '../../models/create-user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class UserService {
     return this.apiService.get('/users');
   }
 
-  createUser(username: string, firstname: string, lastname: string) {
-    return this.apiService.post('/services', { username, firstname, lastname });
+  createUser(newUser: UserCreation) {
+    return this.apiService.post('/users', newUser);
   }
 }

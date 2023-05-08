@@ -4,6 +4,7 @@ namespace Panta2.Core.Models
 {
     public class UserRegistrationModel
     {
+        public string? UserName { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
