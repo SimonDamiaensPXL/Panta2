@@ -28,6 +28,7 @@ import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { environment } from './environments/environment';
 import { AddServiceComponent } from './service/add-service/add-service.component';
 import { AddUserComponent } from './user/add-user/add-user.component';
+import { EditCompanyComponent } from './company/edit-company/edit-company.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { AddUserComponent } from './user/add-user/add-user.component';
     ServicesTableComponent,
     DragDirective,
     AddServiceComponent,
-    AddUserComponent
+    AddUserComponent,
+    EditCompanyComponent
   ],
   imports: [
     BrowserModule,

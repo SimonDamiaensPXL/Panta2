@@ -13,7 +13,15 @@ export class CompanyService {
     return this.apiService.get('/companies');
   }
 
+  getCompanyById(companyId: number) {
+    return this.apiService.get(`/companies/${companyId}`);
+  }
+
   createCompany(name: string, logo: string) {
     return this.apiService.post('/companies', { name, logo });
+  }
+
+  editCompany(name: string, logo: string) {
+    return this.apiService.put('/companies', { name, logo });
   }
 }
