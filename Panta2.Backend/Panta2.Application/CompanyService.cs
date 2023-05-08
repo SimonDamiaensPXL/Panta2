@@ -3,6 +3,9 @@ using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Core.Models;
 using Imagekit.Sdk;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Panta2.Application
 {
@@ -11,15 +14,19 @@ namespace Panta2.Application
         private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;
         private readonly ImagekitClient _imagekit;
-        private readonly string publicKey = "public_JqyPbaZd1wHPLPsXWryER3v48vw=";
-        private readonly string urlEndPoint = "https://ik.imagekit.io/panta2/";
-        private readonly string privateKey = "private_OBkUkzNy0p7AzRqoGBrz2tvSpAc=";
+        private readonly IConfiguration _configuration;
 
-        public CompanyService(ICompanyRepository companyRepository, IMapper mapper)
+        public CompanyService(IConfiguration configuration, ICompanyRepository companyRepository, IMapper mapper)
         {
             _companyRepository = companyRepository ?? throw new ArgumentNullException(nameof(companyRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _imagekit = new ImagekitClient(publicKey, privateKey, urlEndPoint);
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+
+            _imagekit = new ImagekitClient(
+                _configuration["ImageKitSettings:PublicKey"],
+                _configuration["ImageKitSettings:PrivateKey"],
+                _configuration["ImageKitSettings:UrlEndpoint"]
+                );
         }
 
         public async Task<IEnumerable<CompanyModel>> GetCompanyList()
@@ -37,7 +44,7 @@ namespace Panta2.Application
         public async Task<string> GetCompanyLogoById(int id)
         {
             return await _companyRepository.GetLogo(id);
-            
+
         }
 
         public async Task<CompanyModel> InsertCompany(CompanyCreationModel company)
@@ -45,7 +52,7 @@ namespace Panta2.Application
             FileCreateRequest ob2 = new FileCreateRequest
             {
                 file = company.Logo,
-                fileName = $"{company.Name}-{Guid.NewGuid().ToString()}",
+                fileName = $"{company.Name}-{Guid.NewGuid()}",
                 folder = "assets/images/logos"
             };
             Result resp = _imagekit.Upload(ob2);
