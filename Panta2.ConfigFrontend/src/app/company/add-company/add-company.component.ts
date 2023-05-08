@@ -57,8 +57,6 @@ export class AddCompanyComponent {
       reader.onload = (event: any) => {
         this.image = event.target.result;
         this.form.company_logo = event.target.result;
-
-        console.log(this.image);
       }
     }
   }

@@ -25,7 +25,7 @@
             </li>
         </ol>
     </nav>
-    <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate
+    <form name="form" #f="ngForm" (ngSubmit)="image && f.form.valid && onSubmit()" novalidate
         class="flex flex-col items-center w-full mb-5">
         <div class="w-2/3 mb-5">
             <h1 class="text-2xl font-bold mb-5">Add new company</h1>
@@ -76,7 +76,7 @@
             company</button>
         <div class=" text-green-600" *ngIf="isUploading">
             <div class="h-full flex flex-col items-center justify-center">
-                <p class="mb-2 mt-2">Adding new service... </p>
+                <p class="mb-2 mt-2">Adding new company... </p>
                 <svg aria-hidden="true" class="w-8 h-8 mr-2 animate-spin text-gray-600 fill-green-600"
                     viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
                     <path

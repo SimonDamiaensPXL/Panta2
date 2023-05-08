@@ -4,8 +4,6 @@ using Panta2.Core.Entities;
 using Panta2.Core.Models;
 using Imagekit.Sdk;
 using Microsoft.Extensions.Configuration;
-using System.Configuration;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Panta2.Application
 {

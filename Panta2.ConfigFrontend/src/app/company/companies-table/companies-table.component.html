@@ -11,13 +11,10 @@
                 <th scope="col" class="px-6 py-3">
                     Company
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Edit
-                </th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let company of companies" class="bg-white border-b hover:bg-gray-100">
+            <tr *ngFor="let company of companies" routerLink="/company/{{company.id}}" class="bg-white border-b hover:bg-gray-100 cursor-pointer">
                 <td class="w-32 h-32 p-4">
                     <img src={{company.logo}} alt="Service Image">
                 </td>
@@ -26,11 +23,6 @@
                 </td>
                 <td class="px-6 py-4 font-semibold text-xl text-gray-900">
                     {{company.name}}
-                </td>
-                <td class="px-6 py-4 font-semibold">
-                    <button type="button"
-                        class="text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 h-10 text-center mr-2 mb-2">
-                        Edit</button>
                 </td>
             </tr>
         </tbody>
