@@ -3,7 +3,8 @@ using Imagekit.Sdk;
 using Microsoft.Extensions.Configuration;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
-using Panta2.Core.Models;
+using Panta2.Core.Models.Service;
+using Panta2.Infrastructure;
 using System.Configuration;
 
 namespace Panta2.Application
@@ -41,29 +42,51 @@ namespace Panta2.Application
             return _mapper.Map<ServiceModel>(serviceEntity);
         }
 
-        public async Task<ServiceModel> InsertService(ServiceCreationModel service)
+        public async Task<ServiceModel> InsertService(ServiceCreationModel model)
         {
             FileCreateRequest ob2 = new FileCreateRequest
             {
-                file = service.Icon,
-                fileName = $"{service.Name}-{Guid.NewGuid()}",
+                file = model.Icon,
+                fileName = $"{model.Name}-{Guid.NewGuid()}",
                 folder = "assets/images/icons"
             };
             Result resp = _imagekit.Upload(ob2);
 
-            service.Icon = resp.url;
+            model.Icon = resp.url;
 
-            var finalService = _mapper.Map<Service>(service);
+            var finalService = _mapper.Map<Service>(model);
 
             var createdService = await _serviceRepository.Add(finalService);
 
             return _mapper.Map<ServiceModel>(createdService);
         }
 
-        public async Task<bool> UpdateService(ServiceModel service)
+        public async Task<bool> UpdateService(ServiceNameUpdateModel model)
         {
-            var updateService = _mapper.Map<Service>(service);
-            return await _serviceRepository.Update(updateService);
+            var updateService = _mapper.Map<Service>(model);
+            return await _serviceRepository.UpdateName(updateService);
+        }
+
+        public async Task<bool> UpdateService(ServiceLinkUpdateModel model)
+        {
+            var updateService = _mapper.Map<Service>(model);
+            return await _serviceRepository.UpdateLink(updateService);
+        }
+
+        public async Task<bool> UpdateService(ServiceIconUpdateModel model)
+        {
+            FileCreateRequest fileCreateRequest = new FileCreateRequest
+            {
+                file = model.Icon,
+                fileName = $"{model.Name}-{Guid.NewGuid()}",
+                folder = "assets/images/icons"
+            };
+            Result resp = _imagekit.Upload(fileCreateRequest);
+
+            model.Icon = resp.url;
+
+            var updateCompany = _mapper.Map<Service>(model);
+            return await _serviceRepository.UpdateIcon(updateCompany);
         }
 
         public async Task<bool> DeleteService(int id)

@@ -10,6 +10,7 @@ import { AddCompanyComponent } from './company/add-company/add-company.component
 import { AddServiceComponent } from './service/add-service/add-service.component';
 import { AddUserComponent } from './user/add-user/add-user.component';
 import { EditCompanyComponent } from './company/edit-company/edit-company.component';
+import { EditServiceComponent } from './service/edit-service/edit-service.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeOverviewComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'services/add', component: AddServiceComponent},
   { path: 'users/add', component: AddUserComponent},
   { path: 'company/:id', component: EditCompanyComponent},
+  { path: 'service/:id', component: EditServiceComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}
 ];

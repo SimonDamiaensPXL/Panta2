@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using Panta2.Core.Contracts;
-using Panta2.Core.Models;
+using Panta2.Core.Models.User;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

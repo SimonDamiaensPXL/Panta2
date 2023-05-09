@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Panta2.Core.Models
+namespace Panta2.Core.Models.Service
 {
-    public class ServiceUpdateModel
+    public class ServiceCreationModel
     {
         [Required(ErrorMessage = "You should provide a Name value.")]
         public string? Name { get; set; }

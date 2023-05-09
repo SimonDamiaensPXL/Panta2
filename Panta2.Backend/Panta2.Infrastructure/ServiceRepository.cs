@@ -41,11 +41,36 @@ namespace Panta2.Infrastructure
                 return service;
             }
         }
-        public async Task<bool> Update(Service service)
+        public async Task<bool> UpdateName(Service service)
         {
+            var query = "UPDATE Services SET Name = @name WHERE Id = @id";
+
             using (var connection = _context.CreateConnection())
             {
-                return await connection.UpdateAsync(service);
+                var rowsAffected = await connection.ExecuteAsync(query, new { name = service.Name, id = service.Id });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateLink(Service service)
+        {
+            var query = "UPDATE Services SET Link = @link WHERE Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { link = service.Link, id = service.Id });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateIcon(Service service)
+        {
+            var query = "UPDATE Services SET Icon = @icon WHERE Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { icon = service.Icon, id = service.Id });
+                return rowsAffected == 1;
             }
         }
 

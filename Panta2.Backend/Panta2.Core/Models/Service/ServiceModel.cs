@@ -1,4 +1,4 @@
-﻿namespace Panta2.Core.Models
+﻿namespace Panta2.Core.Models.Service
 {
     public class ServiceModel
     {

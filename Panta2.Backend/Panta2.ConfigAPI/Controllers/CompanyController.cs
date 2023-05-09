@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Panta2.Core.Contracts;
-using Panta2.Core.Models;
+using Panta2.Core.Models.Company;
 
 namespace Panta2.ConfigAPI.Controllers
 {
@@ -25,14 +25,14 @@ namespace Panta2.ConfigAPI.Controllers
         [HttpGet("{id}", Name = "GetCompanyById")]
         public async Task<ActionResult<CompanyModel>> GetCompanyById(int id)
         {
-            var service = await _companyService.GetCompanyById(id);
+            var company = await _companyService.GetCompanyById(id);
 
-            if (service == null)
+            if (company == null)
             {
                 return NotFound();
             }
 
-            return Ok(service);
+            return Ok(company);
         }
 
         [HttpPost]
@@ -42,10 +42,21 @@ namespace Panta2.ConfigAPI.Controllers
             return NoContent();
         }
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateCompany(CompanyModel company)
+        [HttpPut("name")]
+        public async Task<ActionResult> UpdateCompanyName(CompanyNameUpdateModel company)
         {
-            if (!await _companyService.UpdateCompany(company))
+            if (!await _companyService.UpdateCompanyName(company))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("logo")]
+        public async Task<ActionResult> UpdateCompanyLogo(CompanyLogoUpdateModel company)
+        {
+            if (!await _companyService.UpdateCompanyLogo(company))
             {
                 return NotFound();
             }

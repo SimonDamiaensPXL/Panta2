@@ -9,7 +9,8 @@ namespace Panta2.Core.Contracts
         Task<Company> GetById(int id);
         Task<string> GetLogo(int id);
         Task<Company> Add(Company company);
-        Task<bool> Update(Company company);
+        Task<bool> UpdateName(Company company);
+        Task<bool> UpdateLogo(Company company);
         Task<bool> Remove(int id);
     }
 }

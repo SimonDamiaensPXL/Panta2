@@ -1,5 +1,5 @@
 export interface Service {
-    serviceId: number;
+    id: number;
     name: string;
     icon: string;
     link: string;

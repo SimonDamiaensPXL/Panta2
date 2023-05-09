@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
-using Panta2.Core.Models;
+using Panta2.Core.Models.User;
 
 namespace Panta2.ConfigAPI.Controllers
 {

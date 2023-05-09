@@ -52,11 +52,25 @@ namespace Panta2.Infrastructure
             }
         }
 
-        public async Task<bool> Update(Company company)
+        public async Task<bool> UpdateName(Company company)
         {
+            var query = "UPDATE Companies SET Name = @name WHERE Id = @id";
+
             using (var connection = _context.CreateConnection())
             {
-                return await connection.UpdateAsync(company);
+                var rowsAffected = await connection.ExecuteAsync(query, new { name = company.Name, id = company.Id });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateLogo(Company company)
+        {
+            var query = "UPDATE Companies SET Logo = @logo WHERE Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { logo = company.Logo, id = company.Id });
+                return rowsAffected == 1;
             }
         }
 

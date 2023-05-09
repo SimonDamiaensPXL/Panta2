@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Panta2.Core.Models.User;
 
 namespace Panta2.Core.Profiles
 {
@@ -6,9 +7,9 @@ namespace Panta2.Core.Profiles
     {
         public UserProfile() 
         {
-            CreateMap<Entities.User, Models.UserModel>();
-            CreateMap<Models.UserModel, Entities.User>();
-            CreateMap<Models.UserRegistrationModel, Entities.User>();
+            CreateMap<Entities.User, UserModel>();
+            CreateMap<UserModel, Entities.User>();
+            CreateMap<UserRegistrationModel, Entities.User>();
         }
     }
 }

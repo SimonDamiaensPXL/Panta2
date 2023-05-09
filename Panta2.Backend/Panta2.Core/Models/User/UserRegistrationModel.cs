@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Panta2.Core.Models
+namespace Panta2.Core.Models.User
 {
     public class UserRegistrationModel
     {

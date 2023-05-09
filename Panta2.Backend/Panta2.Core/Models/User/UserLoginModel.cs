@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Panta2.Core.Models
+namespace Panta2.Core.Models.User
 {
     public class UserLoginModel
     {

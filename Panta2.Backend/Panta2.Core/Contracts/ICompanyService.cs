@@ -1,4 +1,4 @@
-﻿using Panta2.Core.Models;
+﻿using Panta2.Core.Models.Company;
 
 namespace Panta2.Core.Contracts
 {
@@ -8,7 +8,8 @@ namespace Panta2.Core.Contracts
         Task<CompanyModel> GetCompanyById(int id);
         Task<string> GetCompanyLogoById(int id);
         Task<CompanyModel> InsertCompany(CompanyCreationModel company);
-        Task<bool> UpdateCompany(CompanyModel company);
+        Task<bool> UpdateCompanyName(CompanyNameUpdateModel company);
+        Task<bool> UpdateCompanyLogo(CompanyLogoUpdateModel company);
         Task<bool> DeleteCompany(int id);
 
     }

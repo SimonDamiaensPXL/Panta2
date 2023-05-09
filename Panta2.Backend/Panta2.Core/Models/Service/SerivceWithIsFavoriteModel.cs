@@ -1,4 +1,4 @@
-﻿namespace Panta2.Core.Models
+﻿namespace Panta2.Core.Models.Service
 {
     public class SerivceWithIsFavoriteModel
     {
@@ -6,6 +6,6 @@
         public string? Name { get; set; }
         public string? Icon { get; set; }
         public string? Link { get; set; }
-        public bool? IsFavorite { get; set;}
+        public bool? IsFavorite { get; set; }
     }
 }

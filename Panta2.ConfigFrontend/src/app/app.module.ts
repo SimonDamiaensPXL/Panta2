@@ -29,6 +29,8 @@ import { environment } from './environments/environment';
 import { AddServiceComponent } from './service/add-service/add-service.component';
 import { AddUserComponent } from './user/add-user/add-user.component';
 import { EditCompanyComponent } from './company/edit-company/edit-company.component';
+import { EditServiceComponent } from './service/edit-service/edit-service.component';
+import { EditUserComponent } from './user/edit-user/edit-user.component';
 
 
 @NgModule({
@@ -54,7 +56,9 @@ import { EditCompanyComponent } from './company/edit-company/edit-company.compon
     DragDirective,
     AddServiceComponent,
     AddUserComponent,
-    EditCompanyComponent
+    EditCompanyComponent,
+    EditServiceComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

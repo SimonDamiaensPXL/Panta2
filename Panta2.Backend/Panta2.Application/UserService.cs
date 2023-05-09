@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
-using Panta2.Core.Models;
+using Panta2.Core.Models.Service;
+using Panta2.Core.Models.User;
 using Panta2.Infrastructure;
 
 namespace Panta2.Application

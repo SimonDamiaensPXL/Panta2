@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { Company } from 'src/app/core/models/company.model';
 import { CompanyService } from 'src/app/core/services/company/company.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { CompanyService } from 'src/app/core/services/company/company.service';
   templateUrl: './edit-company.component.html',
 })
 export class EditCompanyComponent implements OnInit {
+  companyId: number = 0;
   form: any = {
     company_name: null,
     company_logo: null,
@@ -22,23 +24,26 @@ export class EditCompanyComponent implements OnInit {
   
   ngOnInit(): void {
     this.getCompany();
+
   }
 
   async getCompany(): Promise<void> {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.companyId = Number(this.route.snapshot.paramMap.get('id'));
     
-    const company = await firstValueFrom(this.companyService.getCompanyById(id));
+    const company = await firstValueFrom(this.companyService.getCompanyById(this.companyId));
 
     this.form.company_name = company.name;
     this.image = company.logo;
   }
 
-  onSubmit(): void {
+  onNameSubmit(): void {
+    console.log("Name submitted");
     this.isUploading = true;
-    this.companyService.editCompany(this.form.company_name, this.form.company_logo).subscribe({
+    this.companyService.editCompanyName(this.companyId, this.form.company_name).subscribe({
       next: data => {
         this.isUploadFailed = false;
-        this.router.navigate(['/companies']);
+        this.isUploading = false;
+        //this.router.navigate(['/companies']);
       },
       error: err => {
         this.isUploading = false;
@@ -47,6 +52,31 @@ export class EditCompanyComponent implements OnInit {
         this.isUploadFailed = true;
       }
     });
+  }
+
+  onLogoSubmit(): void {
+    console.log("Logo submitted");
+
+    if (this.form.company_logo == null) {
+      this.errorMessage = "Provide a new logo!";
+      this.isUploadFailed = true;
+    }
+    else{
+      this.isUploading = true;
+      this.companyService.editCompanyLogo(this.companyId, this.form.company_name, this.form.company_logo).subscribe({
+        next: data => {
+          this.isUploadFailed = false;
+          this.isUploading = false;
+          //this.router.navigate(['/companies']);
+        },
+        error: err => {
+          this.isUploading = false;
+          console.log(err);
+          this.errorMessage = "Something went wrong! Please try again.";
+          this.isUploadFailed = true;
+        }
+      });
+    }
   }
 
   onFileDropped(event: any) {

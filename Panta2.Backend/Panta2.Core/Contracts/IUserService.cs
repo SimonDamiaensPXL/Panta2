@@ -1,4 +1,5 @@
-﻿using Panta2.Core.Models;
+﻿using Panta2.Core.Models.Service;
+using Panta2.Core.Models.User;
 
 namespace Panta2.Core.Contracts
 {

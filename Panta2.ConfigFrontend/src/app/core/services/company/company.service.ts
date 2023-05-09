@@ -21,7 +21,11 @@ export class CompanyService {
     return this.apiService.post('/companies', { name, logo });
   }
 
-  editCompany(name: string, logo: string) {
-    return this.apiService.put('/companies', { name, logo });
+  editCompanyName(id: number, name: string) {
+    return this.apiService.put('/companies/name', {id, name});
+  }
+
+  editCompanyLogo(id: number, name: string, logo: string) {
+    return this.apiService.put('/companies/logo', {id, name, logo });
   }
 }

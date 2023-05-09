@@ -1,5 +1,5 @@
 ﻿using Panta2.Core.Entities;
-using Panta2.Core.Models;
+using Panta2.Core.Models.Service;
 
 namespace Panta2.Core.Contracts
 {

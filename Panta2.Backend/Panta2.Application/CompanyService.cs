@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
-using Panta2.Core.Models;
 using Imagekit.Sdk;
 using Microsoft.Extensions.Configuration;
+using Panta2.Core.Models.Company;
 
 namespace Panta2.Application
 {
@@ -47,13 +47,13 @@ namespace Panta2.Application
 
         public async Task<CompanyModel> InsertCompany(CompanyCreationModel company)
         {
-            FileCreateRequest ob2 = new FileCreateRequest
+            FileCreateRequest fileCreateRequest = new FileCreateRequest
             {
                 file = company.Logo,
                 fileName = $"{company.Name}-{Guid.NewGuid()}",
                 folder = "assets/images/logos"
             };
-            Result resp = _imagekit.Upload(ob2);
+            Result resp = _imagekit.Upload(fileCreateRequest);
 
             company.Logo = resp.url;
 
@@ -64,10 +64,26 @@ namespace Panta2.Application
             return _mapper.Map<CompanyModel>(createdCompany);
         }
 
-        public async Task<bool> UpdateCompany(CompanyModel company)
+        public async Task<bool> UpdateCompanyName(CompanyNameUpdateModel company)
         {
             var updateCompany = _mapper.Map<Company>(company);
-            return await _companyRepository.Update(updateCompany);
+            return await _companyRepository.UpdateName(updateCompany);
+        }
+
+        public async Task<bool> UpdateCompanyLogo(CompanyLogoUpdateModel company)
+        {
+            FileCreateRequest fileCreateRequest = new FileCreateRequest
+            {
+                file = company.Logo,
+                fileName = $"{company.Name}-{Guid.NewGuid()}",
+                folder = "assets/images/logos"
+            };
+            Result resp = _imagekit.Upload(fileCreateRequest);
+
+            company.Logo = resp.url;
+
+            var updateCompany = _mapper.Map<Company>(company);
+            return await _companyRepository.UpdateLogo(updateCompany);
         }
 
         public async Task<bool> DeleteCompany(int id)
