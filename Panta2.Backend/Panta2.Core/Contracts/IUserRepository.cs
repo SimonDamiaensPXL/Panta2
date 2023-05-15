@@ -7,7 +7,7 @@ namespace Panta2.Core.Contracts
     {
         Task<IEnumerable<User>> GetAll();
         Task<User> GetById(int id);
-        Task<User> CreateAsync(User user);
+        Task<User> CreateAsync(User user, int roleId);
         Task<bool> UpdateFirstName(string username, int id);
         Task<User> GetUserByUsername(string username);
         Task<IEnumerable<Service>> GetServicesFromUser(int id);

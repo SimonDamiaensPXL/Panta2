@@ -38,7 +38,7 @@ namespace Panta2.Application
             var finalUser = _mapper.Map<User>(user);
             finalUser.PasswordHash = _passwordHasher.HashPassword(finalUser, user.Password);
             
-            var createdUser = await _userRepository.CreateAsync(finalUser);
+            var createdUser = await _userRepository.CreateAsync(finalUser, user.RoleId);
 
             return _mapper.Map<UserModel>(createdUser);
         }

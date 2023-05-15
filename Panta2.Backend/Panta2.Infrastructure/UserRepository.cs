@@ -32,12 +32,18 @@ namespace Panta2.Infrastructure
             }
         }
 
-        public async Task<User> CreateAsync(User user)
+        public async Task<User> CreateAsync(User user, int roleId)
         {
+            var query = "INSERT INTO AspNetUserRoles (UserId, RoleId) " +
+                        "VALUES (@userId, @roleId)";
+
             using (var connection = _context.CreateConnection())
             {
                 var id = await connection.InsertAsync(user);
                 user.Id = id;
+
+                await connection.ExecuteAsync(query, new { userId = id, roleId });
+
                 return user;
             }
         }
@@ -76,7 +82,6 @@ namespace Panta2.Infrastructure
             using (var connection = _context.CreateConnection())
             {
                 var services = await connection.QueryAsync<Service>(query, new { id });
-                Console.WriteLine(services.Last().Id);
                 return services;
             }
         }

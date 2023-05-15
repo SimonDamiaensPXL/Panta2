@@ -2,6 +2,8 @@
 using Dapper.Contrib.Extensions;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
+using Panta2.Core.Models.Role;
+using Panta2.Core.Models.User;
 using Panta2.Infrastructure.Context;
 
 namespace Panta2.Infrastructure
@@ -79,6 +81,33 @@ namespace Panta2.Infrastructure
             using (var connection = _context.CreateConnection())
             {
                 return await connection.DeleteAsync(new Company { Id = id });
+            }
+        }
+
+        public async Task<IEnumerable<UserWithRoleNameModel>> GetUsersWithRoleNameFromCompany(int id)
+        {
+            var query = "SELECT u.Id, u.Firstname, u.Lastname, u.Email, r.Name AS RoleName " +
+                        "FROM AspNetUsers u " +
+                        "JOIN AspNetUserRoles ur ON u.Id = ur.UserId " +
+                        "JOIN AspNetRoles r ON ur.RoleId = r.Id " +
+                        "WHERE u.CompanyId = @id";
+            using (var connection = _context.CreateConnection())
+            {
+                var users = await connection.QueryAsync<UserWithRoleNameModel>(query, new { id });
+                return users;
+            }
+        }
+
+        public async Task<IEnumerable<RoleModel>> GetRolesFromCompany(int id)
+        {
+            var query = "SELECT r.Id, r.Name " +
+                        "FROM AspNetRoles r " +
+                        "JOIN CompanyRole cr ON r.Id = cr.RoleId " +
+                        "WHERE cr.CompanyId = @id";
+            using (var connection = _context.CreateConnection())
+            {
+                var roles = await connection.QueryAsync<RoleModel>(query, new { id });
+                return roles;
             }
         }
     }

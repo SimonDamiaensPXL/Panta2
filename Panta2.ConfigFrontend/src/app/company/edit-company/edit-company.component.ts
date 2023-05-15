@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Company } from 'src/app/core/models/company.model';
+import { User } from 'src/app/core/models/user.model';
 import { CompanyService } from 'src/app/core/services/company/company.service';
 
 @Component({
@@ -15,6 +16,8 @@ export class EditCompanyComponent implements OnInit {
     company_name: null,
     company_logo: null,
   };
+  users: User[] = [];
+  roles: any[] = [];
   image?: any;
   isUploading: boolean = false;
   isUploadFailed: boolean = false;
@@ -22,14 +25,17 @@ export class EditCompanyComponent implements OnInit {
 
   constructor(private companyService: CompanyService, private route: ActivatedRoute, private router: Router) { }
   
-  ngOnInit(): void {
-    this.getCompany();
-
-  }
-
-  async getCompany(): Promise<void> {
+  async ngOnInit(): Promise<void> {
     this.companyId = Number(this.route.snapshot.paramMap.get('id'));
-    
+
+    this.users = await firstValueFrom(this.companyService.getCompanyUsers(this.companyId));
+
+    this.roles = await firstValueFrom(this.companyService.getCompanyRoles(this.companyId));
+
+    await this.getCompany();
+  }
+  
+  async getCompany(): Promise<void> {
     const company = await firstValueFrom(this.companyService.getCompanyById(this.companyId));
 
     this.form.company_name = company.name;
@@ -109,5 +115,9 @@ export class EditCompanyComponent implements OnInit {
     this.image = null;
     this.form.company_logo = null;
     this.errorMessage = "";
+  }
+
+  goToAddUser(): void {
+    this.router.navigate([`/company/${this.companyId}/add-user`]);
   }
 }

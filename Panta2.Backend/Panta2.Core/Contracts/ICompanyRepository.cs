@@ -1,5 +1,6 @@
 ﻿using Panta2.Core.Entities;
-using Panta2.Core.Models;
+using Panta2.Core.Models.Role;
+using Panta2.Core.Models.User;
 
 namespace Panta2.Core.Contracts
 {
@@ -12,5 +13,7 @@ namespace Panta2.Core.Contracts
         Task<bool> UpdateName(Company company);
         Task<bool> UpdateLogo(Company company);
         Task<bool> Remove(int id);
+        Task<IEnumerable<UserWithRoleNameModel>> GetUsersWithRoleNameFromCompany(int id);
+        Task<IEnumerable<RoleModel>> GetRolesFromCompany(int id);
     }
 }

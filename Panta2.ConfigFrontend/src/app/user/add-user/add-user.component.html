@@ -2,13 +2,24 @@
     <nav class="flex mb-5" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
             <li class="inline-flex items-center">
-                <a href="/users" class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-800">
+                <a href="/companies" class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-800">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                            d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
                     </svg>
-                    Users
+                    Companies
+                </a>
+            </li>
+            <li class="inline-flex items-center">
+                <a href="{{companyUrl}}" class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-800">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-500" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    {{companyName}}
                 </a>
             </li>
             <li aria-current="page">
@@ -34,6 +45,7 @@
                     #username="ngModel"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Johnny">
+                <div *ngIf="username.errors && f.submitted" class="mt-2 text-red-600">Username is required!</div>
             </div>
             <div class="flex justify-between mb-5">
                 <div class="w-[49%]">
@@ -42,6 +54,7 @@
                         #firstname="ngModel"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="John">
+                    <div *ngIf="firstname.errors && f.submitted" class="mt-2 text-red-600">Firstname is required!</div>
                 </div>
                 <div class="w-[49%]">
                     <label for="lastname" class="block mb-2 text-sm font-semibold text-gray-900">Lastname</label>
@@ -49,46 +62,46 @@
                         #lastname="ngModel"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Doe">
+                    <div *ngIf="lastname.errors && f.submitted" class="mt-2 text-red-600">Lastname is required!</div>
                 </div>
             </div>
-            <label for="email" class="block mb-2 text-sm font-semibold text-gray-900">Email</label>
-            <input type="text" id="email" name="email" [(ngModel)]="form.email" required #email="ngModel"
-                class="bg-gray-50 mb-5 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="john.doe@mail.it">
-            <div class="flex justify-between mb-5">
+            <div class="w-[49%] mb-5">
+                <label for="email" class="block mb-2 text-sm font-semibold text-gray-900">Email</label>
+                <input type="text" id="email" name="email" [(ngModel)]="form.email" required #email="ngModel"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="john.doe@mail.it">
+                <div *ngIf="email.errors && f.submitted" class="mt-2 text-red-600">Email is required!</div>
+            </div>
+            <div class="flex justify-between">
                 <div class="w-[49%] mb-5">
                     <label for="password" class="block mb-2 text-sm font-semibold text-gray-900">Password</label>
                     <input type="password" id="password" name="password" [(ngModel)]="form.password" required
                         #password="ngModel"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <div *ngIf="password.errors && f.submitted" class="mt-2 text-red-600">Password is required!</div>
                 </div>
                 <div class="w-[49%] mb-5">
-                    <label for="confirmPassword" class="block mb-2 text-sm font-semibold text-gray-900">Confirm Password</label>
-                    <input type="confirmPassword" id="confirmPassword" name="confirmPassword" [(ngModel)]="form.confirmPassword" required
-                        #confirmPassword="ngModel"
+                    <label for="confirmPassword" class="block mb-2 text-sm font-semibold text-gray-900">Confirm
+                        Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword"
+                        [(ngModel)]="form.confirmPassword" required #confirmPassword="ngModel"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <div *ngIf="confirmPassword.errors && f.submitted" class="mt-2 text-red-600">Confirm Password is
+                        required!</div>
                 </div>
             </div>
-
-            <h3 class="block mb-2 text-sm font-semibold text-gray-900">Companies</h3>
-            <div class="flex flex-wrap mx-[-10px] w-full">
-                <div *ngFor="let company of companies" class="w-[25%]">
-                    <div class="flex h-full mx-[10px] pb-4">
-                        <input id="{{company.name}}" type="radio" value={{company.id}} name="companyId" ngModel
-                            class="w-full h-4 text-blue-600 bg-gray-100 border-gray-300">
-                        <label for="{{company.name}}"
-                            class="w-full text-sm font-medium text-gray-900">{{company.name}}</label>
+            <div>
+                <h3 class="mb-2 font-semibold text-gray-900">Role</h3>
+                <div class="h-full flex flex-wrap">
+                    <div *ngFor="let role of roles" class="flex items-center mb-4">
+                        <input id="{{role.id}}" type="radio" value="{{role.id}}" name="roleId" [(ngModel)]="form.role"
+                            required #role="ngModel"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                        <label for="{{role.id}}" class="mx-2 text-sm font-medium text-gray-900">{{role.name}}</label>
                     </div>
                 </div>
             </div>
-
         </div>
-        <div *ngIf="username.errors && f.submitted" class="mt-2 text-red-600">Username is required!</div>
-        <div *ngIf="firstname.errors && f.submitted" class="mt-2 text-red-600">Firstname is required!</div>
-        <div *ngIf="lastname.errors && f.submitted" class="mt-2 text-red-600">Lastname is required!</div>
-        <div *ngIf="email.errors && f.submitted" class="mt-2 text-red-600">Email is required!</div>
-        <div *ngIf="password.errors && f.submitted" class="mt-2 text-red-600">Password is required!</div>
-        <div *ngIf="confirmPassword.errors && f.submitted" class="mt-2 text-red-600">Confirm Password is required!</div>
         <p *ngIf="isUploadFailed" class="text-red-600 mt-2">{{errorMessage}}</p>
 
         <button type="submit" *ngIf="!isUploading"

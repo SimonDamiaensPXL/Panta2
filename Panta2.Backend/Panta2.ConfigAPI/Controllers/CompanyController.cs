@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Panta2.Core.Contracts;
 using Panta2.Core.Models.Company;
+using Panta2.Core.Models.Role;
+using Panta2.Core.Models.User;
 
 namespace Panta2.ConfigAPI.Controllers
 {
@@ -73,6 +75,20 @@ namespace Panta2.ConfigAPI.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("users/{id}")]
+        public async Task<ActionResult<IEnumerable<UserWithRoleNameModel>>> GetUsersWithRoleName(int id)
+        {
+            var companies = await _companyService.GetUsersWithRoleName(id);
+            return Ok(companies);
+        }
+
+        [HttpGet("roles/{id}")]
+        public async Task<ActionResult<IEnumerable<RoleModel>>> GetAllRolesFromCompany(int id)
+        {
+            var roles = await _companyService.GetAllRolesFromCompany(id);
+            return Ok(roles);
         }
     }
 }

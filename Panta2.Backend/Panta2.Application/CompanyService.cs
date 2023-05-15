@@ -4,6 +4,8 @@ using Panta2.Core.Entities;
 using Imagekit.Sdk;
 using Microsoft.Extensions.Configuration;
 using Panta2.Core.Models.Company;
+using Panta2.Core.Models.User;
+using Panta2.Core.Models.Role;
 
 namespace Panta2.Application
 {
@@ -89,6 +91,16 @@ namespace Panta2.Application
         public async Task<bool> DeleteCompany(int id)
         {
             return await _companyRepository.Remove(id);
+        }
+
+        public async Task<IEnumerable<UserWithRoleNameModel>> GetUsersWithRoleName(int id)
+        {
+            return await _companyRepository.GetUsersWithRoleNameFromCompany(id);
+        }
+
+        public async Task<IEnumerable<RoleModel>> GetAllRolesFromCompany(int id)
+        {
+            return await _companyRepository.GetRolesFromCompany(id);
         }
     }
 }

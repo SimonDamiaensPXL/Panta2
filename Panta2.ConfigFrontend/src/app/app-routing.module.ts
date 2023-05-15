@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageNotFoundComponent } from './shared/page-not-found.component';
 import { ServicesOverviewComponent } from './service/services-overview/services-overview.component';
 import { CompaniesOverviewComponent } from './company/companies-overview/companies-overview.component';
@@ -19,8 +18,8 @@ const routes: Routes = [
   { path: 'users', component: UsersOverviewComponent},
   { path: 'companies/add', component: AddCompanyComponent},
   { path: 'services/add', component: AddServiceComponent},
-  { path: 'users/add', component: AddUserComponent},
   { path: 'company/:id', component: EditCompanyComponent},
+  { path: 'company/:id/add-user', component: AddUserComponent},
   { path: 'service/:id', component: EditServiceComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}
