@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { CompanyCreation } from '../../models/create-company.model';
+import { RoleCreation } from '../../models/create-role.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class CompanyService {
 
   createCompany(name: string, logo: string) {
     return this.apiService.post('/companies', { name, logo });
+  }
+
+  createRole(newRole: RoleCreation, companyId: number) {
+    return this.apiService.post(`/companies/roles/${companyId}`, newRole);
   }
 
   editCompanyName(id: number, name: string) {

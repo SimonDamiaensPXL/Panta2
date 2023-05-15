@@ -120,4 +120,8 @@ export class EditCompanyComponent implements OnInit {
   goToAddUser(): void {
     this.router.navigate([`/company/${this.companyId}/add-user`]);
   }
+
+  goToAddRole(): void {
+    this.router.navigate([`/company/${this.companyId}/add-role`]);
+  }
 }

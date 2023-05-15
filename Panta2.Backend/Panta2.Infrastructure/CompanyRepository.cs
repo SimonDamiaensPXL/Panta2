@@ -5,6 +5,7 @@ using Panta2.Core.Entities;
 using Panta2.Core.Models.Role;
 using Panta2.Core.Models.User;
 using Panta2.Infrastructure.Context;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Panta2.Infrastructure
 {
@@ -108,6 +109,33 @@ namespace Panta2.Infrastructure
             {
                 var roles = await connection.QueryAsync<RoleModel>(query, new { id });
                 return roles;
+            }
+        }
+
+        public async Task<int> AddRoleToCompany(RoleCreationModel model, int companyId)
+        {
+            Role newRole = new()
+            {
+                Name = model.Name,
+                NormalizedName = model.Name.ToUpper(),
+            };
+
+            using (var connection = _context.CreateConnection())
+            {
+                var roleId = await connection.InsertAsync(newRole);
+
+                CompanyRole newCompanyRole = new()
+                {
+                    CompanyId = companyId,
+                    RoleId = roleId
+                };
+
+                await connection.InsertAsync(newCompanyRole);
+
+                var serviceRoles = model.Services.Select(e => new ServiceRole { RoleId =  roleId, ServiceId = e }).ToList();
+
+                await connection.InsertAsync(serviceRoles);
+
             }
         }
     }

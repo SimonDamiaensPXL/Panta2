@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Panta2.Core.Contracts;
+using Panta2.Core.Entities;
 using Panta2.Core.Models.Company;
 using Panta2.Core.Models.Role;
 using Panta2.Core.Models.User;
@@ -43,6 +44,7 @@ namespace Panta2.ConfigAPI.Controllers
             await _companyService.InsertCompany(company);
             return NoContent();
         }
+
 
         [HttpPut("name")]
         public async Task<ActionResult> UpdateCompanyName(CompanyNameUpdateModel company)
@@ -89,6 +91,12 @@ namespace Panta2.ConfigAPI.Controllers
         {
             var roles = await _companyService.GetAllRolesFromCompany(id);
             return Ok(roles);
+        }
+
+        [HttpPost("roles/{id}")]
+        public async Task<ActionResult> CreateRole(RoleCreationModel role, int id)
+        {
+            return Ok(new { role, id });
         }
     }
 }

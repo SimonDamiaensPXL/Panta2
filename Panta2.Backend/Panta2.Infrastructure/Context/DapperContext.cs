@@ -30,6 +30,18 @@ namespace Panta2.Infrastructure.Context
                 {
                     return "AspNetUsers";
                 }
+                else if (entityType == typeof(Role))
+                {
+                    return "AspNetRoles";
+                }
+                else if (entityType == typeof(CompanyRole))
+                {
+                    return "CompanyRole";
+                }
+                else if (entityType == typeof(ServiceRole))
+                {
+                    return "ServiceRole";
+                }
                 throw new Exception($"Not supported entity type {entityType}");
             };
         }
