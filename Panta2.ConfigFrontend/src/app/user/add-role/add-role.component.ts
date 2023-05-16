@@ -3,9 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { RoleCreation } from 'src/app/core/models/create-role.model';
-import { Service } from 'src/app/core/models/service.model';
 import { CompanyService } from 'src/app/core/services/company/company.service';
-import { ServiceService } from 'src/app/core/services/service/service.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 
 @Component({
@@ -20,7 +18,7 @@ export class AddRoleComponent {
   };
   companyName?: string;
   companyUrl?: string;
-  services: Service[] = [];
+  services: any[] = [];
 
   selectedIds: any[] = [];
   
@@ -29,12 +27,12 @@ export class AddRoleComponent {
   errorMessage: string = '';
   isSubmitted = false;
 
-  constructor(private serviceService: ServiceService, private companyService: CompanyService, private userService: UserService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private companyService: CompanyService, private userService: UserService, private route: ActivatedRoute, private router: Router) { }
 
   async ngOnInit(): Promise<void> {
     this.companyId = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.services = await firstValueFrom(this.serviceService.getServices());
+    this.services = await firstValueFrom(this.companyService.getCompanyServiceNames(this.companyId));
 
     const company = await firstValueFrom(this.companyService.getCompanyById(this.companyId));
     this.companyName = company.name;
@@ -55,8 +53,7 @@ export class AddRoleComponent {
       },
       error: err => {
         this.isUploading = false;
-        console.log(err);
-        this.errorMessage = "Something went wrong! Please try again.";
+        this.errorMessage = err.error?.message || "Something went wrong! Please try again.";
         console.log(this.errorMessage);
         this.isUploadFailed = true;
       }
@@ -66,7 +63,6 @@ export class AddRoleComponent {
   OnCheckboxSelect(id: any, event: any): void {
     if (event.target.checked === true) {
       this.selectedIds.push(id);
-      console.log('Selected Ids ', this.selectedIds);
     }
   }
 }

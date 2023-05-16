@@ -4,5 +4,6 @@ namespace Panta2.Core.Entities
 {
     public class Role : IdentityRole<int>
     {
+        public string Discriminator { get; set; }
     }
 }

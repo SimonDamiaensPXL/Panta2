@@ -1,8 +1,11 @@
 ﻿using Dapper;
 using Dapper.Contrib.Extensions;
+using Microsoft.IdentityModel.Tokens;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
+using Panta2.Core.Models.Company;
 using Panta2.Core.Models.Role;
+using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
 using Panta2.Infrastructure.Context;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -118,10 +121,23 @@ namespace Panta2.Infrastructure
             {
                 Name = model.Name,
                 NormalizedName = model.Name.ToUpper(),
+                Discriminator = "ApplicationRole"
             };
+
+            var query = "SELECT r.Name " +
+                        "FROM AspNetRoles r " +
+                        "JOIN CompanyRole cr ON r.Id = cr.RoleId " +
+                        "WHERE r.Name = @name AND cr.CompanyId = @id";
 
             using (var connection = _context.CreateConnection())
             {
+                var role = await connection.QueryAsync<RoleModel>(query, new { name = model.Name, id = companyId });
+
+                if (!role.IsNullOrEmpty())
+                {
+                    return 0;
+                }
+
                 var roleId = await connection.InsertAsync(newRole);
 
                 CompanyRole newCompanyRole = new()
@@ -132,10 +148,38 @@ namespace Panta2.Infrastructure
 
                 await connection.InsertAsync(newCompanyRole);
 
-                var serviceRoles = model.Services.Select(e => new ServiceRole { RoleId =  roleId, ServiceId = e }).ToList();
+                var serviceRoles = model.Services.Select(e => new RoleService { RoleId =  roleId, ServiceId = e }).ToList();
 
                 await connection.InsertAsync(serviceRoles);
 
+            }
+
+            return companyId;
+        }
+
+        public async Task<IEnumerable<ServiceModel>> GetServicesFromCompany(int id)
+        {
+            var query = "SELECT cs.ServiceId AS Id, cs.Name, cs.Icon, s.Link " +
+                        "FROM CompanyService cs " +
+                        "JOIN Services s ON cs.ServiceId = s.Id " +
+                        "WHERE CompanyId = @id";
+            using (var connection = _context.CreateConnection())
+            {
+                var companyServices = await connection.QueryAsync<ServiceModel>(query, new { id });
+                return companyServices;
+            }
+        }
+
+        public async Task<IEnumerable<ServiceNameModel>> GetServiceNamesFromCompany(int id)
+        {
+            var query = "SELECT ServiceId AS Id,Name " +
+                        "FROM CompanyService " +
+                        "WHERE CompanyId = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var companyServices = await connection.QueryAsync<ServiceNameModel>(query, new { id });
+                return companyServices;
             }
         }
     }
