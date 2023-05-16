@@ -9,9 +9,6 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var imageKitPrivatKey = builder.Configuration["ImageKitSettings:PrivateKey"];
-builder.Services.AddSingleton(provider => imageKitPrivatKey);
-
 // Add services to the container.
 builder.Services.AddSingleton<DapperContext>();
 
