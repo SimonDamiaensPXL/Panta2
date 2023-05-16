@@ -16,7 +16,7 @@ namespace Panta2.Application
         private readonly ImagekitClient _imagekit;
         private readonly IConfiguration _configuration;
 
-        public CompanyService(IConfiguration configuration, ICompanyRepository companyRepository, IMapper mapper)
+        public CompanyService(IConfiguration configuration, ICompanyRepository companyRepository, IMapper mapper, string privateKey)
         {
             _companyRepository = companyRepository ?? throw new ArgumentNullException(nameof(companyRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -24,7 +24,7 @@ namespace Panta2.Application
 
             _imagekit = new ImagekitClient(
                 _configuration["ImageKitSettings:PublicKey"],
-                _configuration["ImageKitSettings:PrivateKey"],
+                privateKey,
                 _configuration["ImageKitSettings:UrlEndpoint"]
                 );
         }
