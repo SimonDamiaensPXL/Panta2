@@ -12,6 +12,10 @@ export class ServiceService {
     return this.apiService.get('/services');
   }
 
+  getServicesFromCompany(companyId: number) {
+    return this.apiService.get(`/services/${companyId}`);
+  }
+
   getServiceById(serviceId: number) {
     return this.apiService.get(`/services/${serviceId}`);
   }

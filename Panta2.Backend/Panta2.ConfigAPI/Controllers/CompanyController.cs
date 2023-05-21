@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Core.Models.Company;
 using Panta2.Core.Models.Role;
+using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
 
 namespace Panta2.ConfigAPI.Controllers
@@ -96,9 +99,33 @@ namespace Panta2.ConfigAPI.Controllers
         [HttpPost("roles/{id}")]
         public async Task<ActionResult> CreateRole(RoleCreationModel model, int id)
         {
-            var newRole = await _companyService.CreateRole(model, id);
+            if (model.Services.IsNullOrEmpty())
+            {
+                return BadRequest(new { message = "No services were added to the role!" });
+            }
 
-            return Ok(newRole);
+            var roleId = await _companyService.CreateRole(model, id);
+
+            if (roleId == 0)
+            {
+                return Conflict(new { message = "Given role already exists!" });
+            }
+
+            return Ok(roleId);
+        }
+
+        [HttpGet("services/{id}")]
+        public async Task<ActionResult<IEnumerable<ServiceModel>>> GetAllServicesFromCompany(int id)
+        {
+            var services = await _companyService.GetServiceListFromCompany(id);
+            return Ok(services);
+        }
+
+        [HttpGet("servicenames/{id}")]
+        public async Task<ActionResult<IEnumerable<ServiceNameModel>>> GetAllServiceNamesFromCompany(int id)
+        {
+            var roles = await _companyService.GetServiceNamesFromCompany(id);
+            return Ok(roles);
         }
     }
 }

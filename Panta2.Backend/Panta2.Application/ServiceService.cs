@@ -21,8 +21,8 @@ namespace Panta2.Application
         {
             _serviceRepository = serviceRepository ?? throw new ArgumentNullException(nameof(serviceRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+
             _imagekit = new ImagekitClient(
                 _configuration["ImageKitSettings:PublicKey"],
                 _configuration["ImageKitSettings:PrivateKey"],

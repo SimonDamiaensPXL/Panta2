@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Company } from 'src/app/core/models/company.model';
+import { Service } from 'src/app/core/models/service.model';
 import { User } from 'src/app/core/models/user.model';
 import { CompanyService } from 'src/app/core/services/company/company.service';
 
@@ -18,6 +19,7 @@ export class EditCompanyComponent implements OnInit {
   };
   users: User[] = [];
   roles: any[] = [];
+  services: Service[] = [];
   image?: any;
   isUploading: boolean = false;
   isUploadFailed: boolean = false;
@@ -31,6 +33,8 @@ export class EditCompanyComponent implements OnInit {
     this.users = await firstValueFrom(this.companyService.getCompanyUsers(this.companyId));
 
     this.roles = await firstValueFrom(this.companyService.getCompanyRoles(this.companyId));
+
+    this.services = await firstValueFrom(this.companyService.getCompanyServices(this.companyId));
 
     await this.getCompany();
   }
@@ -122,6 +126,10 @@ export class EditCompanyComponent implements OnInit {
   }
 
   goToAddRole(): void {
+    this.router.navigate([`/company/${this.companyId}/add-role`]);
+  }
+
+  goToAddService(): void {
     this.router.navigate([`/company/${this.companyId}/add-role`]);
   }
 }

@@ -38,9 +38,9 @@ namespace Panta2.Infrastructure.Context
                 {
                     return "CompanyRole";
                 }
-                else if (entityType == typeof(ServiceRole))
+                else if (entityType == typeof(RoleService))
                 {
-                    return "ServiceRole";
+                    return "RoleService";
                 }
                 throw new Exception($"Not supported entity type {entityType}");
             };

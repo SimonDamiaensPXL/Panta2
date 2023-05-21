@@ -93,13 +93,13 @@
             </form>
         </div>
         <div class="flex w-full">
-            <div class="flex flex-col items-end w-[59%] mr-[2%]">
+            <div class="flex flex-col items-end max-h-[350px] w-[59%] mr-[2%]">
                 <button (click)="goToAddUser()"
                     class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-8 text-center inline-flex items-center mb-3">Add
                     user</button>
                 <div class="w-full relative overflow-x-auto shadow-md rounded-lg">
                     <table class="w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <thead class="text-xs text-gray-700 uppercase sticky top-0 bg-gray-100">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     id
@@ -112,8 +112,8 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr *ngFor="let user of users" class="bg-white border-b hover:bg-gray-100 font-semibold">
+                        <tbody class="overflow-y-auto">
+                            <tr *ngFor="let user of users" class="h-[50px] bg-white border-b hover:bg-gray-100 font-semibold">
                                 <td class="px-6 p-4">
                                     {{user.id}}
                                 </td>
@@ -129,13 +129,13 @@
                 </div>
             </div>
 
-            <div class="flex flex-col items-end w-[39%]">
+            <div class="flex flex-col items-end max-h-[350px] w-[39%]">
                 <button (click)="goToAddRole()"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-8 text-center inline-flex items-center mb-3">Add
                     role</button>
                 <div class="w-full relative overflow-x-auto shadow-md rounded-lg">
                     <table class="w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <thead class="text-xs text-gray-700 uppercase sticky top-0 bg-gray-100">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     id
@@ -145,7 +145,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="max-h-[350px] overflow-y-auto">
                             <tr *ngFor="let role of roles" class="bg-white border-b hover:bg-gray-100 font-semibold">
                                 <td class="px-6 p-4">
                                     {{role.id}}
@@ -160,7 +160,48 @@
             </div>
         </div>
 
-
+        <div class="flex justify-between items-end">
+            <h1 class="text-2xl font-bold mt-5 mb-2">Services</h1>
+            <button (click)="goToAddService()"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-8 text-center inline-flex items-center mb-3">Add
+            service</button>
+        </div>
+        <div class="relative overflow-x-auto max-h-[450px] shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase sticky top-0 bg-gray-100">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            <span class="sr-only">Image</span>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Id
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Service
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Link
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="max-h-[450px] overflow-y-auto">
+                    <tr *ngFor="let service of services" routerLink="/service/{{service.id}}" class="bg-white border-b hover:bg-gray-100 cursor-pointer">
+                        <td class="w-32 p-4">
+                            <img src={{service.icon}} alt="Service Image">
+                        </td>
+                        <td class="px-6 py-3 font-semibold text-gray-900">
+                            {{service.id}}
+                        </td>
+                        <td class="px-6 py-3 font-semibold text-gray-900">
+                            {{service.name}}
+                        </td>
+                        <td class="px-6 py-3 font-semibold text-gray-900">
+                            <a href="{{service.link}}" target="_blank">{{service.link}}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <!-- <app-users-list [companyId]="companyId" ></app-users-list> -->
 
         <div class=" text-green-600" *ngIf="isUploading">

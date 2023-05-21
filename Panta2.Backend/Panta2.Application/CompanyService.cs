@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Panta2.Core.Models.Company;
 using Panta2.Core.Models.User;
 using Panta2.Core.Models.Role;
+using Panta2.Core.Models.Service;
 
 namespace Panta2.Application
 {
@@ -103,10 +104,20 @@ namespace Panta2.Application
             return await _companyRepository.GetRolesFromCompany(id);
         }
 
-        public async Task<RoleModel> CreateRole(RoleCreationModel model, int companyId)
+        public async Task<int> CreateRole(RoleCreationModel model, int companyId)
         {
-            var newRole = await _companyRepository.AddNewRoleToCompany(model, companyId);
-            return _mapper.Map<RoleModel>(newRole);
+            return await _companyRepository.AddRoleToCompany(model, companyId);
+        }
+
+        public async Task<IEnumerable<ServiceModel>> GetServiceListFromCompany(int id)
+        {
+            return await _companyRepository.GetServicesFromCompany(id);
+        }
+
+        public async Task<IEnumerable<ServiceNameModel>> GetServiceNamesFromCompany(int id)
+        {
+            var serviceEntities = await _companyRepository.GetServiceNamesFromCompany(id);
+            return _mapper.Map<IEnumerable<ServiceNameModel>>(serviceEntities);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Panta2.Core.Models.Company;
 using Panta2.Core.Models.Role;
+using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
 
 namespace Panta2.Core.Contracts
@@ -15,6 +16,10 @@ namespace Panta2.Core.Contracts
         Task<bool> DeleteCompany(int id);
         Task<IEnumerable<UserWithRoleNameModel>> GetUsersWithRoleName(int id);
         Task<IEnumerable<RoleModel>> GetAllRolesFromCompany(int id);
-        Task<RoleModel> CreateRole(RoleCreationModel model, int companyId);
+        Task<int> CreateRole(RoleCreationModel model, int companyId);
+        Task<IEnumerable<ServiceModel>> GetServiceListFromCompany(int id);
+        Task<IEnumerable<ServiceNameModel>> GetServiceNamesFromCompany(int id);
+
+
     }
 }

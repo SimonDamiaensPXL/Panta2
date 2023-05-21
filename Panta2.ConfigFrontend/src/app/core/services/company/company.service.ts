@@ -26,6 +26,14 @@ export class CompanyService {
     return this.apiService.get(`/companies/roles/${companyId}`);
   }
 
+  getCompanyServices(companyId: number) {
+    return this.apiService.get(`/companies/services/${companyId}`);
+  }
+
+  getCompanyServiceNames(companyId: number) {
+    return this.apiService.get(`/companies/servicenames/${companyId}`);
+  }
+
   createCompany(name: string, logo: string) {
     return this.apiService.post('/companies', { name, logo });
   }
