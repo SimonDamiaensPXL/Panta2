@@ -114,14 +114,11 @@ namespace Panta2.Infrastructure
             }
         }
 
-        public async Task<Role> AddNewRoleToCompany(RoleCreationModel model, int companyId)
+        public async Task<int> AddNewRoleToCompany(RoleCreationModel model, int companyId)
         {
             Role newRole = new()
             {
-                Name = model.Name
                 Name = model.Name,
-                NormalizedName = model.Name.ToUpper(),
-                Discriminator = "ApplicationRole"
             };
 
             var query = "SELECT r.Name " +

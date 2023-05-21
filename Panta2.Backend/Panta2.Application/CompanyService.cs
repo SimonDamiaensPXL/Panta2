@@ -106,7 +106,7 @@ namespace Panta2.Application
 
         public async Task<int> CreateRole(RoleCreationModel model, int companyId)
         {
-            return await _companyRepository.AddRoleToCompany(model, companyId);
+            return await _companyRepository.AddNewRoleToCompany(model, companyId);
         }
 
         public async Task<IEnumerable<ServiceModel>> GetServiceListFromCompany(int id)
