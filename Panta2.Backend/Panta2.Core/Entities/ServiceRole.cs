@@ -1,6 +1,6 @@
 ﻿namespace Panta2.Core.Entities
 {
-    public class RoleService
+    public class ServiceRole
     {
         public int ServiceId { get; set; }
         public int RoleId { get; set; }

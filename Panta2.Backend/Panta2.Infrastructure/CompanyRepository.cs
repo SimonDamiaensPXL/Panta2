@@ -145,7 +145,7 @@ namespace Panta2.Infrastructure
 
                 await connection.InsertAsync(newCompanyRole);
 
-                var serviceRoles = model.Services.Select(e => new RoleService { RoleId =  roleId, ServiceId = e }).ToList();
+                var serviceRoles = model.Services.Select(e => new ServiceRole { RoleId =  roleId, ServiceId = e }).ToList();
 
                 await connection.InsertAsync(serviceRoles);
 
