@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Panta2.Core.Entities;
 using Panta2.Core.Models.Company;
+using Panta2.Core.Models.Role;
 
 namespace Panta2.Core.Profiles
 {
@@ -7,12 +9,13 @@ namespace Panta2.Core.Profiles
     {
         public CompanyProfile()
         {
-            CreateMap<Entities.Company, CompanyModel>();
-            CreateMap<CompanyModel, Entities.Company>();
-            CreateMap<CompanyCreationModel, Entities.Company>();
-            CreateMap<Entities.Company, CompanyCreationModel>();
-            CreateMap<CompanyNameUpdateModel, Entities.Company>();
-            CreateMap<CompanyLogoUpdateModel, Entities.Company>();
+            CreateMap<Company, CompanyModel>();
+            CreateMap<CompanyModel, Company>();
+            CreateMap<CompanyCreationModel, Company>();
+            CreateMap<Company, CompanyCreationModel>();
+            CreateMap<CompanyNameUpdateModel, Company>();
+            CreateMap<CompanyLogoUpdateModel, Company>();
+            CreateMap<Role, RoleModel>();
         }
     }
 }

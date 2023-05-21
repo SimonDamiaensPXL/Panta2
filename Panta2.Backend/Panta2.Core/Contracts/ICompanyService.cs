@@ -9,12 +9,12 @@ namespace Panta2.Core.Contracts
         Task<IEnumerable<CompanyModel>> GetCompanyList();
         Task<CompanyModel> GetCompanyById(int id);
         Task<string> GetCompanyLogoById(int id);
-        Task<CompanyModel> InsertCompany(CompanyCreationModel company);
+        Task<CompanyModel> CreateCompany(CompanyCreationModel company);
         Task<bool> UpdateCompanyName(CompanyNameUpdateModel company);
         Task<bool> UpdateCompanyLogo(CompanyLogoUpdateModel company);
         Task<bool> DeleteCompany(int id);
         Task<IEnumerable<UserWithRoleNameModel>> GetUsersWithRoleName(int id);
         Task<IEnumerable<RoleModel>> GetAllRolesFromCompany(int id);
-
+        Task<RoleModel> CreateRole(RoleCreationModel model, int companyId);
     }
 }

@@ -47,7 +47,7 @@ namespace Panta2.Application
 
         }
 
-        public async Task<CompanyModel> InsertCompany(CompanyCreationModel company)
+        public async Task<CompanyModel> CreateCompany(CompanyCreationModel company)
         {
             FileCreateRequest fileCreateRequest = new FileCreateRequest
             {
@@ -101,6 +101,12 @@ namespace Panta2.Application
         public async Task<IEnumerable<RoleModel>> GetAllRolesFromCompany(int id)
         {
             return await _companyRepository.GetRolesFromCompany(id);
+        }
+
+        public async Task<RoleModel> CreateRole(RoleCreationModel model, int companyId)
+        {
+            var newRole = await _companyRepository.AddNewRoleToCompany(model, companyId);
+            return _mapper.Map<RoleModel>(newRole);
         }
     }
 }

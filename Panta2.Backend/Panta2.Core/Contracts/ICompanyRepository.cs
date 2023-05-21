@@ -15,5 +15,6 @@ namespace Panta2.Core.Contracts
         Task<bool> Remove(int id);
         Task<IEnumerable<UserWithRoleNameModel>> GetUsersWithRoleNameFromCompany(int id);
         Task<IEnumerable<RoleModel>> GetRolesFromCompany(int id);
+        Task<Role> AddNewRoleToCompany(RoleCreationModel model, int companyId);
     }
 }

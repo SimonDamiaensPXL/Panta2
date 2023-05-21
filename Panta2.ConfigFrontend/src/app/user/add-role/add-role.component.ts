@@ -68,5 +68,9 @@ export class AddRoleComponent {
       this.selectedIds.push(id);
       console.log('Selected Ids ', this.selectedIds);
     }
+    if (event.target.checked === false) {
+      this.selectedIds = this.selectedIds.filter((item) => item !== id);
+      console.log('Selected Ids ', this.selectedIds);
+    }
   }
 }

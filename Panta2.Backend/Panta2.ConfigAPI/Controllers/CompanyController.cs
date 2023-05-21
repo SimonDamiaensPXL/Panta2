@@ -39,17 +39,17 @@ namespace Panta2.ConfigAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateCompany(CompanyCreationModel company)
+        public async Task<ActionResult> CreateCompany(CompanyCreationModel model)
         {
-            await _companyService.InsertCompany(company);
+            await _companyService.CreateCompany(model);
             return NoContent();
         }
 
 
         [HttpPut("name")]
-        public async Task<ActionResult> UpdateCompanyName(CompanyNameUpdateModel company)
+        public async Task<ActionResult> UpdateCompanyName(CompanyNameUpdateModel model)
         {
-            if (!await _companyService.UpdateCompanyName(company))
+            if (!await _companyService.UpdateCompanyName(model))
             {
                 return NotFound();
             }
@@ -58,9 +58,9 @@ namespace Panta2.ConfigAPI.Controllers
         }
 
         [HttpPut("logo")]
-        public async Task<ActionResult> UpdateCompanyLogo(CompanyLogoUpdateModel company)
+        public async Task<ActionResult> UpdateCompanyLogo(CompanyLogoUpdateModel model)
         {
-            if (!await _companyService.UpdateCompanyLogo(company))
+            if (!await _companyService.UpdateCompanyLogo(model))
             {
                 return NotFound();
             }
@@ -94,9 +94,11 @@ namespace Panta2.ConfigAPI.Controllers
         }
 
         [HttpPost("roles/{id}")]
-        public async Task<ActionResult> CreateRole(RoleCreationModel role, int id)
+        public async Task<ActionResult> CreateRole(RoleCreationModel model, int id)
         {
-            return Ok(new { role, id });
+            var newRole = await _companyService.CreateRole(model, id);
+
+            return Ok(newRole);
         }
     }
 }
