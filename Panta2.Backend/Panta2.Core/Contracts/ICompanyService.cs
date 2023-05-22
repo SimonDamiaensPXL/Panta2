@@ -18,8 +18,11 @@ namespace Panta2.Core.Contracts
         Task<IEnumerable<RoleModel>> GetAllRolesFromCompany(int id);
         Task<int> CreateRole(RoleCreationModel model, int companyId);
         Task<IEnumerable<ServiceModel>> GetServiceListFromCompany(int id);
+        Task<ServiceModel> GetSingleServiceFromCompany(int companyId, int serivceId);
         Task<IEnumerable<ServiceNameModel>> GetServiceNamesFromCompany(int id);
-
-
+        Task<IEnumerable<ServiceNameModel>> GetServiceNamesNotInCompany(int id);
+        Task<int> AddServicesToCompany(CompanyServicesCreationModel model);
+        Task<bool> UpdateService(ServiceNameUpdateModel model, int companyId);
+        Task<bool> UpdateService(ServiceIconUpdateModel model, int companyId);
     }
 }

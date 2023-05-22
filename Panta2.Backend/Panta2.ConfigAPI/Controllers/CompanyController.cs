@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Panta2.Application;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Core.Models.Company;
@@ -121,11 +122,60 @@ namespace Panta2.ConfigAPI.Controllers
             return Ok(services);
         }
 
-        [HttpGet("servicenames/{id}")]
+        [HttpGet("{companyId}/service/{serviceId}")]
+        public async Task<ActionResult<ServiceModel>> GetSingleServicesFromCompany(int companyId, int serviceId)
+        {
+            var service = await _companyService.GetSingleServiceFromCompany(companyId, serviceId);
+            return Ok(service);
+        }
+
+        [HttpGet("service-names/{id}")]
         public async Task<ActionResult<IEnumerable<ServiceNameModel>>> GetAllServiceNamesFromCompany(int id)
         {
             var roles = await _companyService.GetServiceNamesFromCompany(id);
             return Ok(roles);
+        }
+
+        [HttpGet("service-names-not-in/{id}")]
+        public async Task<ActionResult<IEnumerable<ServiceNameModel>>> GetAllServiceNamesNotInCompany(int id)
+        {
+            var roles = await _companyService.GetServiceNamesNotInCompany(id);
+            return Ok(roles);
+        }
+
+        [HttpPost("company-services")]
+        public async Task<ActionResult> AddCompanyServices(CompanyServicesCreationModel model)
+        {
+            if (model.Services.IsNullOrEmpty())
+            {
+                return BadRequest(new { message = "No services were added!" });
+            }
+
+            var companyId = await _companyService.AddServicesToCompany(model);
+
+            return Ok(companyId);
+        }
+
+        [HttpPut("{companyId}/service-name")]
+        public async Task<ActionResult> UpdateServiceName(ServiceNameUpdateModel model, int companyId)
+        {
+            if (!await _companyService.UpdateService(model, companyId))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("{companyId}/service-icon")]
+        public async Task<ActionResult> UpdateServiceIcon(ServiceIconUpdateModel model, int companyId)
+        {
+            if (!await _companyService.UpdateService(model, companyId))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }

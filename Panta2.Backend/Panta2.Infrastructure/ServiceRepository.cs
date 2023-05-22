@@ -42,6 +42,7 @@ namespace Panta2.Infrastructure
                 return service;
             }
         }
+
         public async Task<bool> UpdateName(Service service)
         {
             var query = "UPDATE Services SET Name = @name WHERE Id = @id";
@@ -53,17 +54,6 @@ namespace Panta2.Infrastructure
             }
         }
 
-        public async Task<bool> UpdateLink(Service service)
-        {
-            var query = "UPDATE Services SET Link = @link WHERE Id = @id";
-
-            using (var connection = _context.CreateConnection())
-            {
-                var rowsAffected = await connection.ExecuteAsync(query, new { link = service.Link, id = service.Id });
-                return rowsAffected == 1;
-            }
-        }
-
         public async Task<bool> UpdateIcon(Service service)
         {
             var query = "UPDATE Services SET Icon = @icon WHERE Id = @id";
@@ -71,6 +61,17 @@ namespace Panta2.Infrastructure
             using (var connection = _context.CreateConnection())
             {
                 var rowsAffected = await connection.ExecuteAsync(query, new { icon = service.Icon, id = service.Id });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateLink(Service service)
+        {
+            var query = "UPDATE Services SET Link = @link WHERE Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { link = service.Link, id = service.Id });
                 return rowsAffected == 1;
             }
         }

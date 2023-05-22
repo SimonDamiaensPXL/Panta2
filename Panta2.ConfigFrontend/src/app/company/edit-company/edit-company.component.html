@@ -185,7 +185,7 @@
                     </tr>
                 </thead>
                 <tbody class="max-h-[450px] overflow-y-auto">
-                    <tr *ngFor="let service of services" routerLink="/service/{{service.id}}" class="bg-white border-b hover:bg-gray-100 cursor-pointer">
+                    <tr *ngFor="let service of services" routerLink="/company/{{companyId}}/edit-service/{{service.id}}" class="bg-white border-b hover:bg-gray-100 cursor-pointer">
                         <td class="w-32 p-4">
                             <img src={{service.icon}} alt="Service Image">
                         </td>
@@ -202,7 +202,6 @@
                 </tbody>
             </table>
         </div>
-        <!-- <app-users-list [companyId]="companyId" ></app-users-list> -->
 
         <div class=" text-green-600" *ngIf="isUploading">
             <div class="h-full flex flex-col items-center justify-center">

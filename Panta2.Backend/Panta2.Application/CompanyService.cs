@@ -7,6 +7,7 @@ using Panta2.Core.Models.Company;
 using Panta2.Core.Models.User;
 using Panta2.Core.Models.Role;
 using Panta2.Core.Models.Service;
+using Panta2.Infrastructure;
 
 namespace Panta2.Application
 {
@@ -114,10 +115,48 @@ namespace Panta2.Application
             return await _companyRepository.GetServicesFromCompany(id);
         }
 
+        public async Task<ServiceModel> GetSingleServiceFromCompany(int companyId, int serivceId)
+        {
+            return await _companyRepository.GetServiceFromCompany(companyId, serivceId);
+        }
+
         public async Task<IEnumerable<ServiceNameModel>> GetServiceNamesFromCompany(int id)
         {
             var serviceEntities = await _companyRepository.GetServiceNamesFromCompany(id);
             return _mapper.Map<IEnumerable<ServiceNameModel>>(serviceEntities);
+        }
+
+        public async Task<IEnumerable<ServiceNameModel>> GetServiceNamesNotInCompany(int id)
+        {
+            var serviceEntities = await _companyRepository.GetServiceNamesNotInCompany(id);
+            return _mapper.Map<IEnumerable<ServiceNameModel>>(serviceEntities);
+        }
+
+        public async Task<int> AddServicesToCompany(CompanyServicesCreationModel model)
+        {
+            return await _companyRepository.AddServicesToCompany(model);
+        }
+
+        public async Task<bool> UpdateService(ServiceNameUpdateModel model, int companyId)
+        {
+            var updateService = _mapper.Map<Service>(model);
+            return await _companyRepository.UpdateServiceName(updateService, companyId);
+        }
+
+        public async Task<bool> UpdateService(ServiceIconUpdateModel model, int companyId)
+        {
+            FileCreateRequest fileCreateRequest = new FileCreateRequest
+            {
+                file = model.Icon,
+                fileName = $"{model.Name}-{Guid.NewGuid()}",
+                folder = "assets/images/icons"
+            };
+            Result resp = _imagekit.Upload(fileCreateRequest);
+
+            model.Icon = resp.url;
+
+            var updateCompany = _mapper.Map<Service>(model);
+            return await _companyRepository.UpdateServiceIcon(updateCompany, companyId);
         }
     }
 }

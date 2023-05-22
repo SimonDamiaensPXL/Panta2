@@ -42,8 +42,7 @@ namespace Panta2.Infrastructure
 
             using (var connection = _context.CreateConnection())
             {
-                var logo = await connection.QueryFirstOrDefaultAsync<string>(query, new { id });
-                return logo;
+                return await connection.QueryFirstOrDefaultAsync<string>(query, new { id });
             }
         }
 
@@ -96,8 +95,7 @@ namespace Panta2.Infrastructure
                         "WHERE u.CompanyId = @id";
             using (var connection = _context.CreateConnection())
             {
-                var users = await connection.QueryAsync<UserWithRoleNameModel>(query, new { id });
-                return users;
+                return await connection.QueryAsync<UserWithRoleNameModel>(query, new { id });
             }
         }
 
@@ -109,8 +107,7 @@ namespace Panta2.Infrastructure
                         "WHERE cr.CompanyId = @id";
             using (var connection = _context.CreateConnection())
             {
-                var roles = await connection.QueryAsync<RoleModel>(query, new { id });
-                return roles;
+                return await connection.QueryAsync<RoleModel>(query, new { id });
             }
         }
 
@@ -162,8 +159,18 @@ namespace Panta2.Infrastructure
                         "WHERE CompanyId = @id";
             using (var connection = _context.CreateConnection())
             {
-                var companyServices = await connection.QueryAsync<ServiceModel>(query, new { id });
-                return companyServices;
+                return await connection.QueryAsync<ServiceModel>(query, new { id });
+            }
+        }
+
+        public async Task<ServiceModel> GetServiceFromCompany(int companyId, int serviceId)
+        {
+            var query = "SELECT ServiceId AS Id, Name, Icon " +
+                        "FROM CompanyService " +
+                        "WHERE CompanyId = @companyId AND ServiceId = @serviceId";
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.QueryFirstOrDefaultAsync<ServiceModel>(query, new { companyId, serviceId });
             }
         }
 
@@ -175,8 +182,76 @@ namespace Panta2.Infrastructure
 
             using (var connection = _context.CreateConnection())
             {
-                var companyServices = await connection.QueryAsync<ServiceNameModel>(query, new { id });
-                return companyServices;
+                return await connection.QueryAsync<ServiceNameModel>(query, new { id });
+            }
+        }
+
+        public async Task<IEnumerable<ServiceNameModel>> GetServiceNamesNotInCompany(int id)
+        {
+            var query = "SELECT Id, Name " +
+                        "FROM Services " +
+                        "WHERE Id NOT IN (" +
+                        "    SELECT ServiceId " +
+                        "    FROM CompanyService " +
+                        "    WHERE CompanyId = @id " +
+                        ")";
+
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.QueryAsync<ServiceNameModel>(query, new { id });
+            }
+        }
+
+        public async Task<int> AddServicesToCompany(CompanyServicesCreationModel model)
+        {
+            var query = "SELECT Id, Name, Icon " +
+                        "FROM Services " +
+                        "WHERE Id NOT IN (" +
+                        "    SELECT ServiceId " +
+                        "    FROM CompanyService " +
+                        "    WHERE CompanyId = @id " +
+                        ")";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var services = await connection.QueryAsync<Service>(query, new { id = model.companyId });
+
+                var companyServices = model.Services.Select(e => new CompanyService
+                {
+                    CompanyId = model.companyId,
+                    ServiceId = e,
+                    Name = services.FirstOrDefault(s => s.Id == e)?.Name,
+                    Icon = services.FirstOrDefault(s => s.Id == e)?.Icon,
+                    Enabled = true,
+                    Order = 0
+                }).ToList();
+
+                await connection.InsertAsync(companyServices);
+
+            }
+
+            return model.companyId;
+        }
+
+        public async Task<bool> UpdateServiceName(Service service, int companyId)
+        {
+            var query = "UPDATE CompanyService SET Name = @name WHERE CompanyId = @companyId AND ServiceId = @serviceId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { name = service.Name, companyId, serviceId = service.Id });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateServiceIcon(Service service, int companyId)
+        {
+            var query = "UPDATE CompanyService SET Icon = @icon WHERE CompanyId = @companyId AND ServiceId = @serviceId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { icon = service.Icon, companyId, serviceId = service.Id });
+                return rowsAffected == 1;
             }
         }
     }
