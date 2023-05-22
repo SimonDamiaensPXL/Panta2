@@ -75,8 +75,8 @@ namespace Panta2.Infrastructure
                         "FROM AspNetUsers u " +
                         "INNER JOIN AspNetUserRoles ur ON u.Id = ur.UserId " +
                         "INNER JOIN AspNetRoles r ON ur.RoleId = r.Id " +
-                        "INNER JOIN RoleService rs ON r.Id = rs.RoleId " +
-                        "INNER JOIN CompanyService cs ON rs.ServiceId = cs.ServiceId " +
+                        "INNER JOIN ServiceRole sr ON r.Id = sr.RoleId " +
+                        "INNER JOIN CompanyService cs ON sr.ServiceId = cs.ServiceId " +
                         "INNER JOIN Services s ON cs.ServiceId = s.Id " +
                         "WHERE u.Id = @id";
             using (var connection = _context.CreateConnection())
@@ -106,8 +106,8 @@ namespace Panta2.Infrastructure
             var query = "SELECT cs.CompanyId, cs.ServiceId, cs.Name, cs.Icon, cs.Enabled, " +
                         "CASE WHEN f.ServiceId IS NULL THEN 0 ELSE 1 END AS isFavorite " +
                         "FROM CompanyService cs " +
-                        "INNER JOIN RoleService rs ON cs.ServiceId = rs.ServiceId " +
-                        "INNER JOIN AspNetRoles r ON rs.RoleId = r.Id " +
+                        "INNER JOIN ServiceRole sr ON cs.ServiceId = sr.ServiceId " +
+                        "INNER JOIN AspNetRoles r ON sr.RoleId = r.Id " +
                         "INNER JOIN AspNetUserRoles ur ON r.Id = ur.RoleId " +
                         "LEFT JOIN Favorites f ON cs.ServiceId = f.ServiceId AND f.UserId = @id " +
                         "WHERE ur.UserId = @id";
