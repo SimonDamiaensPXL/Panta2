@@ -1,4 +1,5 @@
-﻿using Panta2.Core.Models.Service;
+﻿using Panta2.Core.Entities;
+using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
 
 namespace Panta2.Core.Contracts
@@ -6,10 +7,14 @@ namespace Panta2.Core.Contracts
     public interface IUserService
     {
         Task<IEnumerable<UserModel>> GetUserList();
-        Task<UserModel> GetUserById(int id);
+        Task<User> GetUserById(int id);
         Task<UserModel> RegisterUser(UserRegistrationModel user);
         Task<UserModel> LoginUser(string username, string password);
         Task<bool> ChangeFirstName(string username, int id);
+        Task<bool> ChangeUser(UserUserNameUpdateModel model);
+        Task<bool> ChangeUser(UserNameUpdateModel model);
+        Task<bool> ChangeUser(UserEmailUpdateModel model);
+        Task<bool> ChangeUser(UserPasswordUpdateModel model);
         Task<IEnumerable<ServiceModel>> GetAllServicesFromUser(int id);
         Task<IEnumerable<ServiceModel>> GetAllFavoriteServicesFromUser(int id);
         Task<IEnumerable<SerivceWithIsFavoriteModel>> GetAllServicesWithIsFavoriteFromUser(int id);

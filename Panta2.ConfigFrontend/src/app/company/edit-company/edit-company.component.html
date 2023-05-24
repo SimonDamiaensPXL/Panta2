@@ -48,7 +48,7 @@
                 <div *ngIf="company_name.errors && fname.submitted" class="text-red-600">Company name is required!</div>
             </form>
 
-            <form name="logoForm" #flogo="ngForm" (ngSubmit)="image && flogo.form.valid && onLogoSubmit()"
+            <form name="logoForm" #f_logo="ngForm" (ngSubmit)="image && f_logo.form.valid && onLogoSubmit()"
                 class="flex flex-col items-center w-[39%] mb-5">
 
                 <div *ngIf="!image" class="w-full" appDrag (fileDropped)="onFileDropped($event)">
@@ -83,7 +83,7 @@
                     </button>
                 </div>
 
-                <div *ngIf="!image && flogo.submitted" class="mt-5 text-red-600">Company logo is required!</div>
+                <div *ngIf="!image && f_logo.submitted" class="mt-5 text-red-600">Company logo is required!</div>
                 <p *ngIf="isUploadFailed" class="text-red-600 mt-2">{{errorMessage}}</p>
 
 
@@ -113,7 +113,7 @@
                             </tr>
                         </thead>
                         <tbody class="overflow-y-auto">
-                            <tr *ngFor="let user of users" class="h-[50px] bg-white border-b hover:bg-gray-100 font-semibold">
+                            <tr *ngFor="let user of users" routerLink="/company/{{companyId}}/edit-user/{{user.id}}" class="h-[50px] bg-white border-b hover:bg-gray-100 font-semibold cursor-pointer">
                                 <td class="px-6 p-4">
                                     {{user.id}}
                                 </td>

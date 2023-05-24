@@ -3,6 +3,7 @@ using Dapper.Contrib.Extensions;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
 using Panta2.Core.Models.Service;
+using Panta2.Core.Models.User;
 using Panta2.Infrastructure.Context;
 
 namespace Panta2.Infrastructure
@@ -26,9 +27,13 @@ namespace Panta2.Infrastructure
 
         public async Task<User> GetById(int id)
         {
+            var query = "SELECT Id, UserName, Firstname, Lastname, Email, CompanyId " +
+                        "FROM AspNetUsers " +
+                        "WHERE Id = @id";
+
             using (var connection = _context.CreateConnection())
             {
-                return await connection.GetAsync<User>(id);
+                return await connection.QueryFirstOrDefaultAsync<User>(query, new { id });
             }
         }
 
@@ -55,6 +60,52 @@ namespace Panta2.Infrastructure
             using (var connection = _context.CreateConnection())
             {
                 var rowsAffected = await connection.ExecuteAsync(query, new { firstname, id });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateUser(UserUserNameUpdateModel model)
+        {
+            const string query = "UPDATE AspNetUsers SET UserName = @username WHERE Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { username = model.UserName, model.Id });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateUser(UserNameUpdateModel model)
+        {
+            const string query = "UPDATE AspNetUsers " +
+                                 "SET FirstName = @firstname, LastName = @lastname " +
+                                 "WHERE Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { firstname = model.FirstName, lastname = model.LastName, id = model.Id });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateUser(UserEmailUpdateModel model)
+        {
+            const string query = "UPDATE AspNetUsers SET Email = @email WHERE Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { email = model.Email, id = model.Id });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateUser(UserPasswordUpdateModel model)
+        {
+            const string query = "UPDATE AspNetUsers SET PasswordHash = @password WHERE Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { password = model.Password, id = model.Id });
                 return rowsAffected == 1;
             }
         }

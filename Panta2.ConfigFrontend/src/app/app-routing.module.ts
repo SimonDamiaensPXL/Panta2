@@ -13,6 +13,7 @@ import { EditServiceComponent } from './service/edit-service/edit-service.compon
 import { AddRoleComponent } from './user/add-role/add-role.component';
 import { EditCompanyServiceComponent } from './company/edit-company-service/edit-company-service.component';
 import { AddCompanyServiceComponent } from './company/add-company-service/add-company-service.component';
+import { EditUserComponent } from './user/edit-user/edit-user.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeOverviewComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'company/:id/add-service', component: AddCompanyServiceComponent},
   { path: 'service/:id', component: EditServiceComponent},
   { path: 'company/:id/edit-service/:service-id', component: EditCompanyServiceComponent},
+  { path: 'company/:id/edit-user/:user-id', component: EditUserComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}
 ];

@@ -27,10 +27,9 @@ namespace Panta2.Application
             return _mapper.Map<IEnumerable<UserModel>>(userEntities);
         }
 
-        public async Task<UserModel> GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
-            var userEntity = await _userRepository.GetById(id);
-            return _mapper.Map<UserModel>(userEntity);
+            return await _userRepository.GetById(id);
         }
 
         public async Task<UserModel> RegisterUser(UserRegistrationModel user)
@@ -59,6 +58,28 @@ namespace Panta2.Application
         public async Task<bool> ChangeFirstName(string username, int id)
         {
             return await _userRepository.UpdateFirstName(username, id);
+        }
+
+        public async Task<bool> ChangeUser(UserUserNameUpdateModel model)
+        {
+            return await _userRepository.UpdateUser(model);
+        }
+        public async Task<bool> ChangeUser(UserNameUpdateModel model)
+        {
+            return await _userRepository.UpdateUser(model);
+        }
+        public async Task<bool> ChangeUser(UserEmailUpdateModel model)
+        {
+            return await _userRepository.UpdateUser(model);
+        }
+        public async Task<bool> ChangeUser(UserPasswordUpdateModel model)
+        {
+            User user = await GetUserById(model.Id);
+            var hashedPassword = _passwordHasher.HashPassword(user, model.Password);
+
+            model.Password = hashedPassword;
+
+            return await _userRepository.UpdateUser(model);
         }
 
         public async Task<IEnumerable<ServiceModel>> GetAllServicesFromUser(int id)

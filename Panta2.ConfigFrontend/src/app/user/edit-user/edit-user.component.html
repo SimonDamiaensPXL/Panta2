@@ -12,6 +12,18 @@
                     Companies
                 </a>
             </li>
+            <li class="inline-flex items-center">
+                <a href="{{companyUrl}}"
+                    class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-800">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-500" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    {{companyName}}
+                </a>
+            </li>
             <li aria-current="page">
                 <div class="flex items-center">
                     <svg aria-hidden="true" class="w-6 h-6 text-gray-500" fill="currentColor" viewBox="0 0 20 20"
@@ -20,37 +32,99 @@
                             d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                             clip-rule="evenodd"></path>
                     </svg>
-                    <span class="ml-1 text-sm font-medium text-gray-600 md:ml-2">Edit company</span>
+                    <span class="ml-1 text-sm font-medium text-gray-600 md:ml-2">Edit User</span>
                 </div>
             </li>
         </ol>
     </nav>
-
-    <h1 class="text-2xl font-bold mb-5">Edit user details</h1>
-
-    <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onNameSubmit()"
-        class="flex flex-col items-center w-full mb-5">
+    <div class="flex flex-col items-center w-full mb-5">
         <div class="w-2/3 mb-5">
-            <label for="company_name" class="block mb-2 text-sm font-semibold text-gray-900">Company name</label>
-            <div class="flex w-full">
-                <input type="text" id="company_name" name="company_name" [(ngModel)]="form.company_name" required
-                #company_name="ngModel"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5"
-                placeholder="Hospital">
+            <h1 class="text-2xl font-bold mb-5">Edit user</h1>
 
+            <form name="usernameForm" #f_username="ngForm" (ngSubmit)="f_username.form.valid && onUsernameSubmit()"
+                class="w-[49%] mb-5">
+                <label for="username" class="block mb-2 text-sm font-semibold text-gray-900">Username</label>
+                <input type="text" id="username" name="username" [(ngModel)]="form.username" required
+                    #username="ngModel"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Johnny">
                 <button type="submit" [disabled]="isUploading"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-10 text-center inline-flex items-center ml-5">Edit
-                company name</button>
-            </div>
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm h-10 w-40 inline-flex justify-center items-center mt-3">Edit
+                    username</button>
+                <div *ngIf="username.errors && f_username.submitted" class="mt-2 text-red-600">Username is required!
+                </div>
+            </form>
+            <form name="nameForm" #f_name="ngForm" (ngSubmit)="f_name.form.valid && onNameSubmit()" class="mb-5">
+                <div class="flex justify-between items-end">
+                    <div class="w-[49%]">
+                        <label for="firstname" class="block mb-2 text-sm font-semibold text-gray-900">Firstname</label>
+                        <input type="text" id="firstname" name="firstName" [(ngModel)]="form.firstname" required
+                            #firstname="ngModel"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="John">
+                        <div *ngIf="firstname.errors && f_name.submitted" class="mt-2 text-red-600">Firstname is
+                            required!
+                        </div>
+                    </div>
+                    <div class="w-[49%]">
+                        <label for="lastname" class="block text-sm font-semibold text-gray-900">Lastname</label>
+                        <input type="text" id="lastname" name="lastName" [(ngModel)]="form.lastname" required
+                            #lastname="ngModel"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Doe">
+                        <div *ngIf="lastname.errors && f_name.submitted" class="mt-2 text-red-600">Lastname is required!
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" [disabled]="isUploading"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm h-10 w-40 inline-flex justify-center items-center mt-3">Edit
+                    name</button>
+            </form>
+            <form name="emailForm" #f_email="ngForm" (ngSubmit)="f_email.form.valid && onEmailSubmit()"
+                class="w-[49%] mb-5">
+                <label for="email" class="block mb-2 text-sm font-semibold text-gray-900">Email</label>
+                <input type="text" id="email" name="email" [(ngModel)]="form.email" required #email="ngModel"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="john.doe@mail.it">
+                <button type="submit" [disabled]="isUploading"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm h-10 w-40 inline-flex justify-center items-center mt-3">Edit
+                    email</button>
+                <div *ngIf="email.errors && f_email.submitted" class="mt-2 text-red-600">Email is required!</div>
+            </form>
+            <form name="usernameForm" #f_password="ngForm" (ngSubmit)="f_password.form.valid && onPasswordSubmit()">
+                <div class="flex justify-between">
+                    <div class="w-[49%]">
+                        <label for="password" class="block mb-2 text-sm font-semibold text-gray-900">Password</label>
+                        <input type="password" id="password" name="password" [(ngModel)]="form.password" required
+                            #password="ngModel"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <div *ngIf="password.errors && f_password.submitted" class="mt-2 text-red-600">Password is
+                            required!
+                        </div>
+                    </div>
+                    <div class="w-[49%]">
+                        <label for="confirmPassword" class="block mb-2 text-sm font-semibold text-gray-900">Confirm
+                            Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword"
+                            [(ngModel)]="form.confirmPassword" required #confirmPassword="ngModel"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <div *ngIf="confirmPassword.errors && f_password.submitted" class="mt-2 text-red-600">Confirm
+                            Password is
+                            required!</div>
+                    </div>
+                </div>
+                <button type="submit" [disabled]="isUploading"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm h-10 w-40 inline-flex justify-center items-center mt-3">Edit
+                    password</button>
+            </form>
         </div>
-        <div *ngIf="company_name.errors && f.submitted" class="text-red-600">Company name is required!</div>
-    </form>
+    </div>
 
     <div class=" text-green-600" *ngIf="isUploading">
         <div class="h-full flex flex-col items-center justify-center">
             <p class="mb-2 mt-2">Editing company... </p>
-            <svg aria-hidden="true" class="w-8 h-8 mr-2 animate-spin text-gray-600 fill-green-600"
-                viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+            <svg aria-hidden="true" class="w-8 h-8 mr-2 animate-spin text-gray-600 fill-green-600" viewBox="0 0 100 101"
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
                     fill="currentColor" />

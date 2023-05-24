@@ -45,17 +45,87 @@ namespace Panta2.ConfigAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> RegisterUser(UserRegistrationModel user)
+        public async Task<ActionResult> RegisterUser(UserRegistrationModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var createdUser = await _userService.RegisterUser(user);
+            var createdUser = await _userService.RegisterUser(model);
             return CreatedAtRoute("GetUserById", new { createdUser.Id }, createdUser);
         }
 
+        [HttpPut("username")]
+        public async Task<ActionResult> ChangeUser(UserUserNameUpdateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var isFound = await _userService.ChangeUser(model);
+
+            if (!isFound)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("name")]
+        public async Task<ActionResult> ChangeUser(UserNameUpdateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var isFound = await _userService.ChangeUser(model);
+
+            if (!isFound)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("email")]
+        public async Task<ActionResult> ChangeUser(UserEmailUpdateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var isFound = await _userService.ChangeUser(model);
+
+            if (!isFound)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("password")]
+        public async Task<ActionResult> ChangeUser(UserPasswordUpdateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var isFound = await _userService.ChangeUser(model);
+
+            if (!isFound)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }
