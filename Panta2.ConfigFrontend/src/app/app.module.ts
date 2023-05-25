@@ -24,8 +24,6 @@ import { UsersListComponent } from './user/user-list/user-list.component';
 import { CompanyTableComponent } from './company/companies-table/companies-table.component';
 import { ServicesTableComponent } from './service/services-table/services-table.component';
 import { DragDirective } from './core/directives/drag.directive';
-import { ImagekitioAngularModule } from 'imagekitio-angular';
-import { environment } from './environments/environment';
 import { AddServiceComponent } from './service/add-service/add-service.component';
 import { AddUserComponent } from './user/add-user/add-user.component';
 import { EditCompanyComponent } from './company/edit-company/edit-company.component';
@@ -71,12 +69,7 @@ import { EditRoleComponent } from './user/edit-role/edit-role.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
-    ImagekitioAngularModule.forRoot({
-      publicKey: environment.publicKey,
-      urlEndpoint: environment.urlEndpoint,
-      authenticationEndpoint: environment.authenticationEndpoint
-    })
+    HttpClientModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

@@ -2,7 +2,6 @@
 using Dapper.Contrib.Extensions;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
-using Panta2.Core.Models.Role;
 using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
 using Panta2.Infrastructure.Context;
@@ -225,6 +224,23 @@ namespace Panta2.Infrastructure
             {
                 var rowsAffected = await connection.ExecuteAsync(query, new { userId, serviceId });
                 return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> RemoveUser(int userId)
+        {
+            var query = "DELETE FROM AspNetUserRoles " +
+                        "WHERE UserId = @userId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { userId });
+
+                User user = new User { Id = userId };
+
+                var isDeleted = await connection.DeleteAsync(user);
+
+                return rowsAffected == 1 && isDeleted;
             }
         }
     }

@@ -43,4 +43,8 @@ export class UserService {
   editRole(id: number, roleId: number, newRoleId: number) {
     return this.apiService.put('/users/role', { id, roleId, newRoleId });
   }
+
+  deleteUser(id: number) {
+    return this.apiService.delete(`/users/${id}`);
+  }
 }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { Role } from 'src/app/core/models/role.model';
 import { CompanyService } from 'src/app/core/services/company/company.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 
@@ -28,9 +27,12 @@ export class EditUserComponent {
   };
 
   image?: any;
+  showPopup: boolean = false;
+  isDeleting: boolean = false;
   isUploading: boolean = false;
   isUploadFailed: boolean = false;
   errorMessage: string = '';
+  deletingErrorMessage = '';
 
   constructor(private userService: UserService, private companyService: CompanyService, private route: ActivatedRoute, private router: Router) { }
   
@@ -125,9 +127,6 @@ export class EditUserComponent {
   onRoleSubmit(): void {
     this.isUploading = true;
 
-    console.log(this.userRole.id);
-    console.log(this.form.roleId);
-
     if (this.userRole.id == this.form.roleId) {
       this.isUploading = false;
       this.isUploadFailed = true;
@@ -146,6 +145,33 @@ export class EditUserComponent {
         }
       });
     }
+  }
+
+  onUserDelete(): void {
+    this.isDeleting = true;
+
+    this.userService.deleteUser(this.userId).subscribe({
+      next: data => {
+        this.isDeleting = false;
+        this.showPopup = false;
+        this.router.navigate([`/company/${this.companyId}`]);
+      },
+      error: err => {
+        console.log(err);
+        this.deletingErrorMessage = "Deleting user went wrong! Please try again.";
+        this.isUploadFailed = true;
+        this.isDeleting = false;
+        this.showPopup = false;
+      }
+    });
+  }
+
+  onShowPopup(): void {
+    this.showPopup = true;
+  }
+
+  onHidePopup(): void {
+    this.showPopup = false;
   }
 
   OnRadioSelect(id: any, event: any): void {

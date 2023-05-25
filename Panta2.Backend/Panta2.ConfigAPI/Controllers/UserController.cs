@@ -167,5 +167,18 @@ namespace Panta2.ConfigAPI.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var isFound = await _userService.DeleteUser(id);
+
+            if (!isFound)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }

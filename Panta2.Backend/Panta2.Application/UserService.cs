@@ -127,5 +127,10 @@ namespace Panta2.Application
                 return await _userRepository.AddFavoriteService(userId, serviceId);
             }
         }
+
+        public async Task<bool> DeleteUser(int id)
+        {
+            return await _userRepository.RemoveUser(id);
+        }
     }
 }

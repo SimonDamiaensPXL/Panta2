@@ -22,5 +22,6 @@ namespace Panta2.Core.Contracts
         Task<IEnumerable<ServiceModel>> GetAllFavoriteServicesFromUser(int id);
         Task<IEnumerable<SerivceWithIsFavoriteModel>> GetAllServicesWithIsFavoriteFromUser(int id);
         Task<bool> EditFavoritesFromUser(int userId, int serviceId, bool isFavorite);
+        Task<bool> DeleteUser(int id);
     }
 }
