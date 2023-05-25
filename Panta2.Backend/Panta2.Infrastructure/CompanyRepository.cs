@@ -8,6 +8,7 @@ using Panta2.Core.Models.Role;
 using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
 using Panta2.Infrastructure.Context;
+using System.Data;
 
 namespace Panta2.Infrastructure
 {
@@ -43,6 +44,44 @@ namespace Panta2.Infrastructure
             using (var connection = _context.CreateConnection())
             {
                 return await connection.QueryFirstOrDefaultAsync<string>(query, new { id });
+            }
+        }
+
+        public async Task<Role> GetRoleById(int id)
+        {
+            var query = "SELECT Id, Name FROM AspNetRoles WHERE Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.QueryFirstOrDefaultAsync<Role>(query, new { id });
+            }
+        }
+
+        public async Task<IEnumerable<Service>> GetServicesFromRole(int id)
+        {
+            var query = "SELECT s.Id, s.Name " +
+                        "FROM AspNetRoles r " +
+                        "INNER JOIN ServiceRole sr ON r.Id = sr.RoleId " +
+                        "INNER JOIN Services s ON sr.ServiceId = s.Id " +
+                        "WHERE r.Id = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.QueryAsync<Service>(query, new { id });
+            }
+        }
+
+        public async Task<IEnumerable<ServiceWithIsInRoleModel>> GetServicesFromCompanyWithIsInRole(int companyId, int roleId)
+        {
+            var query = "SELECT cs.ServiceId AS Id, cs.Name, sr.RoleId, " +
+                        "       CASE WHEN sr.ServiceId IS NOT NULL THEN 1 ELSE 0 END AS IsInRole " +
+                        "FROM CompanyService cs " +
+                        "LEFT JOIN ServiceRole sr ON cs.ServiceId = sr.ServiceId AND sr.RoleId = @roleId " +
+                        "WHERE cs.CompanyId = @companyId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.QueryAsync<ServiceWithIsInRoleModel>(query, new { roleId, companyId });
             }
         }
 
@@ -252,6 +291,33 @@ namespace Panta2.Infrastructure
             {
                 var rowsAffected = await connection.ExecuteAsync(query, new { icon = service.Icon, companyId, serviceId = service.Id });
                 return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateRoleName(int roleId, string name)
+        {
+            var query = "UPDATE AspNetRoles SET Name = @name WHERE Id = @roleId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { roleId, name });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> UpdateRoleServices(int roleId, int[] serviceIds)
+        {
+            var query = "DELETE FROM ServiceRole WHERE RoleId = @roleId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var rowsAffected = await connection.ExecuteAsync(query, new { roleId });
+
+                var serviceRoles = serviceIds.Select(e => new ServiceRole { RoleId = roleId, ServiceId = e }).ToList();
+
+                await connection.InsertAsync(serviceRoles);
+
+                return rowsAffected != 0;
             }
         }
     }

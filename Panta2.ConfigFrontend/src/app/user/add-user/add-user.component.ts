@@ -50,8 +50,7 @@ export class AddUserComponent implements OnInit {
       error: err => {
         this.isUploading = false;
         console.log(err);
-        this.errorMessage = "Something went wrong! Please try again.";
-        console.log(this.errorMessage);
+        this.errorMessage = err?.error || "Something went wrong! Please try again.";
         this.isUploadFailed = true;
       }
     });

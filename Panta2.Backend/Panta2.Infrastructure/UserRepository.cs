@@ -2,9 +2,11 @@
 using Dapper.Contrib.Extensions;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
+using Panta2.Core.Models.Role;
 using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
 using Panta2.Infrastructure.Context;
+using System.Data;
 
 namespace Panta2.Infrastructure
 {
@@ -37,10 +39,27 @@ namespace Panta2.Infrastructure
             }
         }
 
+        public async Task<User> GetUserByUsername(string username)
+        {
+            const string query = "SELECT * FROM AspNetUsers WHERE UserName = @username";
+
+            using (var connection = _context.CreateConnection())
+            {
+                return await connection.QueryFirstOrDefaultAsync<User>(query, new { username });
+            }
+        }
+
         public async Task<User> CreateAsync(User user, int roleId)
         {
             var query = "INSERT INTO AspNetUserRoles (UserId, RoleId) " +
-                        "VALUES (@userId, @roleId)";
+                                 "VALUES (@userId, @roleId)";
+
+            var checkUser = await GetUserByUsername(user.UserName);
+
+            if (checkUser != null)
+            {
+                throw new ConstraintException();
+            }
 
             using (var connection = _context.CreateConnection())
             {
@@ -110,13 +129,28 @@ namespace Panta2.Infrastructure
             }
         }
 
-        public async Task<User> GetUserByUsername(string username)
+        public async Task<bool> UpdateUser(UserRoleUpdateModel model)
         {
-            const string query = "SELECT * FROM AspNetUsers WHERE UserName = @username";
+            const string query = "UPDATE AspNetUserRoles SET RoleId = @newRoleId WHERE UserId = @userId AND RoleId = @roleId";
 
             using (var connection = _context.CreateConnection())
             {
-                return await connection.QueryFirstOrDefaultAsync<User>(query, new { username });
+                var rowsAffected = await connection.ExecuteAsync(query, new { newRoleId = model.NewRoleId, userId = model.Id, roleId = model.RoleId });
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<Role> GetRoleFromUser(int id)
+        {
+            var query = "SELECT r.Id, r.Name " +
+                        "FROM AspNetUserRoles ur " +
+                        "INNER JOIN AspNetRoles r ON ur.RoleId = r.Id " +
+                        "WHERE ur.UserId = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var role = await connection.QueryFirstOrDefaultAsync<Role>(query, new { id });
+                return role;
             }
         }
 
@@ -127,7 +161,7 @@ namespace Panta2.Infrastructure
                         "INNER JOIN AspNetUserRoles ur ON u.Id = ur.UserId " +
                         "INNER JOIN AspNetRoles r ON ur.RoleId = r.Id " +
                         "INNER JOIN ServiceRole sr ON r.Id = sr.RoleId " +
-                        "INNER JOIN CompanyService cs ON sr.ServiceId = cs.ServiceId " +
+                        "INNER JOIN CompanyService cs ON sr.ServiceId = cs.ServiceId AND u.CompanyId = cs.CompanyId " +
                         "INNER JOIN Services s ON cs.ServiceId = s.Id " +
                         "WHERE u.Id = @id";
             using (var connection = _context.CreateConnection())

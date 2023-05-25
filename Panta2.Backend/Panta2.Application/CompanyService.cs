@@ -49,6 +49,23 @@ namespace Panta2.Application
 
         }
 
+        public async Task<RoleModel> GetRoleById(int id)
+        {
+            var role = await _companyRepository.GetRoleById(id);
+            return _mapper.Map<RoleModel>(role);
+        }
+
+        public async Task<IEnumerable<ServiceModel>> GetAllServicesFromRole(int id)
+        {
+            var serviceEntities = await _companyRepository.GetServicesFromRole(id);
+            return _mapper.Map<IEnumerable<ServiceModel>>(serviceEntities);
+        }
+
+        public async Task<IEnumerable<ServiceWithIsInRoleModel>> GetAllServicesFromCompanyWithIsInRole(int companyId, int roleId)
+        {
+            return await _companyRepository.GetServicesFromCompanyWithIsInRole(companyId, roleId);
+        }
+
         public async Task<CompanyModel> CreateCompany(CompanyCreationModel company)
         {
             FileCreateRequest fileCreateRequest = new FileCreateRequest
@@ -157,6 +174,15 @@ namespace Panta2.Application
 
             var updateCompany = _mapper.Map<Service>(model);
             return await _companyRepository.UpdateServiceIcon(updateCompany, companyId);
+        }
+
+        public async Task<bool> UpdateRole(int roleId, string name)
+        {
+            return await _companyRepository.UpdateRoleName(roleId, name);
+        }
+        public async Task<bool> UpdateRole(int roleId, int[] serviceIds)
+        {
+            return await _companyRepository.UpdateRoleServices(roleId, serviceIds);
         }
     }
 }

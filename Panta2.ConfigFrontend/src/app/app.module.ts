@@ -34,6 +34,7 @@ import { EditUserComponent } from './user/edit-user/edit-user.component';
 import { AddRoleComponent } from './user/add-role/add-role.component';
 import { EditCompanyServiceComponent } from './company//edit-company-service/edit-company-service.component';
 import { AddCompanyServiceComponent } from './company/add-company-service/add-company-service.component';
+import { EditRoleComponent } from './user/edit-role/edit-role.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { AddCompanyServiceComponent } from './company/add-company-service/add-co
     EditUserComponent,
     AddRoleComponent,
     EditCompanyServiceComponent,
-    AddCompanyServiceComponent
+    AddCompanyServiceComponent,
+    EditRoleComponent
   ],
   imports: [
     BrowserModule,

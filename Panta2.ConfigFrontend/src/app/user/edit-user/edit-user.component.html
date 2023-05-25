@@ -91,7 +91,8 @@
                     email</button>
                 <div *ngIf="email.errors && f_email.submitted" class="mt-2 text-red-600">Email is required!</div>
             </form>
-            <form name="usernameForm" #f_password="ngForm" (ngSubmit)="f_password.form.valid && onPasswordSubmit()">
+            <form name="usernameForm" #f_password="ngForm" (ngSubmit)="f_password.form.valid && onPasswordSubmit()"
+                class="mb-5">
                 <div class="flex justify-between">
                     <div class="w-[49%]">
                         <label for="password" class="block mb-2 text-sm font-semibold text-gray-900">Password</label>
@@ -117,6 +118,25 @@
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm h-10 w-40 inline-flex justify-center items-center mt-3">Edit
                     password</button>
             </form>
+
+            <form name="roleForm" #f_role="ngForm" (ngSubmit)="f_role.form.valid && onRoleSubmit()"
+                class="w-[49%] mb-5">
+                <h3 class="mb-2 font-semibold text-gray-900">Role</h3>
+                <div *ngIf="userRole" class="h-full flex flex-wrap">
+                    <div *ngFor="let role of roles" class="flex items-center">
+                        <input [checked]="role.id == userRole.id" id="{{role.id}}" type="radio" value="{{role.id}}"
+                            name="roleId" required (change)="OnRadioSelect(role.id, $event)"
+                            class="h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                        <label for="{{role.id}}"
+                            class="mx-2 text-sm font-medium text-gray-900">{{role.name}}</label>
+                    </div>
+                </div>
+                <button type="submit" [disabled]="isUploading"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm h-10 w-40 inline-flex justify-center items-center mt-3">Edit
+                    role</button>
+                <div *ngIf="this.form.roleId == 0 && f_role.submitted" class="mt-2 text-red-600">Role is required!</div>
+            </form>
+        <p *ngIf="isUploadFailed" class="text-red-600 mt-2">{{errorMessage}}</p>
         </div>
     </div>
 

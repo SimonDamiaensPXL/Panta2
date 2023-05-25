@@ -1,4 +1,5 @@
 ﻿using Panta2.Core.Entities;
+using Panta2.Core.Models.Role;
 using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
 
@@ -15,6 +16,8 @@ namespace Panta2.Core.Contracts
         Task<bool> ChangeUser(UserNameUpdateModel model);
         Task<bool> ChangeUser(UserEmailUpdateModel model);
         Task<bool> ChangeUser(UserPasswordUpdateModel model);
+        Task<bool> ChangeUser(UserRoleUpdateModel model);
+        Task<RoleModel> GetRoleFromUser(int id);
         Task<IEnumerable<ServiceModel>> GetAllServicesFromUser(int id);
         Task<IEnumerable<ServiceModel>> GetAllFavoriteServicesFromUser(int id);
         Task<IEnumerable<SerivceWithIsFavoriteModel>> GetAllServicesWithIsFavoriteFromUser(int id);

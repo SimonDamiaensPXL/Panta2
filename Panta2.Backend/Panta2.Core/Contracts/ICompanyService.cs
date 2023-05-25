@@ -1,4 +1,5 @@
-﻿using Panta2.Core.Models.Company;
+﻿using Panta2.Core.Entities;
+using Panta2.Core.Models.Company;
 using Panta2.Core.Models.Role;
 using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
@@ -10,6 +11,9 @@ namespace Panta2.Core.Contracts
         Task<IEnumerable<CompanyModel>> GetCompanyList();
         Task<CompanyModel> GetCompanyById(int id);
         Task<string> GetCompanyLogoById(int id);
+        Task<RoleModel> GetRoleById(int id);
+        Task<IEnumerable<ServiceModel>> GetAllServicesFromRole(int id);
+        Task<IEnumerable<ServiceWithIsInRoleModel>> GetAllServicesFromCompanyWithIsInRole(int companyId, int roleId);
         Task<CompanyModel> CreateCompany(CompanyCreationModel company);
         Task<bool> UpdateCompanyName(CompanyNameUpdateModel company);
         Task<bool> UpdateCompanyLogo(CompanyLogoUpdateModel company);
@@ -24,5 +28,7 @@ namespace Panta2.Core.Contracts
         Task<int> AddServicesToCompany(CompanyServicesCreationModel model);
         Task<bool> UpdateService(ServiceNameUpdateModel model, int companyId);
         Task<bool> UpdateService(ServiceIconUpdateModel model, int companyId);
+        Task<bool> UpdateRole(int roleId, string name);
+        Task<bool> UpdateRole(int roleId, int[] serviceIds);
     }
 }

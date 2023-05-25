@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
+using Panta2.Core.Models.Role;
 using Panta2.Core.Models.User;
+using System.Data;
 
 namespace Panta2.ConfigAPI.Controllers
 {
@@ -44,6 +46,19 @@ namespace Panta2.ConfigAPI.Controllers
             return Ok(user);
         }
 
+        [HttpGet("role/{id}")]
+        public async Task<ActionResult<RoleModel>> GetUserRole(int id)
+        {
+            var user = await _userService.GetRoleFromUser(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
         [HttpPost]
         public async Task<ActionResult> RegisterUser(UserRegistrationModel model)
         {
@@ -52,8 +67,15 @@ namespace Panta2.ConfigAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var createdUser = await _userService.RegisterUser(model);
-            return CreatedAtRoute("GetUserById", new { createdUser.Id }, createdUser);
+            try
+            {
+                var createdUser = await _userService.RegisterUser(model);
+                return CreatedAtRoute("GetUserById", new { createdUser.Id }, createdUser);
+            }
+            catch (ConstraintException)
+            {
+                return Conflict("Username already taken. Please choose a different username.");
+            }
         }
 
         [HttpPut("username")]
@@ -112,6 +134,24 @@ namespace Panta2.ConfigAPI.Controllers
 
         [HttpPut("password")]
         public async Task<ActionResult> ChangeUser(UserPasswordUpdateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var isFound = await _userService.ChangeUser(model);
+
+            if (!isFound)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("role")]
+        public async Task<ActionResult> ChangeRole(UserRoleUpdateModel model)
         {
             if (!ModelState.IsValid)
             {

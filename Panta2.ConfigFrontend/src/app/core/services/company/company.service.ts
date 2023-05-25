@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
-import { CompanyCreation } from '../../models/create-company.model';
 import { RoleCreation } from '../../models/create-role.model';
 import { CompanyServiceCreation } from '../../models/create-company-service-model';
 
@@ -23,8 +22,16 @@ export class CompanyService {
     return this.apiService.get(`/companies/users/${companyId}`);
   }
 
+  getRoleById(id: number) {
+    return this.apiService.get(`/companies/role/${id}`);
+  }
+
   getCompanyRoles(companyId: number) {
     return this.apiService.get(`/companies/roles/${companyId}`);
+  }
+
+  getRoleServices(roleId: number) {
+    return this.apiService.get(`/companies/role/${roleId}/services`);
   }
 
   getCompanyServices(companyId: number) {
@@ -37,6 +44,10 @@ export class CompanyService {
 
   getCompanyServiceNames(companyId: number) {
     return this.apiService.get(`/companies/service-names/${companyId}`);
+  }
+
+  getCompanyServiceWithIsInRole(companyId: number, roleId: number) {
+    return this.apiService.get(`/companies/${companyId}/role/${roleId}/services`);
   }
 
   getNotInCompanyServiceNames(companyId: number) {
@@ -60,14 +71,22 @@ export class CompanyService {
   }
 
   editServiceName(companyId: number, serviceId: number, name: string) {
-    return this.apiService.put(`/companies/${companyId}/service-name`, {serviceId, name});
+    return this.apiService.put(`/companies/${companyId}/service-name`, {id: serviceId, name});
   }
 
   editServiceIcon(companyId: number, serviceId: number, name: string, icon: string) {
-    return this.apiService.put(`/companies/${companyId}/service-icon`, {serviceId, name, icon});
+    return this.apiService.put(`/companies/${companyId}/service-icon`, { id: serviceId, name, icon});
   }
 
   addCompanyServices(newCompanyServices: CompanyServiceCreation) {
     return this.apiService.post(`/companies/company-services`, newCompanyServices);
+  }
+
+  editRoleName(id: number, name: string) {
+    return this.apiService.put('/companies/role-name', { id, name });
+  }
+
+  editRoleServices(id: number, serviceIds: number[]) {
+    return this.apiService.put('/companies/role-services', { id, serviceIds });
   }
 }

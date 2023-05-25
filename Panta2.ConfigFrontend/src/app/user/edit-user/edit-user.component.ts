@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { Role } from 'src/app/core/models/role.model';
 import { CompanyService } from 'src/app/core/services/company/company.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 
@@ -13,6 +14,8 @@ export class EditUserComponent {
   companyId: number = 0;
   companyName?: string;
   companyUrl?: string;
+  roles?: any[] = [];
+  userRole: any;
 
   form: any = {
     username: null,
@@ -21,6 +24,7 @@ export class EditUserComponent {
     email: null,
     password: null,
     confirmPassword: null,
+    roleId: null
   };
 
   image?: any;
@@ -32,7 +36,6 @@ export class EditUserComponent {
   
   ngOnInit(): void {
     this.getCompanyUser();
-
   }
 
   async getCompanyUser(): Promise<void> {
@@ -41,11 +44,15 @@ export class EditUserComponent {
 
     const user = await firstValueFrom(this.userService.getUserById(this.userId));
     const company = await firstValueFrom(this.companyService.getCompanyById(this.companyId));
+    
+    this.roles = await firstValueFrom(this.companyService.getCompanyRoles(this.companyId));
+    this.userRole = await firstValueFrom(this.userService.getUserRole(this.userId));
 
     this.form.username = user.userName;
     this.form.firstname = user.firstName;
     this.form.lastname = user.lastName;
     this.form.email = user.email;
+    this.form.roleId = this.userRole.id;
 
     this.companyName = company.name;
     this.companyUrl = `/company/${company.id}`
@@ -113,5 +120,37 @@ export class EditUserComponent {
         this.isUploadFailed = true;
       }
     });
+  }
+
+  onRoleSubmit(): void {
+    this.isUploading = true;
+
+    console.log(this.userRole.id);
+    console.log(this.form.roleId);
+
+    if (this.userRole.id == this.form.roleId) {
+      this.isUploading = false;
+      this.isUploadFailed = true;
+      this.errorMessage = "Role has not been changed. Please choose a different role.";
+    } else {
+      this.userService.editRole(this.userId, this.userRole.id, this.form.roleId).subscribe({
+        next: data => {
+          this.isUploadFailed = false;
+          this.isUploading = false;
+        },
+        error: err => {
+          this.isUploading = false;
+          console.log(err);
+          this.errorMessage = "Something went wrong! Please try again.";
+          this.isUploadFailed = true;
+        }
+      });
+    }
+  }
+
+  OnRadioSelect(id: any, event: any): void {
+    if (event.target.checked === true) {
+      this.form.roleId = id;
+    }
   }
 }

@@ -16,6 +16,10 @@ export class UserService {
     return this.apiService.get(`/users/${userId}`);
   }
 
+  getUserRole(userId: number) {
+    return this.apiService.get(`/users/role/${userId}`);
+  }
+
   createUser(newUser: UserCreation) {
     return this.apiService.post('/users', newUser);
   }
@@ -34,5 +38,9 @@ export class UserService {
 
   editPassword(id: number, password: string, confirmPassword: string) {
     return this.apiService.put('/users/password', { id, password, confirmPassword });
+  }
+
+  editRole(id: number, roleId: number, newRoleId: number) {
+    return this.apiService.put('/users/role', { id, roleId, newRoleId });
   }
 }

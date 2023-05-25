@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Panta2.Core.Contracts;
 using Panta2.Core.Entities;
+using Panta2.Core.Models.Role;
 using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
 using Panta2.Infrastructure;
@@ -80,6 +81,16 @@ namespace Panta2.Application
             model.Password = hashedPassword;
 
             return await _userRepository.UpdateUser(model);
+        }
+        public async Task<bool> ChangeUser(UserRoleUpdateModel model)
+        {
+            return await _userRepository.UpdateUser(model);
+        }
+
+        public async Task<RoleModel> GetRoleFromUser(int id)
+        {
+            var role = await _userRepository.GetRoleFromUser(id);
+            return _mapper.Map<RoleModel>(role);
         }
 
         public async Task<IEnumerable<ServiceModel>> GetAllServicesFromUser(int id)

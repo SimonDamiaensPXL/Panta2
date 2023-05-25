@@ -42,6 +42,45 @@ namespace Panta2.ConfigAPI.Controllers
             return Ok(company);
         }
 
+        [HttpGet("role/{id}/services")]
+        public async Task<ActionResult<IEnumerable<ServiceModel>>> GetAllServicesFromRole(int id)
+        {
+            var services = await _companyService.GetAllServicesFromRole(id);
+
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(services);
+        }
+
+        [HttpGet("{companyId}/role/{roleId}/services")]
+        public async Task<ActionResult<IEnumerable<ServiceWithIsInRoleModel>>> GetAllServicesFromCompanyWithIsInRole(int companyId, int roleId)
+        {
+            var services = await _companyService.GetAllServicesFromCompanyWithIsInRole(companyId, roleId);
+
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(services);
+        }
+
+        [HttpGet("role/{id}")]
+        public async Task<ActionResult<RoleModel>> GetRoleById(int id)
+        {
+            var role = await _companyService.GetRoleById(id);
+
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(role);
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateCompany(CompanyCreationModel model)
         {
@@ -171,6 +210,28 @@ namespace Panta2.ConfigAPI.Controllers
         public async Task<ActionResult> UpdateServiceIcon(ServiceIconUpdateModel model, int companyId)
         {
             if (!await _companyService.UpdateService(model, companyId))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("role-name")]
+        public async Task<ActionResult> UpdateRoleName(RoleNameUpdateModel model)
+        {
+            if (!await _companyService.UpdateRole(model.Id, model.Name))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("role-services")]
+        public async Task<ActionResult> UpdateRoleName(RoleServicesUpdateModel model)
+        {
+            if (!await _companyService.UpdateRole(model.Id, model.ServiceIds))
             {
                 return NotFound();
             }
