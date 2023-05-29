@@ -19,9 +19,12 @@ export class EditCompanyServiceComponent {
   };
 
   image?: any;
+  showPopup: boolean = false;
+  isDeleting: boolean = false;
   isUploading: boolean = false;
   isUploadFailed: boolean = false;
   errorMessage: string = '';
+  deletingErrorMessage: string = '';
 
   constructor(private companyService: CompanyService, private route: ActivatedRoute, private router: Router) { }
 
@@ -111,5 +114,32 @@ export class EditCompanyServiceComponent {
     this.image = null;
     this.form.service_logo = null;
     this.errorMessage = "";
+  }
+
+  onCompanyServiceDelete(): void {
+    this.isDeleting = true;
+
+    this.companyService.deleteService(this.serviceId, this.companyId).subscribe({
+      next: data => {
+        this.isDeleting = false;
+        this.showPopup = false;
+        this.router.navigate([this.companyUrl]);
+      },
+      error: err => {
+        console.log(err);
+        this.deletingErrorMessage = err.error?.message || "Deleting service went wrong! Please try again.";
+        this.isUploadFailed = true;
+        this.isDeleting = false;
+        this.showPopup = false;
+      }
+    });
+  }
+
+  onShowPopup(): void {
+    this.showPopup = true;
+  }
+
+  onHidePopup(): void {
+    this.showPopup = false;
   }
 }

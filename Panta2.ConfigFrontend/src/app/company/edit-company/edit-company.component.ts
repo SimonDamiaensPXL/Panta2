@@ -13,17 +13,22 @@ import { CompanyService } from 'src/app/core/services/company/company.service';
 })
 export class EditCompanyComponent implements OnInit {
   companyId: number = 0;
+  users: User[] = [];
+  roles: any[] = [];
+  services: Service[] = [];
+
   form: any = {
     company_name: null,
     company_logo: null,
   };
-  users: User[] = [];
-  roles: any[] = [];
-  services: Service[] = [];
+
   image?: any;
+  showPopup: boolean = false;
+  isDeleting: boolean = false;  
   isUploading: boolean = false;
   isUploadFailed: boolean = false;
   errorMessage: string = '';
+  deletingErrorMessage: string = '';
 
   constructor(private companyService: CompanyService, private route: ActivatedRoute, private router: Router) { }
   
@@ -119,6 +124,33 @@ export class EditCompanyComponent implements OnInit {
     this.image = null;
     this.form.company_logo = null;
     this.errorMessage = "";
+  }
+
+  onCompanyDelete(): void {
+    this.isDeleting = true;
+
+    this.companyService.deleteCompany(this.companyId).subscribe({
+      next: data => {
+        this.isDeleting = false;
+        this.showPopup = false;
+        this.router.navigate(['/companies/']);
+      },
+      error: err => {
+        console.log(err);
+        this.deletingErrorMessage = err.error?.message || "Deleting company went wrong! Please try again.";
+        this.isUploadFailed = true;
+        this.isDeleting = false;
+        this.showPopup = false;
+      }
+    });
+  }
+
+  onShowPopup(): void {
+    this.showPopup = true;
+  }
+
+  onHidePopup(): void {
+    this.showPopup = false;
   }
 
   goToAddUser(): void {

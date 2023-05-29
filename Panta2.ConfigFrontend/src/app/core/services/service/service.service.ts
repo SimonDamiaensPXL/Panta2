@@ -35,4 +35,8 @@ export class ServiceService {
   editServiceLink(id: number, link: string) {
     return this.apiService.put('/services/link', {id, link});
   }
+
+  deleteService(id: number) {
+    return this.apiService.delete(`/services/${id}`);
+  }
 }

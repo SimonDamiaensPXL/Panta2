@@ -1,14 +1,14 @@
-<app-dashboard-page>
+<app-dashboard-page [ngClass]="{'blur-md': showPopup}">
     <nav class="flex mb-5" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
             <li class="inline-flex items-center">
                 <a href="/services"
                     class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-800">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5 mr-2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
-                </svg>
+                        stroke="currentColor" class="w-5 h-5 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+                    </svg>
                     Services
                 </a>
             </li>
@@ -25,101 +25,147 @@
             </li>
         </ol>
     </nav>
-
-    <h1 class="text-2xl font-bold mb-5">Edit service details</h1>
-
-    <form name="nameForm" #fname="ngForm" (ngSubmit)="fname.form.valid && onNameSubmit()"
-        class="flex flex-col items-center w-full">
+    <div class="flex flex-col items-center w-full mb-5">
         <div class="w-2/3 mb-5">
-            <label for="service_name" class="block mb-2 text-sm font-semibold text-gray-900">Service name</label>
-            <div class="flex w-full">
-                <input type="text" id="service_name" name="service_name" [(ngModel)]="form.service_name" required
-                #service_name="ngModel"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5"
-                placeholder="Hospital">
-
-                <button type="submit" [disabled]="isUploading"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-10 text-center inline-flex items-center ml-5">Edit
-                service name</button>
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold">Edit service details</h1>
+                <button type="button" [disabled]="isDeleting" (click)="onShowPopup()"
+                    class="text-white bg-red-600 hover:bg-red-700 focus:ring-1 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm h-10 w-28 inline-flex justify-center items-center">Delete
+                    service</button>
             </div>
-        </div>
-        <div *ngIf="service_name.errors && fname.submitted" class="text-red-600">Service name is required!</div>
-    </form>
-    
-    <form name="nameForm" #fLink="ngForm" (ngSubmit)="fLink.form.valid && onLinkSubmit()"
-        class="flex flex-col items-center w-full mb-5">
-        <div class="w-2/3 mb-5">
-            <label for="service_link" class="block mb-2 text-sm font-semibold text-gray-900">Service name</label>
-            <div class="flex w-full">
-                <input type="text" id="service_link" name="service_link" [(ngModel)]="form.service_link" required
-                #service_link="ngModel"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5"
-                placeholder="Hospital">
+            <p *ngIf="isUploadFailed" class="text-red-600">{{deletingErrorMessage}}</p>
+            <form name="nameForm" #fname="ngForm" (ngSubmit)="fname.form.valid && onNameSubmit()"
+                class="flex flex-col items-center w-full">
+                <div class="my-5 w-full">
+                    <label for="service_name" class="block mb-2 text-sm font-semibold text-gray-900">Service
+                        name</label>
+                    <div class="flex w-full justify-between">
+                        <input type="text" id="service_name" name="service_name" [(ngModel)]="form.service_name"
+                            required #service_name="ngModel"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[74%] p-2.5"
+                            placeholder="Hospital">
 
-                <button type="submit" [disabled]="isUploading"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-10 text-center inline-flex items-center ml-5">Edit
-                service link</button>
-            </div>
-        </div>
-        <div *ngIf="service_link.errors && fLink.submitted" class="text-red-600">Service link is required!</div>
-    </form>
-
-    <form name="logoForm" #fIcon="ngForm" (ngSubmit)="image && fIcon.form.valid && onIconSubmit()"
-        class="flex flex-col items-center w-full mb-5">
-
-        <div *ngIf="!image" class="w-2/3" appDrag (fileDropped)="onFileDropped($event)">
-            <p class="mb-2 text-sm font-semibold text-gray-900">Service icon</p>
-            <label for="dropzone-file"
-                class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-20 h-20">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
-                    <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Click to upload</span> or
-                        drag
-                        and drop</p>
-                    <p class="text-xs text-gray-500 ">SVG, PNG, JPG (MAX. 800x800px)</p>
+                        <button type="submit" [disabled]="isUploading"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-10 w-[24%] inline-flex justify-center items-center">Edit
+                            service name</button>
+                    </div>
                 </div>
-                <input id="dropzone-file" type="file" class="hidden" [multiple]="false" required
-                    (change)="fileBrowseHandler($event)" />
-            </label>
-        </div>
+                <div *ngIf="service_name.errors && fname.submitted" class="text-red-600">Service name is required!</div>
+            </form>
 
-        <div *ngIf="image" class="relative mb-2">
-            <img src="{{image}}" alt="preview-image" class="rounded-lg">
-            <button type="button" (click)="resetPreview()"
-                class="absolute top-0 m-2 text-white bg-red-700 hover:bg-red-800 focus:ring-1 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-2 text-center inline-flex items-center mr-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span class="sr-only">Reset preview</span>
-            </button>
-        </div>
+            <form name="nameForm" #fLink="ngForm" (ngSubmit)="fLink.form.valid && onLinkSubmit()"
+                class="flex flex-col items-center w-full mb-5">
+                <div class="mb-5 w-full">
+                    <label for="service_link" class="block mb-2 text-sm font-semibold text-gray-900">Service
+                        name</label>
+                    <div class="flex w-full justify-between">
+                        <input type="text" id="service_link" name="service_link" [(ngModel)]="form.service_link"
+                            required #service_link="ngModel"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[74%] p-2.5"
+                            placeholder="Hospital">
 
-        <div *ngIf="!image && fIcon.submitted" class="mt-5 text-red-600">Service icon is required!</div>
-        <p *ngIf="isUploadFailed" class="text-red-600 mt-2">{{errorMessage}}</p>
+                        <button type="submit" [disabled]="isUploading"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-10 w-[24%] inline-flex justify-center items-center">Edit
+                            service link</button>
+                    </div>
+                </div>
+                <div *ngIf="service_link.errors && fLink.submitted" class="text-red-600">Service link is required!</div>
+            </form>
+
+            <form name="logoForm" #fIcon="ngForm" (ngSubmit)="image && fIcon.form.valid && onIconSubmit()"
+                class="flex flex-col items-center w-full mb-5">
+
+                <div *ngIf="!image" class="w-full" appDrag (fileDropped)="onFileDropped($event)">
+                    <p class="mb-2 text-sm font-semibold text-gray-900">Service icon</p>
+                    <label for="dropzone-file"
+                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-20 h-20">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                            </svg>
+                            <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Click to upload</span> or
+                                drag
+                                and drop</p>
+                            <p class="text-xs text-gray-500 ">SVG, PNG, JPG (MAX. 800x800px)</p>
+                        </div>
+                        <input id="dropzone-file" type="file" class="hidden" [multiple]="false" required
+                            (change)="fileBrowseHandler($event)" />
+                    </label>
+                </div>
+
+                <div *ngIf="image" class="relative mb-2">
+                    <img src="{{image}}" alt="preview-image" class="rounded-lg">
+                    <button type="button" (click)="resetPreview()"
+                        class="absolute top-0 m-2 text-white bg-red-700 hover:bg-red-800 focus:ring-1 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-2 text-center inline-flex items-center mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <span class="sr-only">Reset preview</span>
+                    </button>
+                </div>
+
+                <div *ngIf="!image && fIcon.submitted" class="mt-5 text-red-600">Service icon is required!</div>
+                <p *ngIf="isUploadFailed" class="text-red-600 mt-2">{{errorMessage}}</p>
 
 
-        <button type="submit" [disabled]="isUploading"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-10 text-center inline-flex items-center mt-5">Edit
-            service icon</button>
-    </form>
+                <button type="submit" [disabled]="isUploading"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 h-10 text-center inline-flex items-center mt-5">Edit
+                    service icon</button>
+            </form>
 
-    <div class=" text-green-600" *ngIf="isUploading">
-        <div class="h-full flex flex-col items-center justify-center">
-            <p class="mb-2 mt-2">Editing service... </p>
-            <svg aria-hidden="true" class="w-8 h-8 mr-2 animate-spin text-gray-600 fill-green-600"
-                viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                    fill="currentColor" />
-                <path
-                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                    fill="currentFill" />
-            </svg>
+            <div class=" text-green-600" *ngIf="isUploading">
+                <div class="h-full flex flex-col items-center justify-center">
+                    <p class="mb-2 mt-2">Editing service... </p>
+                    <svg aria-hidden="true" class="w-8 h-8 mr-2 animate-spin text-gray-600 fill-green-600"
+                        viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor" />
+                        <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentFill" />
+                    </svg>
+                </div>
+            </div>
         </div>
     </div>
 </app-dashboard-page>
+
+<div *ngIf="showPopup">
+    <div id="popup-modal" tabindex="-1"
+        class="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full flex items-center justify-center">
+        <div class="relative w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow">
+                <button type="button" (click)="onHidePopup()" [disabled]="isDeleting"
+                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-6 text-center">
+                    <svg aria-hidden="true" class="mx-auto mb-4 text-gray-400 w-14 h-14 " fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 ">Are you sure you want
+                        to delete this service?</h3>
+                    <button type="button" (click)="onCompanyServiceDelete()" [disabled]="isDeleting"
+                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                        Yes, I'm sure
+                    </button>
+                    <button type="button" (click)="onHidePopup()" [disabled]="isDeleting"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No,
+                        cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

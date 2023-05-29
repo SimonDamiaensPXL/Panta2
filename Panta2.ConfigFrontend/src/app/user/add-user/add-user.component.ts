@@ -18,6 +18,7 @@ export class AddUserComponent implements OnInit {
   companyName?: string;
   companyUrl?: string;
   roles: any[] = [];
+  
   isUploading: boolean = false;
   isUploadFailed: boolean = false;
   errorMessage: string = '';

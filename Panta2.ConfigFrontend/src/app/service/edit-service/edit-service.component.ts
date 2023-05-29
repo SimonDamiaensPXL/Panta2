@@ -9,15 +9,20 @@ import { ServiceService } from 'src/app/core/services/service/service.service';
 })
 export class EditServiceComponent {
   serviceId: number = 0;
+
   form: any = {
     service_name: null,
     service_link: null,
     service_icon: null
   };
+  
   image?: any;
+  showPopup: boolean = false;
+  isDeleting: boolean = false;
   isUploading: boolean = false;
   isUploadFailed: boolean = false;
   errorMessage: string = '';
+  deletingErrorMessage: string = '';
 
   constructor(private serviceService: ServiceService, private route: ActivatedRoute, private router: Router) { }
 
@@ -120,5 +125,33 @@ export class EditServiceComponent {
     this.image = null;
     this.form.service_logo = null;
     this.errorMessage = "";
+  }
+
+  
+  onCompanyServiceDelete(): void {
+    this.isDeleting = true;
+
+    this.serviceService.deleteService(this.serviceId).subscribe({
+      next: data => {
+        this.isDeleting = false;
+        this.showPopup = false;
+        this.router.navigate(['/services/']);
+      },
+      error: err => {
+        console.log(err);
+        this.deletingErrorMessage = err.error?.message || "Deleting service went wrong! Please try again.";
+        this.isUploadFailed = true;
+        this.isDeleting = false;
+        this.showPopup = false;
+      }
+    });
+  }
+
+  onShowPopup(): void {
+    this.showPopup = true;
+  }
+
+  onHidePopup(): void {
+    this.showPopup = false;
   }
 }

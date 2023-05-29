@@ -176,7 +176,9 @@ namespace Panta2.Infrastructure
                         "FROM CompanyService cs " +
                         "INNER JOIN Favorites f ON cs.ServiceId = f.ServiceId " +
                         "INNER JOIN Services s ON cs.ServiceId = s.Id " +
-                        "WHERE f.UserId = @id";
+                        "INNER JOIN AspNetUsers u ON @id = u.Id " +
+                        "WHERE f.UserId = @id AND cs.CompanyId = u.CompanyId ";
+
 
             using (var connection = _context.CreateConnection())
             {
@@ -191,10 +193,11 @@ namespace Panta2.Infrastructure
                         "CASE WHEN f.ServiceId IS NULL THEN 0 ELSE 1 END AS isFavorite " +
                         "FROM CompanyService cs " +
                         "INNER JOIN ServiceRole sr ON cs.ServiceId = sr.ServiceId " +
+                        "INNER JOIN AspNetUsers u ON @id = u.Id " +
                         "INNER JOIN AspNetRoles r ON sr.RoleId = r.Id " +
                         "INNER JOIN AspNetUserRoles ur ON r.Id = ur.RoleId " +
                         "LEFT JOIN Favorites f ON cs.ServiceId = f.ServiceId AND f.UserId = @id " +
-                        "WHERE ur.UserId = @id";
+                        "WHERE ur.UserId = @id AND cs.CompanyId = u.CompanyId ";
 
             using (var connection = _context.CreateConnection())
             {
@@ -235,6 +238,13 @@ namespace Panta2.Infrastructure
             using (var connection = _context.CreateConnection())
             {
                 var rowsAffected = await connection.ExecuteAsync(query, new { userId });
+                if (rowsAffected == 0)
+                {
+                    return false;
+                }
+
+                query = "DELETE FROM Favorites WHERE UserId = @userId";
+                await connection.ExecuteAsync(query, new { userId });
 
                 User user = new User { Id = userId };
 

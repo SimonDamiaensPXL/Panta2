@@ -89,4 +89,16 @@ export class CompanyService {
   editRoleServices(id: number, serviceIds: number[]) {
     return this.apiService.put('/companies/role-services', { id, serviceIds });
   }
+
+  deleteRole(id: number) {
+    return this.apiService.delete(`/companies/role/${id}`);
+  }
+
+  deleteService(companyId: number, serviceId: number) {
+    return this.apiService.delete(`/companies/${companyId}/service/${serviceId}`);
+  }
+
+  deleteCompany(id: number) {
+    return this.apiService.delete(`/companies/${id}`);
+  }
 }

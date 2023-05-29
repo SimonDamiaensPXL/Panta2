@@ -7,7 +7,6 @@ using Panta2.Core.Models.Company;
 using Panta2.Core.Models.User;
 using Panta2.Core.Models.Role;
 using Panta2.Core.Models.Service;
-using Panta2.Infrastructure;
 
 namespace Panta2.Application
 {
@@ -183,6 +182,16 @@ namespace Panta2.Application
         public async Task<bool> UpdateRole(int roleId, int[] serviceIds)
         {
             return await _companyRepository.UpdateRoleServices(roleId, serviceIds);
+        }
+
+        public async Task<bool> DeleteCompanyService(int companyId, int serviceId)
+        {
+            return await _companyRepository.RemoveCompanyService(companyId, serviceId);
+        }
+
+        public async Task<bool> DeleteRole(int roleId)
+        {
+            return await _companyRepository.RemoveRole(roleId);
         }
     }
 }

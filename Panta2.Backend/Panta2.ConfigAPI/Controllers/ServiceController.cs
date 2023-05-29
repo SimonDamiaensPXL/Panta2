@@ -74,5 +74,24 @@ namespace Panta2.ConfigAPI.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{serviceId}")]
+        public async Task<ActionResult> DeleteCompanyService(int serviceId)
+        {
+            try
+            {
+                var isFound = await _serviceService.DeleteService(serviceId);
+                if (!isFound)
+                {
+                    return NotFound();
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                return Conflict(new { message = "This service cannot be deleted because it is still assigned to one or more companies." });
+            }
+
+            return NoContent();
+        }
     }
 }

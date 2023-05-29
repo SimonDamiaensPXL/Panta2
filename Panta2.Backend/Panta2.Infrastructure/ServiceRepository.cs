@@ -5,6 +5,7 @@ using Panta2.Core.Entities;
 using Panta2.Core.Models;
 using Panta2.Core.Models.Role;
 using Panta2.Infrastructure.Context;
+using System.ComponentModel.Design;
 
 namespace Panta2.Infrastructure
 {
@@ -78,8 +79,16 @@ namespace Panta2.Infrastructure
 
         public async Task<bool> Remove(int id)
         {
+            var query = "SELECT * FROM CompanyService WHERE ServiceId = @id";
+
             using (var connection = _context.CreateConnection())
             {
+                var checkRow = await connection.QueryFirstOrDefaultAsync(query, new { id });
+                if (checkRow != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
                 return await connection.DeleteAsync(new Service { Id = id });
             }
         }

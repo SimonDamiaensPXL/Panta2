@@ -1,5 +1,4 @@
-﻿using Panta2.Core.Entities;
-using Panta2.Core.Models.Company;
+﻿using Panta2.Core.Models.Company;
 using Panta2.Core.Models.Role;
 using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
@@ -30,5 +29,7 @@ namespace Panta2.Core.Contracts
         Task<bool> UpdateService(ServiceIconUpdateModel model, int companyId);
         Task<bool> UpdateRole(int roleId, string name);
         Task<bool> UpdateRole(int roleId, int[] serviceIds);
+        Task<bool> DeleteCompanyService(int companyId, int serviceId);
+        Task<bool> DeleteRole(int roleId);
     }
 }

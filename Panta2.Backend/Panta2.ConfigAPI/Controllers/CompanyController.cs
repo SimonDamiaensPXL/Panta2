@@ -111,17 +111,6 @@ namespace Panta2.ConfigAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteCompany(int id)
-        {
-            if (!await _companyService.DeleteCompany(id))
-            {
-                return NotFound();
-            }
-
-            return NoContent();
-        }
-
         [HttpGet("users/{id}")]
         public async Task<ActionResult<IEnumerable<UserWithRoleNameModel>>> GetUsersWithRoleName(int id)
         {
@@ -232,6 +221,55 @@ namespace Panta2.ConfigAPI.Controllers
         public async Task<ActionResult> UpdateRoleName(RoleServicesUpdateModel model)
         {
             if (!await _companyService.UpdateRole(model.Id, model.ServiceIds))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("role/{id}")]
+        public async Task<ActionResult> DeleteRole(int id)
+        {
+            try
+            {
+                var isFound = await _companyService.DeleteRole(id);
+                if (!isFound)
+                {
+                    return NotFound();
+                }
+            }
+            catch (InvalidOperationException) 
+            {
+                return Conflict(new { message = "This role cannot be deleted because it is still assigned to one or more users." });
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{companyId}/service/{serviceId}")]
+        public async Task<ActionResult> DeleteCompanyService(int companyId, int serviceId)
+        {
+            try
+            {
+                var isFound = await _companyService.DeleteCompanyService(companyId, serviceId);
+                if (!isFound)
+                {
+                    return NotFound();
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                return Conflict(new { message = "This service cannot be deleted because it is still assigned to one or more roles." });
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteCompany(int id)
+        {
+            if (!await _companyService.DeleteCompany(id))
             {
                 return NotFound();
             }

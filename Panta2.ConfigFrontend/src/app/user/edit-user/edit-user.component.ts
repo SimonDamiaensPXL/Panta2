@@ -154,7 +154,7 @@ export class EditUserComponent {
       next: data => {
         this.isDeleting = false;
         this.showPopup = false;
-        this.router.navigate([`/company/${this.companyId}`]);
+        this.router.navigate([this.companyUrl]);
       },
       error: err => {
         console.log(err);

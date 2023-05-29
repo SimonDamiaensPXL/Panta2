@@ -25,11 +25,13 @@ export class EditRoleComponent {
 
   selectedIds: any[] = [];
 
-
   image?: any;
+  showPopup: boolean = false;
+  isDeleting: boolean = false;
   isUploading: boolean = false;
   isUploadFailed: boolean = false;
   errorMessage: string = '';
+  deletingErrorMessage: string = '';
 
   constructor(private companyService: CompanyService, private route: ActivatedRoute, private router: Router) { }
   
@@ -46,9 +48,6 @@ export class EditRoleComponent {
     if (this.services) {
       this.selectedIds = this.services.filter(s => s.isInRole).map(s => s.id);
     }
-
-    console.log(this.services);
-    console.log(this.selectedIds);
 
     const company = await firstValueFrom(this.companyService.getCompanyById(this.companyId));
     const role = await firstValueFrom(this.companyService.getRoleById(this.roleId));
@@ -94,14 +93,39 @@ export class EditRoleComponent {
     });
   }
 
+  onUserDelete(): void {
+    this.isDeleting = true;
+
+    this.companyService.deleteRole(this.roleId).subscribe({
+      next: data => {
+        this.isDeleting = false;
+        this.showPopup = false;
+        this.router.navigate([this.companyUrl]);
+      },
+      error: err => {
+        console.log(err);
+        this.deletingErrorMessage = err.error?.message || "Deleting user went wrong! Please try again.";
+        this.isUploadFailed = true;
+        this.isDeleting = false;
+        this.showPopup = false;
+      }
+    });
+  }
+
+  onShowPopup(): void {
+    this.showPopup = true;
+  }
+
+  onHidePopup(): void {
+    this.showPopup = false;
+  }
+
   OnCheckboxSelect(id: any, event: any): void {
     if (event.target.checked === true) {
       this.selectedIds.push(id);
-      console.log('Selected Ids ', this.selectedIds);
     }
     if (event.target.checked === false) {
       this.selectedIds = this.selectedIds.filter((item) => item !== id);
-      console.log('Selected Ids ', this.selectedIds);
     }
   }
 }

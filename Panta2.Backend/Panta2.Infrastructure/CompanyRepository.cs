@@ -9,6 +9,7 @@ using Panta2.Core.Models.Service;
 using Panta2.Core.Models.User;
 using Panta2.Infrastructure.Context;
 using System.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Panta2.Infrastructure
 {
@@ -114,14 +115,6 @@ namespace Panta2.Infrastructure
             {
                 var rowsAffected = await connection.ExecuteAsync(query, new { logo = company.Logo, id = company.Id });
                 return rowsAffected == 1;
-            }
-        }
-
-        public async Task<bool> Remove(int id)
-        {
-            using (var connection = _context.CreateConnection())
-            {
-                return await connection.DeleteAsync(new Company { Id = id });
             }
         }
 
@@ -320,5 +313,97 @@ namespace Panta2.Infrastructure
                 return rowsAffected != 0;
             }
         }
+
+        public async Task<bool> Remove(int id)
+        {
+            var query = "SELECT RoleId FROM CompanyRole WHERE CompanyId = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var roleIds = await connection.QueryAsync<int>(query, new { id });
+
+                query = "DELETE FROM AspNetUserRoles " +
+                        "WHERE UserId IN ( " +
+                        "    SELECT Id " +
+                        "    FROM AspNetUsers " +
+                        "    WHERE CompanyId = @id " +
+                        ")";
+                var rowsAffected = await connection.ExecuteAsync(query, new { id });
+
+                query = "DELETE FROM Favorites " +
+                        "WHERE UserId IN ( " +
+                        "    SELECT Id " +
+                        "    FROM AspNetUsers " +
+                        "    WHERE CompanyId = @id " +
+                        ")";
+                rowsAffected = await connection.ExecuteAsync(query, new { id });
+
+                query = "DELETE FROM CompanyRole WHERE CompanyId = @id";
+                rowsAffected = await connection.ExecuteAsync(query, new { id });
+
+                query = "DELETE FROM ServiceRole WHERE RoleId IN @roleIds";
+                rowsAffected = await connection.ExecuteAsync(query, new { roleIds });
+
+                query = "DELETE FROM AspNetRoles WHERE Id IN @roleIds";
+                rowsAffected = await connection.ExecuteAsync(query, new { roleIds });
+
+                query = "DELETE FROM AspNetUsers WHERE CompanyId = @id";
+                rowsAffected = await connection.ExecuteAsync(query, new { id });
+
+                query = "DELETE FROM CompanyService WHERE CompanyId = @id";
+                rowsAffected = await connection.ExecuteAsync(query, new { id });
+
+                return await connection.DeleteAsync(new Company { Id = id });
+            }
+        }
+
+        public async Task<bool> RemoveCompanyService(int companyId, int serviceId)
+        {
+            var query = "SELECT * FROM ServiceRole sr " +
+                        "INNER JOIN CompanyRole cr ON @companyId = cr.CompanyId " +
+                        "WHERE sr.ServiceId = @serviceId AND cr.RoleId = sr.RoleId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var checkRow = await connection.QueryFirstOrDefaultAsync(query, new { companyId, serviceId });
+                if (checkRow != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                query = "DELETE FROM CompanyService WHERE CompanyId = @companyId AND ServiceId = @serviceId";
+                var rowsAffected = await connection.ExecuteAsync(query, new { companyId, serviceId });
+
+
+                return rowsAffected == 1;
+            }
+        }
+
+        public async Task<bool> RemoveRole(int roleId)
+        {
+            var query = "SELECT * FROM AspNetUserRoles WHERE RoleId = @roleId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var checkRow = await connection.QueryFirstOrDefaultAsync(query, new { roleId });
+                if (checkRow != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                query = "DELETE FROM ServiceRole WHERE RoleId = @roleId";
+                var rowsAffected = await connection.ExecuteAsync(query, new { roleId });
+                if (rowsAffected == 0)
+                {
+                    return false;
+                }
+
+                query = "DELETE FROM CompanyRole WHERE RoleId = @roleId";
+                rowsAffected = await connection.ExecuteAsync(query, new { roleId });
+
+                return rowsAffected == 1;
+            }
+        }
+
     }
 }
