@@ -8,8 +8,7 @@ import { Service } from "../core/models/service.model";
 
 @Component({
   selector: 'app-dashboard-page',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.sass']
+  templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
   services: Service[] = [];
