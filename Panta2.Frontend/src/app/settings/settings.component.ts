@@ -8,7 +8,6 @@ import { UserService } from '../core/services/user/user.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.sass']
 })
 export class SettingsComponent implements OnInit {
   services: Service[] = [];
