@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
-
 import { AuthService } from './auth.service';
 import { Observable, of } from 'rxjs';
+import { expect } from '@jest/globals';
 
 describe('AuthService', () => {
   let authService: AuthService;

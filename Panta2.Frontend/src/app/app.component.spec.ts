@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StorageService } from './core/services/storage/storage.service';
+import { expect } from '@jest/globals';
 
 describe('AppComponent', () => {
   let component: AppComponent;

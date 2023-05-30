@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { StorageService } from '../core/services/storage/storage.service';
 import { UserService } from '../core/services/user/user.service';
 import { of, throwError } from 'rxjs';
+import { expect } from '@jest/globals';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;

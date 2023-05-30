@@ -7,6 +7,7 @@ import { StorageService } from '../core/services/storage/storage.service';
 import { of, throwError } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { expect } from '@jest/globals';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from '../api/api.service';
 import { Observable, of } from 'rxjs';
 import { Service } from '../../models/service.model';
+import { expect } from '@jest/globals';
 
 describe('UserService', () => {
   let userService: UserService;

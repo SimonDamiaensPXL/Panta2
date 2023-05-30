@@ -4,6 +4,7 @@ import { UserService } from "../core/services/user/user.service";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { HttpClientModule } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
+import { expect } from '@jest/globals';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
