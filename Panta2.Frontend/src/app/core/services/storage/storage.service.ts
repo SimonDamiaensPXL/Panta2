@@ -30,7 +30,7 @@ export class StorageService {
   }
 
   public async getUser(): Promise<any> {
-    const userString = window.sessionStorage.getItem('USER');
+    const userString = window.sessionStorage.getItem('user');
     const user: User = userString ? JSON.parse(userString) : null;
 
     if (user == null) {

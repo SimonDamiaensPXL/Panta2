@@ -1,0 +1,20 @@
+{
+  "firstName": "Simon",
+  "lastName": "Damiaens",
+  "companyId": 1,
+  "id": 1,
+  "userName": "Simon",
+  "normalizedUserName": null,
+  "email": "simon@mail.com",
+  "normalizedEmail": null,
+  "emailConfirmed": false,
+  "passwordHash": null,
+  "securityStamp": null,
+  "concurrencyStamp": "deb7c52c-6a7b-4fb7-a421-b8dc00c5ac6e",
+  "phoneNumber": null,
+  "phoneNumberConfirmed": false,
+  "twoFactorEnabled": false,
+  "lockoutEnd": null,
+  "lockoutEnabled": false,
+  "accessFailedCount": 0
+}

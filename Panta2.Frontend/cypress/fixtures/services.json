@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Room Cleaning",
+    "icon": "../../assets/images/icons/RoomCleaning.png",
+    "link": "https://example.com"
+  },
+  {
+    "id": 2,
+    "name": "Security",
+    "icon": "../../assets/images/icons/Security.png",
+    "link": "https://example.com"
+  },
+  {
+    "id": 3,
+    "name": "Kitchen Cleaning",
+    "icon": "../../assets/images/icons/KitchenCleaning.png",
+    "link": "https://example.com"
+  }
+]
