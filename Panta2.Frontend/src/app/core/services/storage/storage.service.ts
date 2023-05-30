@@ -41,8 +41,8 @@ export class StorageService {
         window.sessionStorage.setItem(USER, JSON.stringify(user));
         return user;
       } catch (err) {
-        console.log(err);
-        // handle the error appropriately
+        console.error(err);
+        return null;
       }
     } else {
       return user;

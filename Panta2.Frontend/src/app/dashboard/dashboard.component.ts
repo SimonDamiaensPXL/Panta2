@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { StorageService } from "../core/services/storage/storage.service";
 import { UserService } from "../core/services/user/user.service";
 import { User } from "../core/models/user.model";
@@ -37,7 +36,5 @@ export class DashboardComponent implements OnInit {
 
   onFiltered(filteredItems: any[]) {
     this.filteredServices = filteredItems;
-
-    console.log(this.filteredServices);
   }
 } 

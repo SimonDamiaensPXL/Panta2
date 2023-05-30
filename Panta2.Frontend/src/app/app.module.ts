@@ -9,7 +9,6 @@ import { LoginComponent } from './login/login.component';
 import { httpInterceptorProviders } from './core/interceptors/http.interceptor'
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
-import { ProfileComponent } from './profile/profile.component';
 import { ServiceComponent } from './service/service.component';
 import { FooterComponent } from './shared/footer.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -20,7 +19,6 @@ import { NavbarComponent } from './shared/navbar.component';
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    ProfileComponent,
     ServiceComponent,
     FooterComponent,
     NavbarComponent,

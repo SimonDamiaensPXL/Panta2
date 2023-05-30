@@ -32,10 +32,12 @@ export class SettingsComponent implements OnInit {
   }
 
   async editFavorite(serviceId: number, isFavorite: boolean): Promise<void> {
+    this.isLoading = true;
     const user: User = await this.storageService.getUser();
     this.userService.editFavorite(user.id, serviceId, isFavorite).subscribe({
-      next() {
-        window.location.reload();
+      next: () => {
+        //window.location.reload();
+        this.isLoading = false;
       },
       error: (err) => {
         console.error(err);
@@ -46,7 +48,7 @@ export class SettingsComponent implements OnInit {
   }
 
   async changeName() : Promise<void> {
-    console.log(this.inputName);
+    this.isLoading = true;
     if (!this.inputName) {
       this.errorMessage = "Please make sure you have entered a valid username and try again."
       this.isError = true
@@ -55,7 +57,8 @@ export class SettingsComponent implements OnInit {
 
     const user: User = await this.storageService.getUser();
     this.userService.changeName(this.inputName, user.id).subscribe({
-      next() {
+      next: () => {
+        this.isLoading = false;
         window.location.reload();
       },
       error: (err) => {
