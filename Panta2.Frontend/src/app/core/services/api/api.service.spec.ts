@@ -27,6 +27,23 @@ describe('ApiService', () => {
     expect(apiService).toBeTruthy();
   });
 
+  describe('formatErrors', () => {
+    it('should return an Observable that throws the provided error', () => {
+      const error = new Error('Test error');
+
+      const result$ = apiService['formatErrors'](error); // Access the private method
+
+      result$.subscribe(
+        () => {
+          fail('The Observable should have thrown an error');
+        },
+        (thrownError) => {
+          expect(thrownError).toEqual(error);
+        }
+      );
+    });
+  });
+
   describe('get', () => {
     it('should make a GET request to the specified path with the provided params', () => {
       const path = '/users';
@@ -54,10 +71,10 @@ describe('ApiService', () => {
   });
 
   describe('put', () => {
-    it('should make a PUT request to the specified path with the provided body', () => {
-      const path = '/users/123';
-      const body = { firstName: 'John', lastName: 'Doe' };
+    const path = '/users/123';
+    const body = { firstName: 'John', lastName: 'Doe' };
 
+    it('should make a PUT request to the specified path with the provided body', () => {
       (httpMock.put as jest.Mock).mockReturnValue(of({}));
 
       apiService.put(path, body);
@@ -69,9 +86,6 @@ describe('ApiService', () => {
     });
 
     it('should return an Observable', () => {
-      const path = '/users/123';
-      const body = { firstName: 'John', lastName: 'Doe' };
-
       (httpMock.put as jest.Mock).mockReturnValue(of({}));
 
       const result = apiService.put(path, body);
