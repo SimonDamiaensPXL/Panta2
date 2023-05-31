@@ -50,7 +50,7 @@ describe('StorageService', () => {
     const mockUser: User = { id: 1, firstName: 'John', lastName: 'Doe', companyId: 1 };
 
     it('should return the user from session storage if it exists', async () => {
-      window.sessionStorage.setItem('USER', JSON.stringify(mockUser));
+      window.sessionStorage.setItem('user', JSON.stringify(mockUser));
 
       const result = await storageService.getUser();
 

@@ -25,16 +25,6 @@ describe('DashboardComponent', () => {
         })
     });
 
-    it('should load data from JSON file', () => {
-        cy.fixture('user.json').then((data) => {
-          const user = data.user;
-    
-          // Your test assertions using the user data
-          expect(user.name).to.equal('John Doe');
-          expect(user.email).to.equal('johndoe@example.com');
-        });
-      });
-
     it('should display the loading spinner initially', () => {
         cy.get('.h-full svg').should('exist');
     });

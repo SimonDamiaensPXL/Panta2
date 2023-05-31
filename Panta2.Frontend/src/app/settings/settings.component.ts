@@ -36,10 +36,11 @@ export class SettingsComponent implements OnInit {
     const user: User = await this.storageService.getUser();
     this.userService.editFavorite(user.id, serviceId, isFavorite).subscribe({
       next: () => {
-        //window.location.reload();
         this.isLoading = false;
+        window.location.reload();
       },
       error: (err) => {
+        this.isLoading = false;
         console.error(err);
         this.errorMessage = "Sorry, you cannot add more than 5 favorites. Please remove an existing favorite to add a new one."
         this.isError = true;
