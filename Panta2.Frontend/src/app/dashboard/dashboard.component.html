@@ -96,11 +96,10 @@
                                 </div>
                             </div>
 
-                            <div class="w-full mb-5 bg-white rounded-lg drop-shadow-2xl h-96">
-                                <h3 class="text-xl m-5 font-bold">Updated in the last 24 hours</h3>
-                                <div *ngIf="!isLoading" class="relative overflow-x-auto">
+                            <div class="w-full  bg-white rounded-lg drop-shadow-2xl">
+                                <div *ngIf="!isLoading" class="h-96 rounded-lg relative overflow-x-auto">
                                     <table class="w-full text-sm text-left text-gray-500">
-                                        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                        <thead class="text-xs text-gray-700 uppercase sticky top-0 bg-gray-100">
                                             <tr>
                                                 <th scope="col" class="px-6 py-3">
                                                     State
@@ -137,10 +136,10 @@
                                                     {{ticket.subject}}
                                                 </td>
                                                 <td class="px-6 py-4 font-semibold">
-                                                    {{ticket.creationDate}}
+                                                    {{getDateFormatted(ticket.creationDate)}}
                                                 </td>
                                                 <td class="px-6 py-4 font-semibold">
-                                                    {{ticket.lastModificationDate}}
+                                                    {{getDateFormatted(ticket.lastModificationDate)}}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -148,7 +147,7 @@
                                 </div>
                             </div>
 
-                            <h1 class="text-2xl font-bold mb-5">All</h1>
+                            <h1 class="text-2xl font-bold my-5">Services</h1>
                             <div class="flex flex-wrap mx-[-10px]">
                                 <app-service class="w-[20%]" *ngFor="let service of services"
                                     [service]="service"></app-service>

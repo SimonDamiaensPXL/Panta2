@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Panta2.Core.Models.Ticket;
+using System.Text.Json;
 
 namespace Panta2.API.Controllers
 {
@@ -8,58 +9,13 @@ namespace Panta2.API.Controllers
 
     public class TicketController : ControllerBase
     {
-        private IEnumerable<TicketModel> _ticketList;
+        private IEnumerable<TicketModel>? _ticketList;
 
-        public TicketController()
+        public TicketController(IWebHostEnvironment webHostEnvironment)
         {
-            _ticketList = new TicketModel[]
-            {
-                new TicketModel
-                {
-                    TicketNum = 123456,
-                    Subject = "PULIZIA POS DIMISSIONE",
-                    Priority = "Normal",
-                    State = "Open",
-                    CreationDate = new DateTime(2023, 5, 1, 12, 35, 0),
-                    LastModificationDate = new DateTime(2023, 5, 11, 9, 12, 0)
-                },
-                new TicketModel
-                {
-                    TicketNum = 123456443,
-                    Subject = "PULIZIA POS DIMISSIONE URGENTE",
-                    Priority = "Emergency",
-                    State = "Closed",
-                    CreationDate = new DateTime(2023, 5, 5, 14, 44, 0),
-                    LastModificationDate = new DateTime(2023, 5, 6, 9, 18, 0)
-                },
-                new TicketModel
-                {
-                    TicketNum = 443456443,
-                    Subject = "SANIFICAZIONE",
-                    Priority = "High",
-                    State = "In Progress",
-                    CreationDate = new DateTime(2023, 5, 18, 8, 12, 0),
-                    LastModificationDate = new DateTime(2023, 5, 18, 19, 18, 0)
-                },
-                 new TicketModel
-                {
-                    TicketNum = 654321,
-                    Subject = "Ticket 1",
-                    Priority = "Normal",
-                    State = "Open",
-                    CreationDate = new DateTime(2023, 6, 1, 10, 0, 0),
-                    LastModificationDate = new DateTime(2023, 6, 1, 10, 0, 0)
-                },
-                new TicketModel
-                {
-                    TicketNum = 654322,
-                    Subject = "Ticket 2",
-                    Priority = "Low",
-                    State = "Open",
-                    CreationDate = new DateTime(2023, 6, 2, 12, 0, 0),
-                    LastModificationDate = new DateTime(2023, 6, 2, 12, 0, 0)
-                }
-            };
+            string jsonString = System.IO.File.ReadAllText(Path.Combine(webHostEnvironment.WebRootPath, "tickets.json"));
+
+            _ticketList = JsonSerializer.Deserialize<TicketModel[]>(jsonString);
         }
 
         [HttpGet]
